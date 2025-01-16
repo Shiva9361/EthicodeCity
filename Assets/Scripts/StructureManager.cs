@@ -10,6 +10,8 @@ public class StructureManager : MonoBehaviour
     public StructurePrefabWeighted[] housesPrefabe, specialPrefabs, bigStructuresPrefabs;
     public PlacementManager placementManager;
 
+    public InventoryManager inventoryManager;
+
     private float[] houseWeights, specialWeights, bigStructureWeights;
 
     private void Start()
@@ -31,10 +33,16 @@ public class StructureManager : MonoBehaviour
 
     public void PlaceHouseBuffered(Vector3Int position, int houseNum)
     {
-        if (CheckPositionBeforePlacement(position))
+        if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
         {
+
             placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
+            inventoryManager.Buy(housesPrefabe[houseNum].weight);
             AudioPlayer.instance.PlayPlacementSound();
+        }
+        else if (inventoryManager.CanBuy(housesPrefabe[houseNum].weight) == false)
+        {
+            Debug.Log("Not enough money");
         }
     }
 
@@ -147,7 +155,7 @@ public class StructureManager : MonoBehaviour
 public struct StructurePrefabWeighted
 {
     public GameObject prefab;
-    [Range(0, 1)]
+    [Range(1000, 10_000)]
     public float weight;
     public Vector3 scale;
 
@@ -156,5 +164,6 @@ public struct StructurePrefabWeighted
         this.prefab = prefab;
         this.weight = weight;
         this.scale = new Vector3(1, 1, 1);
+
     }
 }
