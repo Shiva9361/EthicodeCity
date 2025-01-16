@@ -19,12 +19,22 @@ public class StructureManager : MonoBehaviour
         bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
     }
 
-    public void PlaceHouse(Vector3Int position)
+    // public void PlaceHouse(Vector3Int position)
+    // {
+    //     if (CheckPositionBeforePlacement(position))
+    //     {
+    //         int randomIndex = GetRandomWeightedIndex(houseWeights);
+    //         placementManager.PlaceObjectOnTheMap(position, housesPrefabe[randomIndex].scale, housesPrefabe[randomIndex].prefab, CellType.Structure);
+    //         AudioPlayer.instance.PlayPlacementSound();
+    //     }
+    // }
+
+    public void PlaceHouseBuffered(Vector3Int position)
     {
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[randomIndex].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[randomIndex].scale, housesPrefabe[randomIndex].prefab, CellType.Structure);
             AudioPlayer.instance.PlayPlacementSound();
         }
     }
@@ -33,10 +43,10 @@ public class StructureManager : MonoBehaviour
     {
         int width = 2;
         int height = 2;
-        if(CheckBigStructure(position, width , height))
+        if (CheckBigStructure(position, width, height))
         {
             int randomIndex = GetRandomWeightedIndex(bigStructureWeights);
-            placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[randomIndex].prefab, CellType.Structure, width, height);
+            placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[randomIndex].scale, bigStructuresPrefabs[randomIndex].prefab, CellType.Structure, width, height);
             AudioPlayer.instance.PlayPlacementSound();
         }
     }
@@ -49,8 +59,8 @@ public class StructureManager : MonoBehaviour
             for (int z = 0; z < height; z++)
             {
                 var newPosition = position + new Vector3Int(x, 0, z);
-                
-                if (DefaultCheck(newPosition)==false)
+
+                if (DefaultCheck(newPosition) == false)
                 {
                     return false;
                 }
@@ -68,7 +78,7 @@ public class StructureManager : MonoBehaviour
         if (CheckPositionBeforePlacement(position))
         {
             int randomIndex = GetRandomWeightedIndex(specialWeights);
-            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].scale, specialPrefabs[randomIndex].prefab, CellType.Structure);
             AudioPlayer.instance.PlayPlacementSound();
         }
     }
@@ -86,7 +96,7 @@ public class StructureManager : MonoBehaviour
         for (int i = 0; i < weights.Length; i++)
         {
             //0->weihg[0] weight[0]->weight[1]
-            if(randomValue >= tempSum && randomValue < tempSum + weights[i])
+            if (randomValue >= tempSum && randomValue < tempSum + weights[i])
             {
                 return i;
             }
@@ -104,7 +114,7 @@ public class StructureManager : MonoBehaviour
 
         if (RoadCheck(position) == false)
             return false;
-        
+
         return true;
     }
 
@@ -138,6 +148,14 @@ public class StructureManager : MonoBehaviour
 public struct StructurePrefabWeighted
 {
     public GameObject prefab;
-    [Range(0,1)]
+    [Range(0, 1)]
     public float weight;
+    public Vector3 scale;
+
+    public StructurePrefabWeighted(GameObject prefab, float weight)
+    {
+        this.prefab = prefab;
+        this.weight = weight;
+        this.scale = new Vector3(1, 1, 1);
+    }
 }

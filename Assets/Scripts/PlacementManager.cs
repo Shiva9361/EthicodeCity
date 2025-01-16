@@ -23,16 +23,16 @@ public class PlacementManager : MonoBehaviour
 
     internal bool CheckIfPositionInBound(Vector3Int position)
     {
-        if(position.x >= 0 && position.x < width && position.z >=0 && position.z < height)
+        if (position.x >= 0 && position.x < width && position.z >= 0 && position.z < height)
         {
             return true;
         }
         return false;
     }
 
-    internal void PlaceObjectOnTheMap(Vector3Int position, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
+    internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
     {
-        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+        StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type);
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
@@ -68,7 +68,8 @@ public class PlacementManager : MonoBehaviour
     internal void PlaceTemporaryStructure(Vector3Int position, GameObject structurePrefab, CellType type)
     {
         placementGrid[position.x, position.z] = type;
-        StructureModel structure = CreateANewStructureModel(position, structurePrefab, type);
+        Vector3 scale = new Vector3(1, 1, 1);
+        StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type);
         temporaryRoadobjects.Add(position, structure);
     }
 
@@ -83,11 +84,12 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
-    private StructureModel CreateANewStructureModel(Vector3Int position, GameObject structurePrefab, CellType type)
+    private StructureModel CreateANewStructureModel(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
     {
         GameObject structure = new GameObject(type.ToString());
         structure.transform.SetParent(transform);
         structure.transform.localPosition = position;
+        structure.transform.localScale = scale;
         var structureModel = structure.AddComponent<StructureModel>();
         structureModel.CreateModel(structurePrefab);
         return structureModel;

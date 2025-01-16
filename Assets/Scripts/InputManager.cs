@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    public Action<Vector3Int> OnMouseClick, OnMouseHold;
-    public Action OnMouseUp;
+	public Action<Vector3Int> OnMouseClick, OnMouseHold, OnMouseUpWithLocation;
+	public Action OnMouseUp;
 	private Vector2 cameraMovementVector;
 
 	[SerializeField]
@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
 	{
 		CheckClickDownEvent();
 		CheckClickUpEvent();
+		CheckClickUpEventWithPos();
 		CheckClickHoldEvent();
 		CheckArrowInput();
 	}
@@ -32,7 +33,7 @@ public class InputManager : MonoBehaviour
 	{
 		RaycastHit hit;
 		Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-		if(Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
+		if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundMask))
 		{
 			Vector3Int positionInt = Vector3Int.RoundToInt(hit.point);
 			return positionInt;
@@ -47,7 +48,7 @@ public class InputManager : MonoBehaviour
 
 	private void CheckClickHoldEvent()
 	{
-		if(Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
+		if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject() == false)
 		{
 			var position = RaycastGround();
 			if (position != null)
@@ -61,6 +62,16 @@ public class InputManager : MonoBehaviour
 		if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false)
 		{
 			OnMouseUp?.Invoke();
+
+		}
+	}
+	private void CheckClickUpEventWithPos()
+	{
+		if (Input.GetMouseButtonUp(0) && EventSystem.current.IsPointerOverGameObject() == false)
+		{
+			var position = RaycastGround();
+			if (position != null)
+				OnMouseUpWithLocation?.Invoke(position.Value);
 
 		}
 	}

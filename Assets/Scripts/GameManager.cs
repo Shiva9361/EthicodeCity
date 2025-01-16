@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         uiController.OnHousePlacement += HousePlacementHandler;
         uiController.OnSpecialPlacement += SpecialPlacementHandler;
         uiController.OnBigStructurePlacement += BigStructurePlacementHandler;
-        
+
     }
 
     private void BigStructurePlacementHandler()
@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour
     private void HousePlacementHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += structureManager.PlaceHouse;
+        // inputManager.OnMouseClick += structureManager.PlaceHouse;
+        inputManager.OnMouseUpWithLocation += structureManager.PlaceHouseBuffered;
     }
 
     private void RoadPlacementHandler()
@@ -55,10 +56,11 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick = null;
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
+        inputManager.OnMouseUpWithLocation = null;
     }
 
     private void Update()
     {
-        cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x,0, inputManager.CameraMovementVector.y));
+        cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
     }
 }
