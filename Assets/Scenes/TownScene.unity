@@ -7034,7 +7034,7 @@ Canvas:
   m_GameObject: {fileID: 681313528}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -24081,7 +24081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8184718f0378d9940997c24ed8d9bcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMovement: {fileID: 2044889014}
+  cameraMovement: {fileID: 0}
   roadManager: {fileID: 2093395483}
   inputManager: {fileID: 1916978682}
   uiController: {fileID: 681313529}
@@ -24342,11 +24342,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2044889009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23955f40d60750642a649bbde1a07458, type: 3}
+  m_Script: {fileID: 11500000, guid: e06ddd435a15b654b9c089d3d89bd1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCamera: {fileID: 0}
-  cameraMovementSpeed: 5
+  dragSpeed: 1
 --- !u!1 &2046492754
 GameObject:
   m_ObjectHideFlags: 0

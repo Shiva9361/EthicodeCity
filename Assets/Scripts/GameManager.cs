@@ -58,8 +58,4 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseUpWithLocation = null;
     }
 
-    private void Update()
-    {
-        cameraMovement.MoveCamera(new Vector3(inputManager.CameraMovementVector.x, 0, inputManager.CameraMovementVector.y));
-    }
 }
