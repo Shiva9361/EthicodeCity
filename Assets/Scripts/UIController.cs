@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton, placeBigStructureButton };
+        buttonList = new List<Button> { placeHouse1Button, placeHouse2Button, placeRoadButton, placeSpecialButton, placeBigStructureButton };
 
         placeRoadButton.onClick.AddListener(() =>
         {
