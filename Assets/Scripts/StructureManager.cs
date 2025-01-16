@@ -29,12 +29,11 @@ public class StructureManager : MonoBehaviour
     //     }
     // }
 
-    public void PlaceHouseBuffered(Vector3Int position)
+    public void PlaceHouseBuffered(Vector3Int position, int houseNum)
     {
         if (CheckPositionBeforePlacement(position))
         {
-            int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[randomIndex].scale, housesPrefabe[randomIndex].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
             AudioPlayer.instance.PlayPlacementSound();
         }
     }

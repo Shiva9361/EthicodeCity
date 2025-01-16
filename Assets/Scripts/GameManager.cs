@@ -35,11 +35,10 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick += structureManager.PlaceSpecial;
     }
 
-    private void HousePlacementHandler()
+    private void HousePlacementHandler(int houseNum)
     {
         ClearInputActions();
-        // inputManager.OnMouseClick += structureManager.PlaceHouse;
-        inputManager.OnMouseUpWithLocation += structureManager.PlaceHouseBuffered;
+        inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBuffered(location, houseNum);
     }
 
     private void RoadPlacementHandler()

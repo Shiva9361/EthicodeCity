@@ -6,15 +6,19 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Action OnRoadPlacement, OnHousePlacement, OnSpecialPlacement, OnBigStructurePlacement;
-    public Button placeRoadButton, placeHouse1Button, placeHouse2Button, placeSpecialButton, placeBigStructureButton;
+    public Action OnRoadPlacement, OnSpecialPlacement, OnBigStructurePlacement;
+
+    public Action<int> OnHousePlacement;
+    public Button placeRoadButton, placeSpecialButton, placeBigStructureButton;
+
+    public Button[] placeHouseButtons;
 
     public Color outlineColor;
     List<Button> buttonList;
 
     private void Start()
     {
-        buttonList = new List<Button> { placeHouse1Button, placeHouse2Button, placeRoadButton, placeSpecialButton, placeBigStructureButton };
+        buttonList = new List<Button> { placeRoadButton, placeSpecialButton, placeBigStructureButton };
 
         placeRoadButton.onClick.AddListener(() =>
         {
@@ -23,20 +27,24 @@ public class UIController : MonoBehaviour
             OnRoadPlacement?.Invoke();
 
         });
-        placeHouse1Button.onClick.AddListener(() =>
-        {
-            ResetButtonColor();
-            ModifyOutline(placeHouse1Button);
-            OnHousePlacement?.Invoke();
+        // placeHouseButton.onClick.AddListener(() =>
+        // {
+        //     ResetButtonColor();
+        //     ModifyOutline(placeHouse1Button);
+        //     OnHousePlacement?.Invoke();
 
-        });
-        placeHouse2Button.onClick.AddListener(() =>
+        // });
+        for (int i = 0; i < placeHouseButtons.Length; i++)
         {
-            ResetButtonColor();
-            ModifyOutline(placeHouse2Button);
-            OnHousePlacement?.Invoke();
+            int index = i;
+            placeHouseButtons[index].onClick.AddListener(() =>
+            {
+                ResetButtonColor();
+                ModifyOutline(placeHouseButtons[index]);
+                OnHousePlacement?.Invoke(index);
+            });
+        }
 
-        });
         placeSpecialButton.onClick.AddListener(() =>
         {
             ResetButtonColor();
