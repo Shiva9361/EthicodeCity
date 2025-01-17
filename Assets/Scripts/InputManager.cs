@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour
 		CheckArrowInput();
 	}
 
-	private Vector3Int? RaycastGround()
+	internal Vector3Int? RaycastGround()
 	{
 		RaycastHit hit;
 		Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);

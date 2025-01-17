@@ -3076,10 +3076,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   housesPrefabe:
   - prefab: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
-    weight: 0.25
+    weight: 5831
     scale: {x: 0.05, y: 0.05, z: 0.05}
   - prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
-    weight: 0.25
+    weight: 2119
     scale: {x: 0.05, y: 0.05, z: 0.05}
   - prefab: {fileID: 100000, guid: 35807f23e7899e541b60b2fb2bbb51ef, type: 3}
     weight: 0.25
@@ -3096,6 +3096,7 @@ MonoBehaviour:
     weight: 0
     scale: {x: 0, y: 0, z: 0}
   placementManager: {fileID: 540532163}
+  inventoryManager: {fileID: 1064610194}
 --- !u!4 &319897189
 Transform:
   m_ObjectHideFlags: 0
@@ -11763,6 +11764,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1064610193}
+  - component: {fileID: 1064610194}
   m_Layer: 0
   m_Name: InventoryManager
   m_TagString: Untagged
@@ -11785,6 +11787,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1064610194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064610192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79ec2d123a1ec6a4b9c3c01e419086ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Population: 0
+  Money: 1000000
 --- !u!1001 &1065881547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13724,6 +13740,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1880490119515231572, guid: aed2aed4bcf2ca849b78ed9886eb775b, type: 3}
   m_PrefabInstance: {fileID: 1192857293}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1201162920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1201162922}
+  - component: {fileID: 1201162921}
+  m_Layer: 0
+  m_Name: DragDropManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1201162921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201162920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906ead65c64b2ef409fec1a135bd4d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - prefab: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
+    weight: 0
+    scale: {x: 0.05, y: 0.05, z: 0.05}
+  - prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
+    weight: 0
+    scale: {x: 0.05, y: 0.05, z: 0.05}
+  - prefab: {fileID: 100000, guid: 35807f23e7899e541b60b2fb2bbb51ef, type: 3}
+    weight: 0
+    scale: {x: 0.05, y: 0.05, z: 0.05}
+  buttons:
+  - {fileID: 2046492757}
+  - {fileID: 1068286669}
+  - {fileID: 806931380}
+  placementManager: {fileID: 540532163}
+  structureManager: {fileID: 319897188}
+  inputManager: {fileID: 1916978682}
+--- !u!4 &1201162922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201162920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 921.5549, y: 242.63506, z: 2.1080856}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1204572181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17042,7 +17119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1475595961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25270,3 +25347,4 @@ SceneRoots:
   - {fileID: 1022635922}
   - {fileID: 1377904272}
   - {fileID: 463315955}
+  - {fileID: 1201162922}

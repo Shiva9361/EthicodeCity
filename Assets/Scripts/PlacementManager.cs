@@ -11,6 +11,8 @@ public class PlacementManager : MonoBehaviour
     private Dictionary<Vector3Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector3Int, StructureModel>();
     private Dictionary<Vector3Int, StructureModel> structureDictionary = new Dictionary<Vector3Int, StructureModel>();
 
+    private GameObject selectedPrefab;
+
     private void Start()
     {
         placementGrid = new Grid(width, height);
@@ -73,6 +75,28 @@ public class PlacementManager : MonoBehaviour
         temporaryRoadobjects.Add(position, structure);
     }
 
+    internal void RemoveSelectedPrefab()
+    {
+        if (selectedPrefab != null)
+        {
+            Destroy(selectedPrefab);
+        }
+    }
+    internal void PlaceCurrentSelection(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
+    {
+        if (selectedPrefab != null)
+        {
+            Destroy(selectedPrefab);
+            Debug.Log("Destroying selected prefab");
+        }
+        selectedPrefab = CreateANewStructureModelGameObject(position, scale, structurePrefab, type);
+    }
+
+    internal void ReplaceCurrentSelection(Vector3Int position)
+    {
+        selectedPrefab.transform.localPosition = position;
+    }
+
     internal List<Vector3Int> GetNeighboursOfTypeFor(Vector3Int position, CellType type)
     {
         var neighbourVertices = placementGrid.GetAdjacentCellsOfType(position.x, position.z, type);
@@ -93,6 +117,17 @@ public class PlacementManager : MonoBehaviour
         var structureModel = structure.AddComponent<StructureModel>();
         structureModel.CreateModel(structurePrefab);
         return structureModel;
+    }
+
+    private GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
+    {
+        GameObject structure = new GameObject(type.ToString());
+        structure.transform.SetParent(transform);
+        structure.transform.localPosition = position;
+        structure.transform.localScale = scale;
+        var structureModel = structure.AddComponent<StructureModel>();
+        structureModel.CreateModel(structurePrefab);
+        return structure;
     }
 
     internal List<Vector3Int> GetPathBetween(Vector3Int startPosition, Vector3Int endPosition)

@@ -31,7 +31,7 @@ public class StructureManager : MonoBehaviour
     //     }
     // }
 
-    public void PlaceHouseBuffered(Vector3Int position, int houseNum)
+    internal void PlaceHouseBuffered(Vector3Int position, int houseNum)
     {
         if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
         {
