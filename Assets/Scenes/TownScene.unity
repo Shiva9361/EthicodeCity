@@ -6981,6 +6981,7 @@ MonoBehaviour:
   placeRoadButton: {fileID: 504028732}
   placeSpecialButton: {fileID: 1405492519}
   placeBigStructureButton: {fileID: 2142958472}
+  placeHouseButton: {fileID: 1325324658}
   placeHouseButtons:
   - {fileID: 2046492757}
   - {fileID: 1068286669}
@@ -7818,7 +7819,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774248382}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &774248385
 Camera:
   m_ObjectHideFlags: 0
@@ -8673,7 +8674,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847165682}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &847165685
 Camera:
   m_ObjectHideFlags: 0
@@ -11090,7 +11091,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022635918}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1022635921
 Camera:
   m_ObjectHideFlags: 0
@@ -16121,7 +16122,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377904268}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1377904271
 Camera:
   m_ObjectHideFlags: 0
