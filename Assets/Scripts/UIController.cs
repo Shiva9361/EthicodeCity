@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Action OnRoadPlacement, OnSpecialPlacement, OnBigStructurePlacement;
+    public Action OnRoadPlacement, OnSpecialPlacement, OnBigStructurePlacement, OnClear;
 
     public Action<int> OnHousePlacement;
-    public Button placeRoadButton, placeSpecialButton, placeBigStructureButton;
+    public Button placeRoadButton, placeSpecialButton, placeBigStructureButton, placeHouseButton;
 
     public Button[] placeHouseButtons;
 
@@ -27,13 +26,13 @@ public class UIController : MonoBehaviour
             OnRoadPlacement?.Invoke();
 
         });
-        // placeHouseButton.onClick.AddListener(() =>
-        // {
-        //     ResetButtonColor();
-        //     ModifyOutline(placeHouse1Button);
-        //     OnHousePlacement?.Invoke();
 
-        // });
+        placeHouseButton.onClick.AddListener(() =>
+        {
+            ResetButtonColor();
+            OnClear?.Invoke();
+
+        });
         for (int i = 0; i < placeHouseButtons.Length; i++)
         {
             int index = i;
