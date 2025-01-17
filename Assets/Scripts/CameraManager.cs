@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class CameraDrag : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     public float dragSpeed = 2f; // Speed of the camera movement
     private Vector3 dragOrigin; // Stores the initial mouse position
     private bool isDragging = false;
+
+    public bool cameraDragEnabled = true;
 
     void Update()
     {
@@ -13,7 +15,7 @@ public class CameraDrag : MonoBehaviour
 
     void HandleCameraDrag()
     {
-        if (Input.GetMouseButtonDown(0)) // Left mouse button pressed
+        if (Input.GetMouseButtonDown(0) && cameraDragEnabled) // Left mouse button pressed
         {
             dragOrigin = Input.mousePosition;
             isDragging = true;
@@ -24,7 +26,7 @@ public class CameraDrag : MonoBehaviour
             isDragging = false;
         }
 
-        if (isDragging)
+        if (isDragging && cameraDragEnabled)
         {
             Vector3 currentMousePosition = Input.mousePosition;
             Vector3 difference = dragOrigin - currentMousePosition;

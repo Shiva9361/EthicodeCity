@@ -1,12 +1,8 @@
-﻿using SVS;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public CameraMovement cameraMovement;
+    public CameraManager cameraManager;
     public RoadManager roadManager;
     public InputManager inputManager;
 
@@ -27,36 +23,41 @@ public class GameManager : MonoBehaviour
     private void BigStructurePlacementHandler()
     {
         ClearInputActions();
+        cameraManager.cameraDragEnabled = false;
         inputManager.OnMouseClick += structureManager.PlaceBigStructure;
     }
 
     private void SpecialPlacementHandler()
     {
         ClearInputActions();
+        cameraManager.cameraDragEnabled = false;
         inputManager.OnMouseClick += structureManager.PlaceSpecial;
     }
 
     private void HousePlacementHandler(int houseNum)
     {
         ClearInputActions();
+        cameraManager.cameraDragEnabled = false;
         inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBuffered(location, houseNum);
     }
 
     private void RoadPlacementHandler()
     {
         ClearInputActions();
-
+        cameraManager.cameraDragEnabled = false;
         inputManager.OnMouseClick += roadManager.PlaceRoad;
         inputManager.OnMouseHold += roadManager.PlaceRoad;
         inputManager.OnMouseUp += roadManager.FinishPlacingRoad;
     }
 
-    private void ClearInputActions()
+    public void ClearInputActions()
     {
         inputManager.OnMouseClick = null;
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
         inputManager.OnMouseUpWithLocation = null;
+        cameraManager.cameraDragEnabled = true;
+
     }
 
 }

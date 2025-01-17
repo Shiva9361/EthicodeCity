@@ -13784,6 +13784,7 @@ MonoBehaviour:
   - {fileID: 2046492757}
   - {fileID: 1068286669}
   - {fileID: 806931380}
+  cameraManager: {fileID: 2044889014}
   placementManager: {fileID: 540532163}
   structureManager: {fileID: 319897188}
   inputManager: {fileID: 1916978682}
@@ -24159,7 +24160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8184718f0378d9940997c24ed8d9bcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMovement: {fileID: 0}
+  cameraManager: {fileID: 2044889014}
   roadManager: {fileID: 2093395483}
   inputManager: {fileID: 1916978682}
   uiController: {fileID: 681313529}
@@ -24424,6 +24425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 1
+  cameraDragEnabled: 1
 --- !u!1 &2046492754
 GameObject:
   m_ObjectHideFlags: 0
@@ -24959,6 +24961,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementManager: {fileID: 540532163}
+  gameManager: {fileID: 2039921795}
+  cameraManager: {fileID: 2044889014}
   temporaryPlacementPositions: []
   roadPositionsToRecheck: []
   roadFixer: {fileID: 2093395485}
