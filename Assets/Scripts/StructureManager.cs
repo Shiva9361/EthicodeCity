@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class StructureManager : MonoBehaviour
 {
@@ -13,6 +15,10 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
+    public TMP_Text[] costs;
+
+    public TMP_Text[] times;
+
     private float[] houseWeights, specialWeights, bigStructureWeights;
 
     private void Start()
@@ -20,6 +26,14 @@ public class StructureManager : MonoBehaviour
         houseWeights = housesPrefabe.Select(prefabStats => prefabStats.weight).ToArray();
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
+        for (int i = 0; i < costs.Length; i++)
+        {
+            costs[i].text = housesPrefabe[i].weight.ToString();
+        }
+        for (int i = 0; i < times.Length; i++)
+        {
+            times[i].text = housesPrefabe[i].time.ToString();
+        }
     }
 
     // public void PlaceHouse(Vector3Int position)
@@ -202,10 +216,13 @@ public struct StructurePrefabWeighted
     public float weight;
     public Vector3 scale;
 
-    public StructurePrefabWeighted(GameObject prefab, float weight)
+    public float time;
+
+    public StructurePrefabWeighted(GameObject prefab, float weight, float time)
     {
         this.prefab = prefab;
         this.weight = weight;
+        this.time = time;
         scale = new Vector3(1, 1, 1);
 
     }
