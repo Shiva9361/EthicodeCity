@@ -1,4 +1,5 @@
-﻿using SVS;
+﻿using NUnit.Framework.Constraints;
+using SVS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,10 +46,28 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum)
+    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum, int placementTime = 10)
     {
         Debug.Log("Placement will occur in 1 minute...");
-        yield return new WaitForSeconds(10);
+        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
+        Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
+        Material oldMaterial = renderer.material;
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        material.color = Color.green;
+
+        for (int i = 0; i < 2 * placementTime; i++)
+        {
+            if (i % 2 == 1)
+            {
+                renderer.material = oldMaterial;
+            }
+            else
+            {
+                renderer.material = material;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+        Destroy(gameObject);
         placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
         inventoryManager.Buy(housesPrefabe[houseNum].weight);
         AudioPlayer.instance.PlayPlacementSound();
