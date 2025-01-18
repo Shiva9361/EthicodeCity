@@ -919,7 +919,7 @@ MonoBehaviour:
     scale: {x: 0.05, y: 0.05, z: 0.05}
   - prefab: {fileID: 1000013721592950, guid: 95c00f442e3cf3643b2062e8e0d0bbd6, type: 3}
     weight: 0.25
-    scale: {x: 0.2, y: 0.2, z: 0.2}
+    scale: {x: 0.05, y: 0.05, z: 0.05}
   specialPrefabs:
   - prefab: {fileID: 8028572972740798329, guid: b4e018779a1b9aa44b2a988c6d8ddfda, type: 3}
     weight: 0.25
@@ -928,9 +928,11 @@ MonoBehaviour:
     weight: 1
     scale: {x: 0, y: 0, z: 0}
   bigStructuresPrefabs:
-  - prefab: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
+  - prefab: {fileID: 1000013721592950, guid: 95c00f442e3cf3643b2062e8e0d0bbd6, type: 3}
     weight: 0
-    scale: {x: 0, y: 0, z: 0}
+    scale: {x: 0.25, y: 0.25, z: 0.25}
+    width: 0
+    height: 0
   placementManager: {fileID: 540532163}
   inventoryManager: {fileID: 1064610194}
 --- !u!4 &319897189
@@ -1706,15 +1708,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e70a10840aa5e40833719b578def1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  structureManager: {fileID: 0}
   placeRoadButton: {fileID: 504028732}
   placeSpecialButton: {fileID: 1405492519}
-  placeBigStructureButton: {fileID: 2142958472}
   placeHouseButton: {fileID: 1325324658}
   placeHouseButtons:
   - {fileID: 2046492757}
   - {fileID: 1068286669}
   - {fileID: 806931380}
   - {fileID: 38608220}
+  placeBigStructureButtons: []
   outlineColor: {r: 0.8931636, g: 0.0047169924, b: 1, a: 1}
 --- !u!114 &681313530
 MonoBehaviour:
@@ -4018,7 +4021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1475595961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5105,7 +5108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2103628853
 RectTransform:
   m_ObjectHideFlags: 0

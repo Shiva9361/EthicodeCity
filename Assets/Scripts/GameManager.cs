@@ -20,11 +20,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void BigStructurePlacementHandler()
+    private void BigStructurePlacementHandler(int index, int width, int height)
     {
         ClearInputActions();
         cameraManager.cameraDragEnabled = false;
-        inputManager.OnMouseClick += structureManager.PlaceBigStructure;
+        inputManager.OnMouseClick += (location) => structureManager.PlaceBigStructure(location, width, height, index);
     }
 
     private void SpecialPlacementHandler()
