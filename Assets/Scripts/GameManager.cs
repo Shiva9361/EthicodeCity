@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour
     {
         ClearInputActions();
         cameraManager.cameraDragEnabled = false;
-        inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBuffered(location, houseNum);
+        // inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBuffered(location, houseNum);
+        inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBufferedDelayed(location, houseNum);
     }
 
     private void RoadPlacementHandler()

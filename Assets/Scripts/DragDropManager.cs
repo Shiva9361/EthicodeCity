@@ -53,7 +53,8 @@ public class DragDropManager : MonoBehaviour
 
             if (pos != null)
             {
-                structureManager.PlaceHouseBuffered(pos.Value, currentPrefabIndex);
+                // structureManager.PlaceHouseBuffered(pos.Value, currentPrefabIndex);
+                structureManager.PlaceHouseBufferedDelayed(pos.Value, currentPrefabIndex);
             }
         }
         if (isDragging)

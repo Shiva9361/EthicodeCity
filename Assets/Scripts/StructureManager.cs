@@ -31,6 +31,32 @@ public class StructureManager : MonoBehaviour
     //     }
     // }
 
+
+
+    internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum)
+    {
+        if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
+        {
+            StartCoroutine(DelayedPlacement(position, houseNum));
+        }
+        else if (!inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
+        {
+            Debug.Log("Not enough money");
+        }
+    }
+
+    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum)
+    {
+        Debug.Log("Placement will occur in 1 minute...");
+        yield return new WaitForSeconds(10);
+        placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
+        inventoryManager.Buy(housesPrefabe[houseNum].weight);
+        AudioPlayer.instance.PlayPlacementSound();
+        Debug.Log("Placement completed.");
+    }
+
+
+
     internal void PlaceHouseBuffered(Vector3Int position, int houseNum)
     {
         if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
