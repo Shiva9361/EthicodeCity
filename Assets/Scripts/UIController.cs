@@ -5,19 +5,22 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Action OnRoadPlacement, OnSpecialPlacement, OnBigStructurePlacement, OnClear;
+    public Action OnRoadPlacement, OnSpecialPlacement, OnClear;
 
     public Action<int> OnHousePlacement;
-    public Button placeRoadButton, placeSpecialButton, placeBigStructureButton, placeHouseButton;
 
-    public Button[] placeHouseButtons;
+    public StructureManager structureManager;
+    public Action<int, int, int> OnBigStructurePlacement;
+    public Button placeRoadButton, placeSpecialButton, placeHouseButton;
+
+    public Button[] placeHouseButtons, placeBigStructureButtons;
 
     public Color outlineColor;
     List<Button> buttonList;
 
     private void Start()
     {
-        buttonList = new List<Button> { placeRoadButton, placeSpecialButton, placeBigStructureButton };
+        buttonList = new List<Button> { placeRoadButton, placeSpecialButton, };
 
         placeRoadButton.onClick.AddListener(() =>
         {
@@ -51,13 +54,18 @@ public class UIController : MonoBehaviour
             OnSpecialPlacement?.Invoke();
 
         });
-        placeBigStructureButton.onClick.AddListener(() =>
+        for (int i = 0; i < placeBigStructureButtons.Length; i++)
         {
-            ResetButtonColor();
-            ModifyOutline(placeBigStructureButton);
-            OnBigStructurePlacement?.Invoke();
+            int index = i;
+            placeBigStructureButtons[index].onClick.AddListener(() =>
+            {
+                ResetButtonColor();
+                Debug.Log(index);
+                ModifyOutline(placeBigStructureButtons[index]);
+                OnBigStructurePlacement?.Invoke(index, structureManager.bigStructuresPrefabs[index].width, structureManager.bigStructuresPrefabs[index].height);
 
-        });
+            });
+        }
     }
 
     private void ModifyOutline(Button button)

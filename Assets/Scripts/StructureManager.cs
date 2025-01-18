@@ -1,14 +1,14 @@
-﻿using NUnit.Framework.Constraints;
-using SVS;
+﻿using SVS;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
 {
-    public StructurePrefabWeighted[] housesPrefabe, specialPrefabs, bigStructuresPrefabs;
+    public StructurePrefabWeighted[] housesPrefabe, specialPrefabs;
+
+    public StructurePrefabWH[] bigStructuresPrefabs;
     public PlacementManager placementManager;
 
     public InventoryManager inventoryManager;
@@ -91,14 +91,12 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    internal void PlaceBigStructure(Vector3Int position)
+    internal void PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex)
     {
-        int width = 2;
-        int height = 2;
         if (CheckBigStructure(position, width, height))
         {
-            int randomIndex = GetRandomWeightedIndex(bigStructureWeights);
-            placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[randomIndex].scale, bigStructuresPrefabs[randomIndex].prefab, CellType.Structure, width, height);
+            Debug.Log("Placing big structure at" + position);
+            placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[bigStructureIndex].scale, bigStructuresPrefabs[bigStructureIndex].prefab, CellType.Structure, width, height);
             AudioPlayer.instance.PlayPlacementSound();
         }
     }
@@ -208,7 +206,30 @@ public struct StructurePrefabWeighted
     {
         this.prefab = prefab;
         this.weight = weight;
-        this.scale = new Vector3(1, 1, 1);
+        scale = new Vector3(1, 1, 1);
+
+    }
+}
+
+
+[Serializable]
+public struct StructurePrefabWH
+{
+    public GameObject prefab;
+    [Range(1000, 10_000)]
+    public float weight;
+    public Vector3 scale;
+
+    public int width;
+    public int height;
+
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height)
+    {
+        this.prefab = prefab;
+        this.weight = weight;
+        this.width = width;
+        this.height = height;
+        scale = new Vector3(1, 1, 1);
 
     }
 }
