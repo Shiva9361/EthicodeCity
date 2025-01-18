@@ -117,7 +117,7 @@ public class PlacementManager : MonoBehaviour
         return structureModel;
     }
 
-    private GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
+    internal GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
     {
         GameObject structure = new GameObject(type.ToString());
         structure.transform.SetParent(transform);
