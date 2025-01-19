@@ -34,7 +34,6 @@ public class DragDropManager : MonoBehaviour
                 {
                     currentPrefabIndex = index;
                     placementManager.PlaceCurrentSelection(pos.Value, prefabs[index].scale, prefabs[index].prefab, CellType.Structure);
-                    cameraManager.cameraDragEnabled = false;
                 }
             });
             trigger.triggers.Add(entry);
@@ -49,7 +48,7 @@ public class DragDropManager : MonoBehaviour
             isDragging = false;
             placementManager.RemoveSelectedPrefab();
             Vector3Int? pos = inputManager.RaycastGround();
-            cameraManager.cameraDragEnabled = true;
+            // cameraManager.cameraDragEnabled = true;
 
             if (pos != null)
             {
