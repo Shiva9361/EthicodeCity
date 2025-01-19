@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class StructureManager : MonoBehaviour
@@ -15,9 +14,13 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
-    public TMP_Text[] costs;
+    public TMP_Text[] housingPrices;
 
-    public TMP_Text[] times;
+    public TMP_Text[] bigBuildingCosts;
+
+    public TMP_Text[] houseTimes;
+
+    public TMP_Text[] bigBuildingTimes;
 
     private float[] houseWeights, specialWeights, bigStructureWeights;
 
@@ -26,13 +29,21 @@ public class StructureManager : MonoBehaviour
         houseWeights = housesPrefabe.Select(prefabStats => prefabStats.weight).ToArray();
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        for (int i = 0; i < costs.Length; i++)
+        for (int i = 0; i < housingPrices.Length; i++)
         {
-            costs[i].text = housesPrefabe[i].weight.ToString();
+            housingPrices[i].text = "$" + housesPrefabe[i].weight.ToString();
         }
-        for (int i = 0; i < times.Length; i++)
+        for (int i = 0; i < houseTimes.Length; i++)
         {
-            times[i].text = housesPrefabe[i].time.ToString();
+            houseTimes[i].text = housesPrefabe[i].time.ToString() + "s";
+        }
+        for (int i = 0; i < bigBuildingCosts.Length; i++)
+        {
+            bigBuildingCosts[i].text = "$" + bigStructuresPrefabs[i].weight.ToString();
+        }
+        for (int i = 0; i < bigBuildingTimes.Length; i++)
+        {
+            bigBuildingTimes[i].text = bigStructuresPrefabs[i].time.ToString() + "s";
         }
     }
 
@@ -60,14 +71,14 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum, int placementTime = 10)
+    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum)
     {
-        Debug.Log("Placement will occur in 1 minute...");
+        float placementTime = housesPrefabe[houseNum].time;
         GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
         Material oldMaterial = renderer.material;
         Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        material.color = Color.green;
+        material.color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage); ;
 
         for (int i = 0; i < 2 * placementTime; i++)
         {
@@ -218,11 +229,15 @@ public struct StructurePrefabWeighted
 
     public float time;
 
-    public StructurePrefabWeighted(GameObject prefab, float weight, float time)
+    [Range(0, 1)]
+    public float aiPercentage;
+
+    public StructurePrefabWeighted(GameObject prefab, float weight, float time, float aiPercentage)
     {
         this.prefab = prefab;
         this.weight = weight;
         this.time = time;
+        this.aiPercentage = aiPercentage;
         scale = new Vector3(1, 1, 1);
 
     }
@@ -240,12 +255,19 @@ public struct StructurePrefabWH
     public int width;
     public int height;
 
-    public StructurePrefabWH(GameObject prefab, float weight, int width, int height)
+    public int time;
+
+    [Range(0, 1)]
+    public float aiPercentage;
+
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage)
     {
         this.prefab = prefab;
         this.weight = weight;
         this.width = width;
         this.height = height;
+        this.time = time;
+        this.aiPercentage = aiPercentage;
         scale = new Vector3(1, 1, 1);
 
     }

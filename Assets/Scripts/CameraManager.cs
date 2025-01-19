@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraManager : MonoBehaviour
 {
@@ -7,8 +8,24 @@ public class CameraManager : MonoBehaviour
     private Vector3 dragOrigin; // Stores the initial mouse position
     private bool isDragging = false;
 
+    public Button[] disableButtons;
+
+    public Button[] enableButtons;
+
+    [SerializeField]
     public bool cameraDragEnabled = true;
 
+    void Start()
+    {
+        for (int i = 0; i < disableButtons.Length; i++)
+        {
+            disableButtons[i].onClick.AddListener(() => cameraDragEnabled = false);
+        }
+        for (int i = 0; i < enableButtons.Length; i++)
+        {
+            enableButtons[i].onClick.AddListener(() => cameraDragEnabled = true);
+        }
+    }
     void Update()
     {
         HandleCameraDrag();

@@ -23,21 +23,21 @@ public class GameManager : MonoBehaviour
     private void BigStructurePlacementHandler(int index, int width, int height)
     {
         ClearInputActions();
-        cameraManager.cameraDragEnabled = false;
+
         inputManager.OnMouseClick += (location) => structureManager.PlaceBigStructure(location, width, height, index);
     }
 
     private void SpecialPlacementHandler()
     {
         ClearInputActions();
-        cameraManager.cameraDragEnabled = false;
+
         inputManager.OnMouseClick += structureManager.PlaceSpecial;
     }
 
     private void HousePlacementHandler(int houseNum)
     {
         ClearInputActions();
-        cameraManager.cameraDragEnabled = false;
+
         // inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBuffered(location, houseNum);
         inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBufferedDelayed(location, houseNum);
     }
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseHold = null;
         inputManager.OnMouseUp = null;
         inputManager.OnMouseUpWithLocation = null;
-        cameraManager.cameraDragEnabled = true;
+        // cameraManager.cameraDragEnabled = true;
 
     }
 
