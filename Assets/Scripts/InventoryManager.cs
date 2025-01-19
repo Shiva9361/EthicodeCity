@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public int Population;
+    public int AiCredits;
     public float Money;
 
     public Text moneyText;
