@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class StructureManager : MonoBehaviour
@@ -28,11 +27,11 @@ public class StructureManager : MonoBehaviour
         bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         for (int i = 0; i < costs.Length; i++)
         {
-            costs[i].text = housesPrefabe[i].weight.ToString();
+            costs[i].text = "$" + housesPrefabe[i].weight.ToString();
         }
         for (int i = 0; i < times.Length; i++)
         {
-            times[i].text = housesPrefabe[i].time.ToString();
+            times[i].text = housesPrefabe[i].time.ToString() + "s";
         }
     }
 
@@ -60,14 +59,14 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum, int placementTime = 10)
+    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum)
     {
-        Debug.Log("Placement will occur in 1 minute...");
+        float placementTime = housesPrefabe[houseNum].time;
         GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
         Material oldMaterial = renderer.material;
         Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        material.color = Color.green;
+        material.color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage); ;
 
         for (int i = 0; i < 2 * placementTime; i++)
         {
@@ -218,11 +217,15 @@ public struct StructurePrefabWeighted
 
     public float time;
 
-    public StructurePrefabWeighted(GameObject prefab, float weight, float time)
+    [Range(0, 1)]
+    public float aiPercentage;
+
+    public StructurePrefabWeighted(GameObject prefab, float weight, float time, float aiPercentage)
     {
         this.prefab = prefab;
         this.weight = weight;
         this.time = time;
+        this.aiPercentage = aiPercentage;
         scale = new Vector3(1, 1, 1);
 
     }
