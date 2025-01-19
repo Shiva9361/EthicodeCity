@@ -14,9 +14,13 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
-    public TMP_Text[] costs;
+    public TMP_Text[] housingPrices;
 
-    public TMP_Text[] times;
+    public TMP_Text[] bigBuildingCosts;
+
+    public TMP_Text[] houseTimes;
+
+    public TMP_Text[] bigBuildingTimes;
 
     private float[] houseWeights, specialWeights, bigStructureWeights;
 
@@ -25,13 +29,21 @@ public class StructureManager : MonoBehaviour
         houseWeights = housesPrefabe.Select(prefabStats => prefabStats.weight).ToArray();
         specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
         bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        for (int i = 0; i < costs.Length; i++)
+        for (int i = 0; i < housingPrices.Length; i++)
         {
-            costs[i].text = "$" + housesPrefabe[i].weight.ToString();
+            housingPrices[i].text = "$" + housesPrefabe[i].weight.ToString();
         }
-        for (int i = 0; i < times.Length; i++)
+        for (int i = 0; i < houseTimes.Length; i++)
         {
-            times[i].text = housesPrefabe[i].time.ToString() + "s";
+            houseTimes[i].text = housesPrefabe[i].time.ToString() + "s";
+        }
+        for (int i = 0; i < bigBuildingCosts.Length; i++)
+        {
+            bigBuildingCosts[i].text = "$" + bigStructuresPrefabs[i].weight.ToString();
+        }
+        for (int i = 0; i < bigBuildingTimes.Length; i++)
+        {
+            bigBuildingTimes[i].text = bigStructuresPrefabs[i].time.ToString() + "s";
         }
     }
 
@@ -243,12 +255,19 @@ public struct StructurePrefabWH
     public int width;
     public int height;
 
-    public StructurePrefabWH(GameObject prefab, float weight, int width, int height)
+    public int time;
+
+    [Range(0, 1)]
+    public float aiPercentage;
+
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage)
     {
         this.prefab = prefab;
         this.weight = weight;
         this.width = width;
         this.height = height;
+        this.time = time;
+        this.aiPercentage = aiPercentage;
         scale = new Vector3(1, 1, 1);
 
     }
