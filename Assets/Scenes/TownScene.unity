@@ -6559,26 +6559,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906ead65c64b2ef409fec1a135bd4d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
-  - prefab: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
-    weight: 0
-    scale: {x: 0.05, y: 0.05, z: 0.05}
-    time: 0
-    aiPercentage: 0
-  - prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
-    weight: 0
-    scale: {x: 0.05, y: 0.05, z: 0.05}
-    time: 0
-    aiPercentage: 0
-  - prefab: {fileID: 100000, guid: 35807f23e7899e541b60b2fb2bbb51ef, type: 3}
-    weight: 0
-    scale: {x: 0.05, y: 0.05, z: 0.05}
-    time: 0
-    aiPercentage: 0
   buttons:
   - {fileID: 2046492757}
   - {fileID: 1068286669}
   - {fileID: 806931380}
+  bigStructureButtons:
+  - {fileID: 199808858}
+  - {fileID: 1781859428}
+  - {fileID: 707373546}
   cameraManager: {fileID: 2044889014}
   placementManager: {fileID: 540532163}
   structureManager: {fileID: 319897188}
