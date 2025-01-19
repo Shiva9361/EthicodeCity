@@ -8,7 +8,6 @@ public class UIController : MonoBehaviour
     public Action OnRoadPlacement, OnSpecialPlacement, OnClear;
 
     public Action<int> OnHousePlacement;
-
     public StructureManager structureManager;
     public Action<int, int, int> OnBigStructurePlacement;
     public Button placeRoadButton, placeSpecialButton, placeHouseButton;

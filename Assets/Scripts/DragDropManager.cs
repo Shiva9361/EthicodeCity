@@ -4,21 +4,34 @@ using UnityEngine.EventSystems;
 
 public class DragDropManager : MonoBehaviour
 {
-    public StructurePrefabWeighted[] prefabs;
-    public Button[] buttons;
+    private StructurePrefabWeighted[] prefabs;
+
+    private StructurePrefabWH[] bigStructuresPrefabs;
+    private Button[] buttons;
+
+    private Button[] bigStructureButtons;
 
     public CameraManager cameraManager;
 
     public PlacementManager placementManager;
 
     public StructureManager structureManager;
+
+    public UIController uiController;
     bool isDragging = false;
+
+    bool isBigStructure = false;
 
     int currentPrefabIndex = 0;
 
     public InputManager inputManager;
     void Start()
     {
+        bigStructuresPrefabs = structureManager.bigStructuresPrefabs;
+        prefabs = structureManager.housesPrefabe;
+        buttons = uiController.placeHouseButtons;
+        bigStructureButtons = uiController.placeBigStructureButtons;
+
         for (int i = 0; i < buttons.Length; i++)
         {
             int index = i;
@@ -34,7 +47,26 @@ public class DragDropManager : MonoBehaviour
                 {
                     currentPrefabIndex = index;
                     placementManager.PlaceCurrentSelection(pos.Value, prefabs[index].scale, prefabs[index].prefab, CellType.Structure);
-                    cameraManager.cameraDragEnabled = false;
+                }
+            });
+            trigger.triggers.Add(entry);
+        }
+        for (int i = 0; i < bigStructureButtons.Length; i++)
+        {
+            int index = i;
+            EventTrigger trigger = bigStructureButtons[index].gameObject.AddComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((data) =>
+            {
+                isDragging = true;
+                Vector3Int? pos = inputManager.RaycastGround();
+
+                if (pos != null)
+                {
+                    currentPrefabIndex = index;
+                    isBigStructure = true;
+                    placementManager.PlaceCurrentSelection(pos.Value, bigStructuresPrefabs[index].scale, bigStructuresPrefabs[index].prefab, CellType.Structure);
                 }
             });
             trigger.triggers.Add(entry);
@@ -49,9 +81,14 @@ public class DragDropManager : MonoBehaviour
             isDragging = false;
             placementManager.RemoveSelectedPrefab();
             Vector3Int? pos = inputManager.RaycastGround();
-            cameraManager.cameraDragEnabled = true;
+            // cameraManager.cameraDragEnabled = true;
 
-            if (pos != null)
+            if (pos != null && isBigStructure)
+            {
+                structureManager.PlaceBigStructure(pos.Value, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height, currentPrefabIndex);
+                isBigStructure = false;
+            }
+            else if (pos != null)
             {
                 // structureManager.PlaceHouseBuffered(pos.Value, currentPrefabIndex);
                 structureManager.PlaceHouseBufferedDelayed(pos.Value, currentPrefabIndex);

@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Data.Common;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PlacementManager : MonoBehaviour
 {
     public int width, height;
+    public StructureInfoManager structureInfoManager;
+    public InventoryManager inventoryManager;
+
+    public GameObject detailsPanel;
     Grid placementGrid;
 
     private Dictionary<Vector3Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector3Int, StructureModel>();
@@ -30,9 +38,10 @@ public class PlacementManager : MonoBehaviour
         return false;
     }
 
-    internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1)
+    internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1, int id = -1)
     {
-        StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type);
+        StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type, id);
+
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
@@ -40,6 +49,7 @@ public class PlacementManager : MonoBehaviour
                 var newPosition = position + new Vector3Int(x, 0, z);
                 placementGrid[newPosition.x, newPosition.z] = type;
                 structureDictionary.Add(newPosition, structure);
+                structure.GameObject().GetComponent<StructureClickController>().positions.Add(newPosition);
                 DestroyNatureAt(newPosition);
             }
         }
@@ -85,7 +95,6 @@ public class PlacementManager : MonoBehaviour
         if (selectedPrefab != null)
         {
             Destroy(selectedPrefab);
-            Debug.Log("Destroying selected prefab");
         }
         selectedPrefab = CreateANewStructureModelGameObject(position, scale, structurePrefab, type);
     }
@@ -106,7 +115,7 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
-    private StructureModel CreateANewStructureModel(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
+    private StructureModel CreateANewStructureModel(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int id = -1)
     {
         GameObject structure = new GameObject(type.ToString());
         structure.transform.SetParent(transform);
@@ -114,10 +123,31 @@ public class PlacementManager : MonoBehaviour
         structure.transform.localScale = scale;
         var structureModel = structure.AddComponent<StructureModel>();
         structureModel.CreateModel(structurePrefab);
+
+        BoxCollider collider = structure.GetComponent<BoxCollider>();
+        if (type == CellType.Road)
+            return structureModel;
+        if (collider == null)
+        {
+            collider = structure.AddComponent<BoxCollider>();
+        }
+        collider.size = structurePrefab.GetComponent<Renderer>().bounds.size;
+
+        structure.AddComponent<StructureClickController>();
+        structure.GetComponent<StructureClickController>().structureInfoManager = structureInfoManager;
+        structure.GetComponent<StructureClickController>().id = id;
+        structure.GetComponent<StructureClickController>().detailsPanel = detailsPanel;
+        structure.GetComponent<StructureClickController>().inventoryManager = inventoryManager;
+        structure.GetComponent<StructureClickController>().placementManager = this;
+        structure.GetComponent<StructureClickController>().positions = new HashSet<Vector3Int>();
+
+        Debug.Log("ID: " + id);
+        // structure.layer = LayerMask.NameToLayer("Building");
+
         return structureModel;
     }
 
-    internal GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type)
+    internal GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int id = -1)
     {
         GameObject structure = new GameObject(type.ToString());
         structure.transform.SetParent(transform);
@@ -125,6 +155,20 @@ public class PlacementManager : MonoBehaviour
         structure.transform.localScale = scale;
         var structureModel = structure.AddComponent<StructureModel>();
         structureModel.CreateModel(structurePrefab);
+
+        if (structure.GetComponent<BoxCollider>() == null)
+        {
+            structure.AddComponent<BoxCollider>();
+        }
+
+        structure.AddComponent<StructureClickController>();
+        structure.GetComponent<StructureClickController>().structureInfoManager = structureInfoManager;
+        structure.GetComponent<StructureClickController>().id = id;
+        structure.GetComponent<StructureClickController>().detailsPanel = detailsPanel;
+        structure.GetComponent<StructureClickController>().inventoryManager = inventoryManager;
+        structure.GetComponent<StructureClickController>().placementManager = this;
+        structure.GetComponent<StructureClickController>().positions = new HashSet<Vector3Int>();
+
         return structure;
     }
 
@@ -167,4 +211,11 @@ public class PlacementManager : MonoBehaviour
         else if (structureDictionary.ContainsKey(position))
             structureDictionary[position].SwapModel(newModel, rotation);
     }
+
+    public void ClearLocation(Vector3Int location)
+    {
+        structureDictionary.Remove(location);
+        placementGrid[location.x, location.z] = CellType.Empty;
+    }
+
 }
