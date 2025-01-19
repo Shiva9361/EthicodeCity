@@ -74,7 +74,7 @@ public class StructureManager : MonoBehaviour
     private IEnumerator DelayedPlacement(Vector3Int position, int houseNum)
     {
         float placementTime = housesPrefabe[houseNum].time;
-        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
+        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, houseNum);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
         Material oldMaterial = renderer.material;
         Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
@@ -93,7 +93,7 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-        placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
+        placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum);
         inventoryManager.Buy(housesPrefabe[houseNum].weight);
         AudioPlayer.instance.PlayPlacementSound();
         Debug.Log("Placement completed.");
@@ -106,7 +106,7 @@ public class StructureManager : MonoBehaviour
         if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
         {
 
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, houseNum);
             inventoryManager.Buy(housesPrefabe[houseNum].weight);
             AudioPlayer.instance.PlayPlacementSound();
         }

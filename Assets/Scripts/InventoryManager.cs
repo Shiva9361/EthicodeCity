@@ -15,4 +15,9 @@ public class InventoryManager : MonoBehaviour
     {
         Money -= cost;
     }
+
+    public void AddMoney(float money)
+    {
+        Money += money;
+    }
 }

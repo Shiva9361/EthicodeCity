@@ -18,7 +18,10 @@ public class Switch : MonoBehaviour
             int index = i;
             Buttons[index].onClick.AddListener(() =>
             {
-                GameObjects[index].SetActive(false);
+                for (int j = 0; j < GameObjects.Length; j++)
+                {
+                    GameObjects[j].SetActive(false);
+                }
                 OtherGameObjects[index].SetActive(true);
             });
         }
