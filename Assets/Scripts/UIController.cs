@@ -38,12 +38,7 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < placeHouseButtons.Length; i++)
         {
             int index = i;
-            placeHouseButtons[index].onClick.AddListener(() =>
-            {
-                ResetButtonColor();
-                ModifyOutline(placeHouseButtons[index]);
-                OnHousePlacement?.Invoke(index);
-            });
+
         }
 
         placeSpecialButton.onClick.AddListener(() =>
@@ -80,5 +75,15 @@ public class UIController : MonoBehaviour
         {
             button.GetComponent<Outline>().enabled = false;
         }
+    }
+
+    public void AddButton(Button button, int id)
+    {
+        button.onClick.AddListener(() =>
+            {
+                ResetButtonColor();
+                Debug.Log(id);
+                OnHousePlacement?.Invoke(id);
+            });
     }
 }

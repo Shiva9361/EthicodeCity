@@ -19,12 +19,12 @@ public class StructureClickController : MonoBehaviour
     {
         StructureInfo info;
         structureInfoManager.structureInfoDictionary.TryGetValue(id, out info);
-        Debug.Log("Cost: " + info.cost + " Time: " + info.time);
-        UpdateDetailsPanel(info.cost, info.time, info.image);
+        Debug.Log("Cost: " + info.weightedPrefab.weight + " Time: " + info.weightedPrefab.time);
+        UpdateDetailsPanel(info.weightedPrefab.weight, info.weightedPrefab.time, info.image);
         detailsPanel.SetActive(true);
     }
 
-    internal void UpdateDetailsPanel(int cost, int time, RenderTexture image)
+    internal void UpdateDetailsPanel(float cost, float time, RenderTexture image)
     {
         detailsPanel.SetActive(true);
         detailsPanel.transform.Find("Cost").GetComponent<TMP_Text>().text = "$" + cost;

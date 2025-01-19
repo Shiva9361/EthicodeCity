@@ -6,15 +6,21 @@ public class StructureInfoManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public StructureInfo[] buildingStructureInfos;
+    public StructureManager structureManager;
+
+    public StructurePrefabWeighted[] structurePrefabWeighted;
 
     public Dictionary<int, StructureInfo> structureInfoDictionary = new Dictionary<int, StructureInfo>();
 
     private void Start()
     {
+        structurePrefabWeighted = new StructurePrefabWeighted[buildingStructureInfos.Length];
         foreach (StructureInfo structureInfo in buildingStructureInfos)
         {
             structureInfoDictionary.Add(structureInfo.id, structureInfo);
+            structurePrefabWeighted[structureInfo.id] = structureInfo.weightedPrefab;
         }
+        structureManager.housesPrefabe = structurePrefabWeighted;
     }
 
 
@@ -23,18 +29,18 @@ public class StructureInfoManager : MonoBehaviour
 [Serializable]
 public struct StructureInfo
 {
-    public int cost;
-    public int time;
 
     public int id;
 
     public RenderTexture image;
 
-    public StructureInfo(int cost, int time, RenderTexture image, int id)
+
+    public StructurePrefabWeighted weightedPrefab;
+
+    public StructureInfo(RenderTexture image, int id, StructurePrefabWeighted prefabWeighted)
     {
-        this.cost = cost;
-        this.time = time;
         this.image = image;
         this.id = id;
+        weightedPrefab = prefabWeighted;
     }
 }
