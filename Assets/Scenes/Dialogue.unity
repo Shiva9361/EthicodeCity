@@ -990,50 +990,54 @@ MonoBehaviour:
     weight: 5831
     scale: {x: 0.05, y: 0.05, z: 0.05}
     time: 2
+    aiPercentage: 0
   - prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
     weight: 2119
     scale: {x: 0.05, y: 0.05, z: 0.05}
     time: 3
+    aiPercentage: 0
   - prefab: {fileID: 100000, guid: 35807f23e7899e541b60b2fb2bbb51ef, type: 3}
     weight: 1929
     scale: {x: 0.05, y: 0.05, z: 0.05}
     time: 4
+    aiPercentage: 0
   - prefab: {fileID: 1000013721592950, guid: 95c00f442e3cf3643b2062e8e0d0bbd6, type: 3}
     weight: 1813
     scale: {x: 0.05, y: 0.05, z: 0.05}
     time: 2
+    aiPercentage: 0
   specialPrefabs:
   - prefab: {fileID: 8028572972740798329, guid: b4e018779a1b9aa44b2a988c6d8ddfda, type: 3}
     weight: 0.25
     scale: {x: 0, y: 0, z: 0}
     time: 0
+    aiPercentage: 0
   - prefab: {fileID: 3702253504043930072, guid: 838f9b485bb510747a4b89e3cb91e1bd, type: 3}
     weight: 1
     scale: {x: 0, y: 0, z: 0}
     time: 0
+    aiPercentage: 0
   bigStructuresPrefabs:
   - prefab: {fileID: 948695418406959342, guid: b23d8607810fd19468a49ab4b829a8ce, type: 3}
     weight: 0
     scale: {x: 1, y: 1, z: 1}
     width: 2
     height: 2
+    time: 0
+    aiPercentage: 0
   - prefab: {fileID: 1000012260637608, guid: 65feeeb562c61c744aa87b8eb394ffcf, type: 3}
     weight: 0
     scale: {x: 0.25, y: 0.25, z: 0.25}
     width: 4
     height: 6
+    time: 0
+    aiPercentage: 0
   placementManager: {fileID: 540532163}
   inventoryManager: {fileID: 1064610194}
-  costs:
-  - {fileID: 776300857}
-  - {fileID: 1190737605}
-  - {fileID: 323533549}
-  - {fileID: 1649060231}
-  times:
-  - {fileID: 427097375}
-  - {fileID: 543310773}
-  - {fileID: 478730393}
-  - {fileID: 803082642}
+  housingPrices: []
+  bigBuildingCosts: []
+  houseTimes: []
+  bigBuildingTimes: []
 --- !u!4 &319897189
 Transform:
   m_ObjectHideFlags: 0
@@ -1958,6 +1962,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 30
   height: 25
+  structureInfoManager: {fileID: 0}
+  inventoryManager: {fileID: 0}
+  detailsPanel: {fileID: 0}
 --- !u!4 &540532164
 Transform:
   m_ObjectHideFlags: 0
@@ -2292,7 +2299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: 75.002}
+  m_AnchoredPosition: {x: 1, y: 67}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &637051990
@@ -4650,26 +4657,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906ead65c64b2ef409fec1a135bd4d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
-  - prefab: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
-    weight: 0
-    scale: {x: 0.05, y: 0.05, z: 0.05}
-    time: 0
-  - prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
-    weight: 0
-    scale: {x: 0.05, y: 0.05, z: 0.05}
-    time: 0
-  - prefab: {fileID: 100000, guid: 35807f23e7899e541b60b2fb2bbb51ef, type: 3}
-    weight: 0
-    scale: {x: 0.05, y: 0.05, z: 0.05}
-    time: 0
-  buttons:
-  - {fileID: 2046492757}
-  - {fileID: 1068286669}
-  - {fileID: 806931380}
   cameraManager: {fileID: 2044889014}
   placementManager: {fileID: 540532163}
   structureManager: {fileID: 319897188}
+  uiController: {fileID: 0}
   inputManager: {fileID: 1916978682}
 --- !u!4 &1201162922
 Transform:
@@ -4950,8 +4941,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 63.257324, y: 0}
-  m_SizeDelta: {x: 490.1705, y: 266.6666}
+  m_AnchoredPosition: {x: 89.08606, y: 0}
+  m_SizeDelta: {x: 541.83, y: 266.6666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1314377840
 MonoBehaviour:
@@ -6788,7 +6779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 109, y: -10}
+  m_AnchoredPosition: {x: 143, y: -13}
   m_SizeDelta: {x: 458.26, y: 143.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1934467555
@@ -7422,6 +7413,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragRatio: 5
+  parent: {fileID: 0}
+  disableButtons: []
+  enableButtons: []
   cameraDragEnabled: 1
 --- !u!1 &2046492754
 GameObject:
