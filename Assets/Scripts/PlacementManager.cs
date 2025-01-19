@@ -85,7 +85,6 @@ public class PlacementManager : MonoBehaviour
         if (selectedPrefab != null)
         {
             Destroy(selectedPrefab);
-            Debug.Log("Destroying selected prefab");
         }
         selectedPrefab = CreateANewStructureModelGameObject(position, scale, structurePrefab, type);
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraManager : MonoBehaviour
 {
@@ -7,8 +8,26 @@ public class CameraManager : MonoBehaviour
     private Vector3 dragOrigin; // Stores the initial mouse position
     private bool isDragging = false;
 
+    public GameObject parent;
+
+    public Button[] disableButtons;
+
+    public Button[] enableButtons;
+
+    [SerializeField]
     public bool cameraDragEnabled = true;
 
+    void Start()
+    {
+        for (int i = 0; i < disableButtons.Length; i++)
+        {
+            disableButtons[i].onClick.AddListener(() => cameraDragEnabled = false);
+        }
+        for (int i = 0; i < enableButtons.Length; i++)
+        {
+            enableButtons[i].onClick.AddListener(() => cameraDragEnabled = true);
+        }
+    }
     void Update()
     {
         HandleCameraDrag();
@@ -42,9 +61,11 @@ public class CameraManager : MonoBehaviour
             Vector3 currentMousePosition = Input.mousePosition;
             Vector3 difference = dragOrigin - currentMousePosition;
 
-            // Move the camera based on the difference
+            // Convert the difference to world space considering the camera's orientation
             Vector3 move = new Vector3(difference.x, 0, difference.y) * dragSpeed * Time.deltaTime;
-            transform.Translate(move, Space.World);
+            move = parent.transform.TransformDirection(move);
+
+            parent.transform.Translate(move, Space.World);
 
             // Update drag origin
             dragOrigin = currentMousePosition;
