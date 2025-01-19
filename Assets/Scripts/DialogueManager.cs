@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (dialogueText.text == characters[currentCharacterIndex].dialogueLines[currentLineIndex])
             {
