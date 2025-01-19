@@ -6559,17 +6559,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906ead65c64b2ef409fec1a135bd4d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 2046492757}
-  - {fileID: 1068286669}
-  - {fileID: 806931380}
-  bigStructureButtons:
-  - {fileID: 199808858}
-  - {fileID: 1781859428}
-  - {fileID: 707373546}
   cameraManager: {fileID: 2044889014}
   placementManager: {fileID: 540532163}
   structureManager: {fileID: 319897188}
+  uiController: {fileID: 681313529}
   inputManager: {fileID: 1916978682}
 --- !u!4 &1201162922
 Transform:

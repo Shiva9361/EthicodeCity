@@ -7,15 +7,17 @@ public class DragDropManager : MonoBehaviour
     private StructurePrefabWeighted[] prefabs;
 
     private StructurePrefabWH[] bigStructuresPrefabs;
-    public Button[] buttons;
+    private Button[] buttons;
 
-    public Button[] bigStructureButtons;
+    private Button[] bigStructureButtons;
 
     public CameraManager cameraManager;
 
     public PlacementManager placementManager;
 
     public StructureManager structureManager;
+
+    public UIController uiController;
     bool isDragging = false;
 
     bool isBigStructure = false;
@@ -27,6 +29,9 @@ public class DragDropManager : MonoBehaviour
     {
         bigStructuresPrefabs = structureManager.bigStructuresPrefabs;
         prefabs = structureManager.housesPrefabe;
+        buttons = uiController.placeHouseButtons;
+        bigStructureButtons = uiController.placeBigStructureButtons;
+
         for (int i = 0; i < buttons.Length; i++)
         {
             int index = i;
