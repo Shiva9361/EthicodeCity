@@ -1,0 +1,46 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class PanelGenerator : MonoBehaviour
+{
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject panelPrefab;
+    public GameObject parent;
+
+    public UIController uIController;
+
+    public StructureInfoManager structureInfoManager;
+    public DragDropManager dragDropManager;
+
+    private int offset = 100;
+
+    public void AddPanel(int id, StructureInfo structureInfo)
+    {
+        GameObject panel = Instantiate(panelPrefab, parent.transform);
+        uIController.AddButton(panel.transform.Find("PlaceHouseBtn").GetComponent<Button>(), id);
+        dragDropManager.DragDrop(panel.transform.Find("PlaceHouseBtn").GetComponent<Button>(), id);
+
+        panel.transform.Find("Image").GetComponent<RawImage>().texture = structureInfo.image;
+        panel.transform.Find("Cost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.weight;
+        panel.transform.Find("Time").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.time + "s";
+
+        panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset, 0);
+        panel.SetActive(true);
+        offset += 250;
+
+        RectTransform parentRectTransform = parent.GetComponent<RectTransform>();
+        if (offset > parentRectTransform.rect.width)
+        {
+            parentRectTransform.sizeDelta = new Vector2(parentRectTransform.sizeDelta.x + 250, parentRectTransform.sizeDelta.y);
+        }
+    }
+
+    public void Start()
+    {
+        for (int i = 0; i < structureInfoManager.buildingStructureInfos.Length; i++)
+        {
+            AddPanel(i, structureInfoManager.buildingStructureInfos[i]);
+        }
+    }
+}

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class DragDropManager : MonoBehaviour
 {
-    private StructurePrefabWeighted[] prefabs;
+    public StructurePrefabWeighted[] prefabs;
 
     private StructurePrefabWH[] bigStructuresPrefabs;
     private Button[] buttons;
@@ -17,6 +17,8 @@ public class DragDropManager : MonoBehaviour
 
     public StructureManager structureManager;
 
+    public StructureInfoManager structureInfoManager;
+
     public UIController uiController;
     bool isDragging = false;
 
@@ -28,29 +30,18 @@ public class DragDropManager : MonoBehaviour
     void Start()
     {
         bigStructuresPrefabs = structureManager.bigStructuresPrefabs;
-        prefabs = structureManager.housesPrefabe;
+
+        StructureInfo[] structureInfos = structureInfoManager.buildingStructureInfos;
+        prefabs = new StructurePrefabWeighted[structureInfos.Length];
+
+        for (int i = 0; i < structureInfos.Length; i++)
+        {
+            prefabs[i] = structureInfos[i].weightedPrefab;
+        }
+
         buttons = uiController.placeHouseButtons;
         bigStructureButtons = uiController.placeBigStructureButtons;
 
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            int index = i;
-            EventTrigger trigger = buttons[index].gameObject.AddComponent<EventTrigger>();
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerDown;
-            entry.callback.AddListener((data) =>
-            {
-                isDragging = true;
-                Vector3Int? pos = inputManager.RaycastGround();
-
-                if (pos != null)
-                {
-                    currentPrefabIndex = index;
-                    placementManager.PlaceCurrentSelection(pos.Value, prefabs[index].scale, prefabs[index].prefab, CellType.Structure);
-                }
-            });
-            trigger.triggers.Add(entry);
-        }
         for (int i = 0; i < bigStructureButtons.Length; i++)
         {
             int index = i;
@@ -71,6 +62,25 @@ public class DragDropManager : MonoBehaviour
             });
             trigger.triggers.Add(entry);
         }
+    }
+
+    public void DragDrop(Button button, int index)
+    {
+        EventTrigger trigger = button.gameObject.AddComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback.AddListener((data) =>
+        {
+            isDragging = true;
+            Vector3Int? pos = inputManager.RaycastGround();
+
+            if (pos != null)
+            {
+                currentPrefabIndex = index;
+                placementManager.PlaceCurrentSelection(pos.Value, prefabs[index].scale, prefabs[index].prefab, CellType.Structure);
+            }
+        });
+        trigger.triggers.Add(entry);
     }
 
     // Update is called once per frame
