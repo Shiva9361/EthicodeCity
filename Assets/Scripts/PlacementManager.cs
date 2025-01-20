@@ -132,7 +132,7 @@ public class PlacementManager : MonoBehaviour
 
         structure.AddComponent<StructureClickController>();
         structure.GetComponent<StructureClickController>().structureInfoManager = structureInfoManager;
-        structure.GetComponent<StructureClickController>().id = id;
+        structure.GetComponent<StructureClickController>().id = id + structureInfoManager.bigStructureOffset;
         structure.GetComponent<StructureClickController>().detailsPanel = detailsPanel;
         structure.GetComponent<StructureClickController>().inventoryManager = inventoryManager;
         structure.GetComponent<StructureClickController>().placementManager = this;
