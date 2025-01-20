@@ -43,26 +43,26 @@ public class DragDropManager : MonoBehaviour
         buttons = uiController.placeHouseButtons;
         bigStructureButtons = uiController.placeBigStructureButtons;
 
-        for (int i = 0; i < bigStructureButtons.Length; i++)
-        {
-            int index = i;
-            EventTrigger trigger = bigStructureButtons[index].gameObject.AddComponent<EventTrigger>();
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerDown;
-            entry.callback.AddListener((data) =>
-            {
-                isDragging = true;
-                Vector3Int? pos = inputManager.RaycastGround();
+        // for (int i = 0; i < bigStructureButtons.Length; i++)
+        // {
+        //     int index = i;
+        //     EventTrigger trigger = bigStructureButtons[index].gameObject.AddComponent<EventTrigger>();
+        //     EventTrigger.Entry entry = new EventTrigger.Entry();
+        //     entry.eventID = EventTriggerType.PointerDown;
+        //     entry.callback.AddListener((data) =>
+        //     {
+        //         isDragging = true;
+        //         Vector3Int? pos = inputManager.RaycastGround();
 
-                if (pos != null)
-                {
-                    currentPrefabIndex = index;
-                    isBigStructure = true;
-                    placementManager.PlaceCurrentSelection(pos.Value, bigStructuresPrefabs[index].scale, bigStructuresPrefabs[index].prefab, CellType.Structure);
-                }
-            });
-            trigger.triggers.Add(entry);
-        }
+        //         if (pos != null)
+        //         {
+        //             currentPrefabIndex = index;
+        //             isBigStructure = true;
+        //             placementManager.PlaceCurrentSelection(pos.Value, bigStructuresPrefabs[index].scale, bigStructuresPrefabs[index].prefab, CellType.Structure);
+        //         }
+        //     });
+        //     trigger.triggers.Add(entry);
+        // }
     }
 
     public void DragDrop(Button button, int index, bool isAi = false)

@@ -6,21 +6,32 @@ public class StructureInfoManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public StructureInfo[] buildingStructureInfos;
+
+    public StructureInfoMulti[] multiBuildingStructureInfos;
     public StructureManager structureManager;
 
     public StructurePrefabWeighted[] structurePrefabWeighted;
 
-    public Dictionary<int, StructureInfo> structureInfoDictionary = new Dictionary<int, StructureInfo>();
+    public StructurePrefabWH[] bigStructuresPrefabs;
+
+    public Dictionary<int, StructureInfo> structureInfoDictionary = new();
+    public Dictionary<int, StructureInfoMulti> multiStructureInfoDictionary = new();
 
     private void Start()
     {
         structurePrefabWeighted = new StructurePrefabWeighted[buildingStructureInfos.Length];
+        bigStructuresPrefabs = new StructurePrefabWH[multiBuildingStructureInfos.Length];
         foreach (StructureInfo structureInfo in buildingStructureInfos)
         {
             structureInfoDictionary.Add(structureInfo.id, structureInfo);
             structurePrefabWeighted[structureInfo.id] = structureInfo.weightedPrefab;
         }
-        structureManager.housesPrefabe = structurePrefabWeighted;
+        foreach (StructureInfoMulti structureInfo in multiBuildingStructureInfos)
+        {
+            multiStructureInfoDictionary.Add(structureInfo.id, new StructureInfoMulti(structureInfo.image, structureInfo.id, structureInfo.weightedPrefab));
+            bigStructuresPrefabs[structureInfo.id] = structureInfo.weightedPrefab;
+        }
+        structureManager.bigStructuresPrefabs = bigStructuresPrefabs;
     }
 
 
@@ -40,6 +51,23 @@ public struct StructureInfo
         this.image = image;
         this.id = id;
 
+        weightedPrefab = prefabWeighted;
+    }
+}
+
+[Serializable]
+public struct StructureInfoMulti
+{
+
+    public int id;
+
+    public RenderTexture image;
+    public StructurePrefabWH weightedPrefab;
+
+    public StructureInfoMulti(RenderTexture image, int id, StructurePrefabWH prefabWeighted)
+    {
+        this.image = image;
+        this.id = id;
         weightedPrefab = prefabWeighted;
     }
 }

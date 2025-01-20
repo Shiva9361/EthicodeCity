@@ -274,16 +274,22 @@ public struct StructurePrefabWH
 
     public int time;
 
+    public int aiCost;
+
+    public int aiTime;
+
     [Range(0, 1)]
     public float aiPercentage;
 
-    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage)
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime)
     {
         this.prefab = prefab;
         this.weight = weight;
         this.width = width;
         this.height = height;
         this.time = time;
+        this.aiCost = aiCost;
+        this.aiTime = aiTime;
         this.aiPercentage = aiPercentage;
         scale = new Vector3(1, 1, 1);
 

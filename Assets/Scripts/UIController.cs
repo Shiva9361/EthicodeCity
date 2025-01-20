@@ -48,18 +48,18 @@ public class UIController : MonoBehaviour
             OnSpecialPlacement?.Invoke();
 
         });
-        for (int i = 0; i < placeBigStructureButtons.Length; i++)
-        {
-            int index = i;
-            placeBigStructureButtons[index].onClick.AddListener(() =>
-            {
-                ResetButtonColor();
-                Debug.Log(index);
-                ModifyOutline(placeBigStructureButtons[index]);
-                OnBigStructurePlacement?.Invoke(index, structureManager.bigStructuresPrefabs[index].width, structureManager.bigStructuresPrefabs[index].height);
+        // for (int i = 0; i < placeBigStructureButtons.Length; i++)
+        // {
+        //     int index = i;
+        //     placeBigStructureButtons[index].onClick.AddListener(() =>
+        //     {
+        //         ResetButtonColor();
+        //         Debug.Log(index);
+        //         ModifyOutline(placeBigStructureButtons[index]);
+        //         OnBigStructurePlacement?.Invoke(index, structureManager.bigStructuresPrefabs[index].width, structureManager.bigStructuresPrefabs[index].height);
 
-            });
-        }
+        //     });
+        // }
     }
 
     private void ModifyOutline(Button button)
