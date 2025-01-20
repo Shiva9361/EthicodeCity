@@ -15,50 +15,7 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
-    public TMP_Text[] housingPrices;
-
-    public TMP_Text[] bigBuildingCosts;
-
-    public TMP_Text[] houseTimes;
-
-    public TMP_Text[] bigBuildingTimes;
-
-    private float[] houseWeights, specialWeights, bigStructureWeights;
-
-    private void Start()
-    {
-        houseWeights = housesPrefabe.Select(prefabStats => prefabStats.weight).ToArray();
-        specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        bigStructureWeights = bigStructuresPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        for (int i = 0; i < housingPrices.Length; i++)
-        {
-            housingPrices[i].text = "$" + housesPrefabe[i].weight.ToString();
-        }
-        for (int i = 0; i < houseTimes.Length; i++)
-        {
-            houseTimes[i].text = housesPrefabe[i].time.ToString() + "s";
-        }
-        for (int i = 0; i < bigBuildingCosts.Length; i++)
-        {
-            bigBuildingCosts[i].text = "$" + bigStructuresPrefabs[i].weight.ToString();
-        }
-        for (int i = 0; i < bigBuildingTimes.Length; i++)
-        {
-            bigBuildingTimes[i].text = bigStructuresPrefabs[i].time.ToString() + "s";
-        }
-    }
-
-    // public void PlaceHouse(Vector3Int position)
-    // {
-    //     if (CheckPositionBeforePlacement(position))
-    //     {
-    //         int randomIndex = GetRandomWeightedIndex(houseWeights);
-    //         placementManager.PlaceObjectOnTheMap(position, housesPrefabe[randomIndex].scale, housesPrefabe[randomIndex].prefab, CellType.Structure);
-    //         AudioPlayer.instance.PlayPlacementSound();
-    //     }
-    // }
-
-
+    private float[] specialWeights;
 
     internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)
     {
@@ -78,6 +35,7 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator DelayedPlacement(Vector3Int position, int houseNum, bool isAi)
     {
+        Debug.Log("Placement started.");
         float placementTime = isAi ? housesPrefabe[houseNum].aiTime : housesPrefabe[houseNum].time;
         GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, houseNum);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
@@ -113,6 +71,7 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator DelayedPlacementMulti(Vector3Int position, int houseNum, bool isAi, int width, int height)
     {
+        Debug.Log("Placement started.");
         float placementTime = isAi ? bigStructuresPrefabs[houseNum].aiTime : bigStructuresPrefabs[houseNum].time;
         GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, houseNum);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
@@ -136,11 +95,11 @@ public class StructureManager : MonoBehaviour
         placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum);
         if (!isAi)
         {
-            inventoryManager.Buy(housesPrefabe[houseNum].weight);
+            inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
         }
         else
         {
-            inventoryManager.SpendAiCredits(housesPrefabe[houseNum].aiCost);
+            inventoryManager.SpendAiCredits(bigStructuresPrefabs[houseNum].aiCost);
         }
         AudioPlayer.instance.PlayPlacementSound();
         Debug.Log("Placement completed.");
@@ -165,11 +124,11 @@ public class StructureManager : MonoBehaviour
 
     internal void PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex, bool isAI = false)
     {
-        if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(bigStructuresPrefabs[bigStructureIndex].weight) && !isAI)
+        if (CheckBigStructure(position, width, height) && inventoryManager.CanBuy(bigStructuresPrefabs[bigStructureIndex].weight) && !isAI)
         {
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
         }
-        else if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuyAi(bigStructuresPrefabs[bigStructureIndex].aiCost) && isAI)
+        else if (CheckBigStructure(position, width, height) && inventoryManager.CanBuyAi(bigStructuresPrefabs[bigStructureIndex].aiCost) && isAI)
         {
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
         }

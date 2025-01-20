@@ -32,6 +32,7 @@ public class StructureInfoManager : MonoBehaviour
             bigStructuresPrefabs[structureInfo.id] = structureInfo.weightedPrefab;
         }
         structureManager.bigStructuresPrefabs = bigStructuresPrefabs;
+        structureManager.housesPrefabe = structurePrefabWeighted;
     }
 
 

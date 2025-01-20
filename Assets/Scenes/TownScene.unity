@@ -2739,24 +2739,6 @@ MonoBehaviour:
     aiPercentage: 0
   placementManager: {fileID: 540532163}
   inventoryManager: {fileID: 1064610194}
-  housingPrices:
-  - {fileID: 776300857}
-  - {fileID: 0}
-  - {fileID: 0}
-  bigBuildingCosts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  houseTimes:
-  - {fileID: 427097375}
-  - {fileID: 0}
-  - {fileID: 0}
-  bigBuildingTimes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &319897189
 Transform:
   m_ObjectHideFlags: 0
@@ -16304,7 +16286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1783282574
 RectTransform:
   m_ObjectHideFlags: 0
