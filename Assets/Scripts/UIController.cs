@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
 {
     public Action OnRoadPlacement, OnSpecialPlacement, OnClear;
 
-    public Action<int> OnHousePlacement;
+    public Action<int, bool> OnHousePlacement;
     public StructureManager structureManager;
     public Action<int, int, int> OnBigStructurePlacement;
     public Button placeRoadButton, placeSpecialButton, placeHouseButton;
@@ -77,13 +77,13 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void AddButton(Button button, int id)
+    public void AddButton(Button button, int id, bool isAi = false)
     {
         button.onClick.AddListener(() =>
             {
                 ResetButtonColor();
                 Debug.Log(id);
-                OnHousePlacement?.Invoke(id);
+                OnHousePlacement?.Invoke(id, isAi);
             });
     }
 }
