@@ -1273,7 +1273,7 @@ MonoBehaviour:
       aiTime: 0
       aiPercentage: 0
   multiBuildingStructureInfos:
-  - id: 0
+  - id: 100
     image: {fileID: 8400000, guid: 113fd082778abf50fb21f60cc80a4a73, type: 2}
     weightedPrefab:
       prefab: {fileID: 948695418406959342, guid: b23d8607810fd19468a49ab4b829a8ce, type: 3}
@@ -1288,6 +1288,7 @@ MonoBehaviour:
   structureManager: {fileID: 319897188}
   structurePrefabWeighted: []
   bigStructuresPrefabs: []
+  bigStructureOffset: 100
 --- !u!4 &158102306
 Transform:
   m_ObjectHideFlags: 0

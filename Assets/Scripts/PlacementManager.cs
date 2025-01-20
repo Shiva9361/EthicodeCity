@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Data.Common;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PlacementManager : MonoBehaviour
 {
@@ -131,7 +128,7 @@ public class PlacementManager : MonoBehaviour
         {
             collider = structure.AddComponent<BoxCollider>();
         }
-        collider.size = structurePrefab.GetComponent<Renderer>().bounds.size;
+        collider.size = structurePrefab.GetComponentInChildren<Renderer>().bounds.size;
 
         structure.AddComponent<StructureClickController>();
         structure.GetComponent<StructureClickController>().structureInfoManager = structureInfoManager;

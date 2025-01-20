@@ -1,10 +1,7 @@
 ﻿using SVS;
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
-using TMPro;
-using UnityEngine.Animations;
 
 public class StructureManager : MonoBehaviour
 {
@@ -95,6 +92,7 @@ public class StructureManager : MonoBehaviour
         placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum);
         if (!isAi)
         {
+            Debug.Log(bigStructuresPrefabs[houseNum].weight);
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
         }
         else

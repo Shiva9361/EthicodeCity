@@ -17,6 +17,8 @@ public class StructureInfoManager : MonoBehaviour
     public Dictionary<int, StructureInfo> structureInfoDictionary = new();
     public Dictionary<int, StructureInfoMulti> multiStructureInfoDictionary = new();
 
+    public int bigStructureOffset = 100;
+
     private void Start()
     {
         structurePrefabWeighted = new StructurePrefabWeighted[buildingStructureInfos.Length];
@@ -29,7 +31,7 @@ public class StructureInfoManager : MonoBehaviour
         foreach (StructureInfoMulti structureInfo in multiBuildingStructureInfos)
         {
             multiStructureInfoDictionary.Add(structureInfo.id, new StructureInfoMulti(structureInfo.image, structureInfo.id, structureInfo.weightedPrefab));
-            bigStructuresPrefabs[structureInfo.id] = structureInfo.weightedPrefab;
+            bigStructuresPrefabs[structureInfo.id - bigStructureOffset] = structureInfo.weightedPrefab;
         }
         structureManager.bigStructuresPrefabs = bigStructuresPrefabs;
         structureManager.housesPrefabe = structurePrefabWeighted;
