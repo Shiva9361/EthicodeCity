@@ -1283,7 +1283,7 @@ MonoBehaviour:
       height: 2
       time: 2
       aiCost: 1
-      aiTime: 2
+      aiTime: 1
       aiPercentage: 0.582
   structureManager: {fileID: 319897188}
   structurePrefabWeighted: []
@@ -10467,12 +10467,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906ead65c64b2ef409fec1a135bd4d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: []
   cameraManager: {fileID: 2044889014}
   placementManager: {fileID: 540532163}
   structureManager: {fileID: 319897188}
   structureInfoManager: {fileID: 158102305}
-  uiController: {fileID: 681313529}
   inputManager: {fileID: 1916978682}
 --- !u!4 &1201162922
 Transform:

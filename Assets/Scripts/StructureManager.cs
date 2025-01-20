@@ -111,6 +111,41 @@ public class StructureManager : MonoBehaviour
         Debug.Log("Placement completed.");
     }
 
+    private IEnumerator DelayedPlacementMulti(Vector3Int position, int houseNum, bool isAi, int width, int height)
+    {
+        float placementTime = isAi ? bigStructuresPrefabs[houseNum].aiTime : bigStructuresPrefabs[houseNum].time;
+        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, houseNum);
+        Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
+        Material oldMaterial = renderer.material;
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        material.color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage); ;
+
+        for (int i = 0; i < 2 * placementTime; i++)
+        {
+            if (i % 2 == 1)
+            {
+                renderer.material = oldMaterial;
+            }
+            else
+            {
+                renderer.material = material;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+        Destroy(gameObject);
+        placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum);
+        if (!isAi)
+        {
+            inventoryManager.Buy(housesPrefabe[houseNum].weight);
+        }
+        else
+        {
+            inventoryManager.SpendAiCredits(housesPrefabe[houseNum].aiCost);
+        }
+        AudioPlayer.instance.PlayPlacementSound();
+        Debug.Log("Placement completed.");
+    }
+
 
 
     internal void PlaceHouseBuffered(Vector3Int position, int houseNum)
@@ -128,13 +163,19 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    internal void PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex)
+    internal void PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex, bool isAI = false)
     {
-        if (CheckBigStructure(position, width, height))
+        if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(bigStructuresPrefabs[bigStructureIndex].weight) && !isAI)
         {
-            Debug.Log("Placing big structure at" + position);
-            placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[bigStructureIndex].scale, bigStructuresPrefabs[bigStructureIndex].prefab, CellType.Structure, width, height);
-            AudioPlayer.instance.PlayPlacementSound();
+            StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
+        }
+        else if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuyAi(bigStructuresPrefabs[bigStructureIndex].aiCost) && isAI)
+        {
+            StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
+        }
+        else
+        {
+            Debug.Log("Not enough money");
         }
     }
 

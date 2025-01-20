@@ -46,10 +46,10 @@ public class PanelGenerator : MonoBehaviour
     public void AddPanelMulti(int id, StructureInfoMulti structureInfo, GameObject parent)
     {
         GameObject panel = Instantiate(panelPrefab, parent.transform);
-        uIController.AddButton(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
-        dragDropManager.DragDrop(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
-        dragDropManager.DragDrop(panel.transform.Find("AIButton").GetComponent<Button>(), id, true);
-        uIController.AddButton(panel.transform.Find("AIButton").GetComponent<Button>(), id, true);
+        uIController.AddBigStructureButton(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
+        dragDropManager.DragDropBigStructure(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
+        dragDropManager.DragDropBigStructure(panel.transform.Find("AIButton").GetComponent<Button>(), id, true);
+        uIController.AddBigStructureButton(panel.transform.Find("AIButton").GetComponent<Button>(), id, true);
 
         panel.transform.Find("Image").GetComponent<RawImage>().texture = structureInfo.image;
         panel.transform.Find("MoneyButton").GetComponent<Transform>().Find("Cost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.weight;
