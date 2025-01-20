@@ -59,21 +59,25 @@ public class StructureManager : MonoBehaviour
 
 
 
-    internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum)
+    internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)
     {
-        if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
+        if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight) && !isAi)
         {
-            StartCoroutine(DelayedPlacement(position, houseNum));
+            StartCoroutine(DelayedPlacement(position, houseNum, isAi));
         }
-        else if (!inventoryManager.CanBuy(housesPrefabe[houseNum].weight))
+        else if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuyAi(housesPrefabe[houseNum].aiCost) && isAi)
+        {
+            StartCoroutine(DelayedPlacement(position, houseNum, isAi));
+        }
+        else
         {
             Debug.Log("Not enough money");
         }
     }
 
-    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum)
+    private IEnumerator DelayedPlacement(Vector3Int position, int houseNum, bool isAi)
     {
-        float placementTime = housesPrefabe[houseNum].time;
+        float placementTime = isAi ? housesPrefabe[houseNum].aiTime : housesPrefabe[houseNum].time;
         GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, houseNum);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
         Material oldMaterial = renderer.material;
@@ -228,15 +232,20 @@ public struct StructurePrefabWeighted
     public Vector3 scale;
 
     public float time;
+    [Range(10, 100)]
+    public float aiCost;
+    public float aiTime;
 
     [Range(0, 1)]
     public float aiPercentage;
 
-    public StructurePrefabWeighted(GameObject prefab, float weight, float time, float aiPercentage)
+    public StructurePrefabWeighted(GameObject prefab, float weight, float time, float aiPercentage, float aiCost, float aiTime)
     {
         this.prefab = prefab;
         this.weight = weight;
         this.time = time;
+        this.aiCost = aiCost;
+        this.aiTime = aiTime;
         this.aiPercentage = aiPercentage;
         scale = new Vector3(1, 1, 1);
 

@@ -33,14 +33,13 @@ public struct StructureInfo
     public int id;
 
     public RenderTexture image;
-
-
     public StructurePrefabWeighted weightedPrefab;
 
     public StructureInfo(RenderTexture image, int id, StructurePrefabWeighted prefabWeighted)
     {
         this.image = image;
         this.id = id;
+
         weightedPrefab = prefabWeighted;
     }
 }

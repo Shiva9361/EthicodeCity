@@ -18,16 +18,16 @@ public class PanelGenerator : MonoBehaviour
     public void AddPanel(int id, StructureInfo structureInfo)
     {
         GameObject panel = Instantiate(panelPrefab, parent.transform);
-        uIController.AddButton(panel.transform.Find("PlaceHouseBtn").GetComponent<Button>(), id);
-        dragDropManager.DragDrop(panel.transform.Find("PlaceHouseBtn").GetComponent<Button>(), id);
-        // dragDropManager.DragDropAI(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
-        uIController.AddButton(panel.transform.Find("MoneyButton").GetComponent<Button>(), id, true);
+        uIController.AddButton(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
+        dragDropManager.DragDrop(panel.transform.Find("MoneyButton").GetComponent<Button>(), id);
+        dragDropManager.DragDrop(panel.transform.Find("AIButton").GetComponent<Button>(), id, true);
+        uIController.AddButton(panel.transform.Find("AIButton").GetComponent<Button>(), id, true);
 
         panel.transform.Find("Image").GetComponent<RawImage>().texture = structureInfo.image;
-        panel.transform.Find("Cost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.weight;
-        panel.transform.Find("Time").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.time + "s";
-        // panel.transform.Find("AICost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.aiCost;
-        // panel.transform.Find("AITime").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.aiTime + "s";
+        panel.transform.Find("MoneyButton").GetComponent<Transform>().Find("Cost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.weight;
+        panel.transform.Find("MoneyButton").GetComponent<Transform>().Find("Time").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.time + "s";
+        panel.transform.Find("AIButton").GetComponent<Transform>().Find("AICost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.aiCost;
+        panel.transform.Find("AIButton").GetComponent<Transform>().Find("AITime").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.aiTime + "s";
         panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset, 0);
         panel.SetActive(true);
         offset += 250;

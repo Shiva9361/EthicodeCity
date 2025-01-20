@@ -24,6 +24,11 @@ public class InventoryManager : MonoBehaviour
         return Money >= cost;
     }
 
+    public bool CanBuyAi(float cost)
+    {
+        return AiCredits >= cost;
+    }
+
     // Method to purchase an item by deducting money
     public void Buy(float cost)
     {

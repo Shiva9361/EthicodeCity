@@ -21,6 +21,7 @@ public class DragDropManager : MonoBehaviour
 
     public UIController uiController;
     bool isDragging = false;
+    bool isAI = false;
 
     bool isBigStructure = false;
 
@@ -64,7 +65,7 @@ public class DragDropManager : MonoBehaviour
         }
     }
 
-    public void DragDrop(Button button, int index)
+    public void DragDrop(Button button, int index, bool isAi = false)
     {
         EventTrigger trigger = button.gameObject.AddComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -73,6 +74,7 @@ public class DragDropManager : MonoBehaviour
         {
             isDragging = true;
             Vector3Int? pos = inputManager.RaycastGround();
+            isAI = isAi;
 
             if (pos != null)
             {
@@ -101,7 +103,7 @@ public class DragDropManager : MonoBehaviour
             else if (pos != null)
             {
                 // structureManager.PlaceHouseBuffered(pos.Value, currentPrefabIndex);
-                structureManager.PlaceHouseBufferedDelayed(pos.Value, currentPrefabIndex);
+                structureManager.PlaceHouseBufferedDelayed(pos.Value, currentPrefabIndex, isAI);
             }
         }
         if (isDragging)
