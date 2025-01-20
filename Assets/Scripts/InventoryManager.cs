@@ -3,41 +3,78 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Public fields for Money and AI Credits
     public int AiCredits;
     public float Money;
 
+    // UI Text elements for displaying money and AI credits
     public Text moneyText;
+    public Text aiCreditsText;
 
     private void Start()
     {
         // Initialize the UI display
         UpdateMoneyDisplay();
+        UpdateAiCreditsDisplay();
     }
 
-
+    // Method to check if the player can afford an item based on money
     public bool CanBuy(float cost)
     {
         return Money >= cost;
     }
 
+    // Method to purchase an item by deducting money
     public void Buy(float cost)
     {
         Money -= cost;
         UpdateMoneyDisplay();
     }
 
+    // Method to add money to the player's balance
     public void AddMoney(float money)
     {
         Money += money;
         UpdateMoneyDisplay();
     }
 
+    // Method to add AI credits
+    public void AddAiCredits(int credits)
+    {
+        AiCredits += credits;
+        UpdateAiCreditsDisplay();
+    }
+
+    // Method to spend AI credits
+    public bool SpendAiCredits(int credits)
+    {
+        if (AiCredits >= credits)
+        {
+            AiCredits -= credits;
+            UpdateAiCreditsDisplay();
+            return true; // Successfully spent AI credits
+        }
+        else
+        {
+            return false; // Not enough AI credits
+        }
+    }
+
+    // Method to update the Money display in the UI
     private void UpdateMoneyDisplay()
     {
         if (moneyText != null)
         {
-            moneyText.text = "$" + Money.ToString(); // Show 2 decimal points
+            moneyText.text = "$" + Money.ToString(""); // Show 2 decimal points for money
+        }
+    }
+
+    // Method to update the AI Credits display in the UI
+    private void UpdateAiCreditsDisplay()
+    {
+        if (aiCreditsText != null)
+        {
+            aiCreditsText.text = AiCredits.ToString(); // Display AI credits
         }
     }
 }
