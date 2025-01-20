@@ -1423,8 +1423,8 @@ MonoBehaviour:
       weight: 2556
       scale: {x: 0.01, y: 0.01, z: 0.01}
       time: 0
-      aiCost: 0
-      aiTime: 0
+      aiCost: 16
+      aiTime: 1
       aiPercentage: 0
   - id: 1
     image: {fileID: 8400000, guid: 4d6a93a77f8461a348927dcf235a2ede, type: 2}
@@ -1432,9 +1432,9 @@ MonoBehaviour:
       prefab: {fileID: 919132149155446097, guid: 070da169a9d4e0f4a9adb179ed137cc1, type: 3}
       weight: 1000
       scale: {x: 0.01, y: 0.01, z: 0.01}
-      time: 5
-      aiCost: 31.3
-      aiTime: 1
+      time: 0
+      aiCost: 13
+      aiTime: 0
       aiPercentage: 0.246
   - id: 2
     image: {fileID: 8400000, guid: ecc5c8add2622431a97e96e16cb79994, type: 2}
@@ -1444,7 +1444,7 @@ MonoBehaviour:
       scale: {x: 0.01, y: 0.01, z: 0.01}
       time: 0
       aiCost: 0
-      aiTime: 1
+      aiTime: 0
       aiPercentage: 0.232
   - id: 3
     image: {fileID: 8400000, guid: b856c09fe7b9335c782578e548f0a6d9, type: 2}
@@ -1453,8 +1453,8 @@ MonoBehaviour:
       weight: 1000
       scale: {x: 0.01, y: 0.01, z: 0.01}
       time: 0
-      aiCost: 24.5
-      aiTime: 1
+      aiCost: 0
+      aiTime: 0
       aiPercentage: 0
   - id: 4
     image: {fileID: 8400000, guid: bc7a041c20fb1a642b9a3b7ced92d173, type: 2}
@@ -1462,9 +1462,9 @@ MonoBehaviour:
       prefab: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
       weight: 1717
       scale: {x: 0.05, y: 0.05, z: 0.05}
-      time: 1
-      aiCost: 25.6
-      aiTime: 1
+      time: 0
+      aiCost: 0
+      aiTime: 0
       aiPercentage: 1
   - id: 5
     image: {fileID: 8400000, guid: ab60aea7497cb744ab0fca6c56ff2397, type: 2}
@@ -1472,9 +1472,9 @@ MonoBehaviour:
       prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
       weight: 2761
       scale: {x: 0.05, y: 0.05, z: 0.05}
-      time: 3
-      aiCost: 25.8
-      aiTime: 1
+      time: 0
+      aiCost: 0
+      aiTime: 0
       aiPercentage: 0.536
   - id: 6
     image: {fileID: 8400000, guid: 687060aa0d63a434c8f50f1153eb3029, type: 2}
@@ -1482,9 +1482,9 @@ MonoBehaviour:
       prefab: {fileID: 100000, guid: 35807f23e7899e541b60b2fb2bbb51ef, type: 3}
       weight: 0
       scale: {x: 0.05, y: 0.05, z: 0.05}
-      time: 1
-      aiCost: 37.9
-      aiTime: 1
+      time: 0
+      aiCost: 0
+      aiTime: 0
       aiPercentage: 0
   structureManager: {fileID: 319897188}
   structurePrefabWeighted: []

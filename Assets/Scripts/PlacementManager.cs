@@ -140,8 +140,6 @@ public class PlacementManager : MonoBehaviour
         structure.GetComponent<StructureClickController>().inventoryManager = inventoryManager;
         structure.GetComponent<StructureClickController>().placementManager = this;
         structure.GetComponent<StructureClickController>().positions = new HashSet<Vector3Int>();
-
-        Debug.Log("ID: " + id);
         // structure.layer = LayerMask.NameToLayer("Building");
 
         return structureModel;

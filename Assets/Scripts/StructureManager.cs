@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Animations;
 
 public class StructureManager : MonoBehaviour
 {
@@ -98,7 +99,14 @@ public class StructureManager : MonoBehaviour
         }
         Destroy(gameObject);
         placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum);
-        inventoryManager.Buy(housesPrefabe[houseNum].weight);
+        if (!isAi)
+        {
+            inventoryManager.Buy(housesPrefabe[houseNum].weight);
+        }
+        else
+        {
+            inventoryManager.SpendAiCredits(housesPrefabe[houseNum].aiCost);
+        }
         AudioPlayer.instance.PlayPlacementSound();
         Debug.Log("Placement completed.");
     }
@@ -231,15 +239,15 @@ public struct StructurePrefabWeighted
     public float weight;
     public Vector3 scale;
 
-    public float time;
+    public int time;
     [Range(10, 100)]
-    public float aiCost;
-    public float aiTime;
+    public int aiCost;
+    public int aiTime;
 
     [Range(0, 1)]
     public float aiPercentage;
 
-    public StructurePrefabWeighted(GameObject prefab, float weight, float time, float aiPercentage, float aiCost, float aiTime)
+    public StructurePrefabWeighted(GameObject prefab, float weight, int time, float aiPercentage, int aiCost, int aiTime)
     {
         this.prefab = prefab;
         this.weight = weight;
