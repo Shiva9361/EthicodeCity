@@ -97,7 +97,6 @@ public class DragDropManager : MonoBehaviour
             {
                 structureManager.PlaceBigStructure(pos.Value, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height, currentPrefabIndex, isAI);
                 isBigStructure = false;
-                Debug.Log("Placing big structure");
             }
             else if (pos != null)
             {

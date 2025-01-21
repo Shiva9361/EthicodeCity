@@ -1285,6 +1285,18 @@ MonoBehaviour:
       aiCost: 1
       aiTime: 1
       aiPercentage: 0.582
+  - id: 101
+    image: {fileID: 8400000, guid: 113fd082778abf50fb21f60cc80a4a73, type: 2}
+    weightedPrefab:
+      prefab: {fileID: 1000012260637608, guid: 65feeeb562c61c744aa87b8eb394ffcf, type: 3}
+      weight: 3968
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+      width: 4
+      height: 6
+      time: 2
+      aiCost: 1
+      aiTime: 1
+      aiPercentage: 0.582
   structureManager: {fileID: 319897188}
   structurePrefabWeighted: []
   bigStructuresPrefabs: []

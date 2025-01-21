@@ -68,13 +68,13 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator DelayedPlacementMulti(Vector3Int position, int houseNum, bool isAi, int width, int height)
     {
-        Debug.Log("Placement started.");
+        Debug.Log("Placement started Multi.");
         float placementTime = isAi ? bigStructuresPrefabs[houseNum].aiTime : bigStructuresPrefabs[houseNum].time;
-        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, houseNum);
+        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, houseNum, true);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
+
         Material oldMaterial = renderer.material;
-        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        material.color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage); ;
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage) };
 
         for (int i = 0; i < 2 * placementTime; i++)
         {
@@ -89,10 +89,9 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-        placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum);
+        placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true);
         if (!isAi)
         {
-            Debug.Log(bigStructuresPrefabs[houseNum].weight);
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
         }
         else
