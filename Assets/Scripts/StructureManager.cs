@@ -1,6 +1,7 @@
 ﻿using SVS;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
@@ -12,7 +13,9 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
-    private float[] specialWeights;
+    private readonly float[] specialWeights;
+
+    private Queue<GameObject> ObjectsInMap = new();
 
     internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)
     {
@@ -53,7 +56,9 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-        placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum);
+
+        ObjectsInMap.Enqueue(placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum, isAI: isAi));
+
         if (!isAi)
         {
             inventoryManager.Buy(housesPrefabe[houseNum].weight);
@@ -62,6 +67,7 @@ public class StructureManager : MonoBehaviour
         {
             inventoryManager.SpendAiCredits(housesPrefabe[houseNum].aiCost);
         }
+
         AudioPlayer.instance.PlayPlacementSound();
         Debug.Log("Placement completed.");
     }
@@ -89,7 +95,9 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-        placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true);
+
+        ObjectsInMap.Enqueue(placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi));
+
         if (!isAi)
         {
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);

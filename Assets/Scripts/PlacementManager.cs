@@ -35,11 +35,12 @@ public class PlacementManager : MonoBehaviour
         return false;
     }
 
-    internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1, int id = -1, bool isBigStructure = false)
+    internal GameObject PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1, int id = -1, bool isBigStructure = false, bool isAI = false)
     {
 
         StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type, id, isBigStructure);
 
+        structure.GameObject().GetComponent<StructureClickController>().isAi = isAI;
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
@@ -51,6 +52,7 @@ public class PlacementManager : MonoBehaviour
                 DestroyNatureAt(newPosition);
             }
         }
+        return structure.GameObject();
 
     }
 

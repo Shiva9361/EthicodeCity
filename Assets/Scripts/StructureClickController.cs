@@ -9,6 +9,10 @@ public class StructureClickController : MonoBehaviour
     public int id;
 
     public bool isBigStructure = false;
+
+    public bool isAi = false;
+
+    public float time;
     public StructureInfoManager structureInfoManager;
     public InventoryManager inventoryManager;
 
@@ -17,6 +21,12 @@ public class StructureClickController : MonoBehaviour
     public GameObject detailsPanel;
 
     public HashSet<Vector3Int> positions;
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+    }
+
     void OnMouseDown()
     {
         if (!isBigStructure)
