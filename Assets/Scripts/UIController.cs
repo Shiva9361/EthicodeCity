@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
 {
     public Action OnRoadPlacement, OnSpecialPlacement, OnClear;
 
-    public Action<int> OnHousePlacement;
+    public Action<int, bool> OnHousePlacement;
     public StructureManager structureManager;
     public Action<int, int, int> OnBigStructurePlacement;
     public Button placeRoadButton, placeSpecialButton, placeHouseButton;
@@ -38,12 +38,7 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < placeHouseButtons.Length; i++)
         {
             int index = i;
-            placeHouseButtons[index].onClick.AddListener(() =>
-            {
-                ResetButtonColor();
-                ModifyOutline(placeHouseButtons[index]);
-                OnHousePlacement?.Invoke(index);
-            });
+
         }
 
         placeSpecialButton.onClick.AddListener(() =>
@@ -53,18 +48,6 @@ public class UIController : MonoBehaviour
             OnSpecialPlacement?.Invoke();
 
         });
-        for (int i = 0; i < placeBigStructureButtons.Length; i++)
-        {
-            int index = i;
-            placeBigStructureButtons[index].onClick.AddListener(() =>
-            {
-                ResetButtonColor();
-                Debug.Log(index);
-                ModifyOutline(placeBigStructureButtons[index]);
-                OnBigStructurePlacement?.Invoke(index, structureManager.bigStructuresPrefabs[index].width, structureManager.bigStructuresPrefabs[index].height);
-
-            });
-        }
     }
 
     private void ModifyOutline(Button button)
@@ -80,5 +63,26 @@ public class UIController : MonoBehaviour
         {
             button.GetComponent<Outline>().enabled = false;
         }
+    }
+
+    public void AddButton(Button button, int id, bool isAi = false)
+    {
+        button.onClick.AddListener(() =>
+            {
+                ResetButtonColor();
+                Debug.Log(id);
+                OnHousePlacement?.Invoke(id, isAi);
+            });
+    }
+
+    public void AddBigStructureButton(Button button, int id, bool isAi = false)
+    {
+        button.onClick.AddListener(() =>
+        {
+            ResetButtonColor();
+            Debug.Log(id);
+            ModifyOutline(button);
+            OnBigStructurePlacement?.Invoke(id, structureManager.bigStructuresPrefabs[id].width, structureManager.bigStructuresPrefabs[id].height);
+        });
     }
 }

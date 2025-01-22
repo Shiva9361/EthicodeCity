@@ -34,12 +34,12 @@ public class GameManager : MonoBehaviour
         inputManager.OnMouseClick += structureManager.PlaceSpecial;
     }
 
-    private void HousePlacementHandler(int houseNum)
+    private void HousePlacementHandler(int houseNum, bool isAi)
     {
         ClearInputActions();
 
         // inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBuffered(location, houseNum);
-        inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBufferedDelayed(location, houseNum);
+        inputManager.OnMouseUpWithLocation += (location) => structureManager.PlaceHouseBufferedDelayed(location, houseNum, isAi);
     }
 
     private void RoadPlacementHandler()
