@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
@@ -13,9 +15,73 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
+    public SlidePanelController slidePanelController;
+
     private readonly float[] specialWeights;
 
+    private float earthQuaketimer = 0;
+
     private Queue<GameObject> ObjectsInMap = new();
+
+    private Queue<GameObject> AIObjectsInMap = new();
+
+    private void Update()
+    {
+        earthQuaketimer += Time.deltaTime;
+        if (earthQuaketimer > 60)
+        {
+            earthQuaketimer = 0;
+
+            if (UnityEngine.Random.value < 0.5f)
+            {
+                EarthQuake();
+                Debug.Log("Earthquake event triggered.");
+            }
+            else
+            {
+                Debug.Log("Earthquake event skipped.");
+            }
+        }
+
+        int k = ObjectsInMap.Count;
+
+        for (int i = 0; i < k; i++)
+        {
+            GameObject obj = ObjectsInMap.Dequeue();
+            if (obj != null)
+            {
+                ObjectsInMap.Enqueue(obj);
+            }
+        }
+
+        k = AIObjectsInMap.Count;
+        for (int i = 0; i < k; i++)
+        {
+            GameObject obj = AIObjectsInMap.Dequeue();
+            if (obj != null)
+            {
+                AIObjectsInMap.Enqueue(obj);
+            }
+        }
+    }
+
+    private void EarthQuake()
+    {
+        if (AIObjectsInMap.Count == 0)
+        {
+            return;
+        }
+        foreach (var obj in AIObjectsInMap)
+        {
+            if (obj != null)
+            {
+                obj.GetComponent<StructureClickController>().Clear();
+
+                Destroy(obj);
+            }
+        }
+        slidePanelController.EnableAchievement("AI");
+    }
 
     internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)
     {
@@ -56,8 +122,8 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-
-        ObjectsInMap.Enqueue(placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum, isAI: isAi));
+        GameObject obj = placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum, isAI: isAi);
+        ObjectsInMap.Enqueue(obj);
 
         if (!isAi)
         {
@@ -65,6 +131,7 @@ public class StructureManager : MonoBehaviour
         }
         else
         {
+            AIObjectsInMap.Enqueue(obj);
             inventoryManager.SpendAiCredits(housesPrefabe[houseNum].aiCost);
         }
 
@@ -96,14 +163,15 @@ public class StructureManager : MonoBehaviour
         }
         Destroy(gameObject);
 
-        ObjectsInMap.Enqueue(placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi));
-
+        GameObject obj = placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi);
+        ObjectsInMap.Enqueue(obj);
         if (!isAi)
         {
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
         }
         else
         {
+            AIObjectsInMap.Enqueue(obj);
             inventoryManager.SpendAiCredits(bigStructuresPrefabs[houseNum].aiCost);
         }
         AudioPlayer.instance.PlayPlacementSound();

@@ -1286,7 +1286,7 @@ MonoBehaviour:
       aiTime: 1
       aiPercentage: 0.582
   - id: 101
-    image: {fileID: 8400000, guid: 113fd082778abf50fb21f60cc80a4a73, type: 2}
+    image: {fileID: 8400000, guid: b825b565bcb76fbad9991b3d12c63f83, type: 2}
     weightedPrefab:
       prefab: {fileID: 1000012260637608, guid: 65feeeb562c61c744aa87b8eb394ffcf, type: 3}
       weight: 3968
@@ -1295,6 +1295,18 @@ MonoBehaviour:
       height: 6
       time: 2
       aiCost: 1
+      aiTime: 1
+      aiPercentage: 0.582
+  - id: 102
+    image: {fileID: 8400000, guid: 717b491537eb0818891334ab9b68d726, type: 2}
+    weightedPrefab:
+      prefab: {fileID: 8028572972740798329, guid: b4e018779a1b9aa44b2a988c6d8ddfda, type: 3}
+      weight: 9657
+      scale: {x: 1, y: 1, z: 1}
+      width: 1
+      height: 1
+      time: 200
+      aiCost: 100
       aiTime: 1
       aiPercentage: 0.582
   structureManager: {fileID: 319897188}
@@ -9380,8 +9392,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ec2d123a1ec6a4b9c3c01e419086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AiCredits: 1000
-  Money: 100000
+  AiCredits: 100
+  Money: 1000
   moneyText: {fileID: 1102258323}
   aiCreditsText: {fileID: 1242311135}
 --- !u!4 &1072508180 stripped
