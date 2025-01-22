@@ -32,11 +32,6 @@ public class CameraManager : MonoBehaviour
     {
         HandleCameraDrag();
         HandleZoom();
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            TriggerEarthquakeFromManager();
-        }
     }
 
     void HandleZoom()
@@ -74,15 +69,6 @@ public class CameraManager : MonoBehaviour
 
             // Update drag origin
             dragOrigin = currentMousePosition;
-        }
-    }
-
-    void TriggerEarthquakeFromManager()
-    {
-        EarthquakeMovement earthquake = GetComponent<EarthquakeMovement>();
-        if (earthquake != null)
-        {
-            earthquake.TriggerEarthquake(earthquake.shakeDuration, earthquake.shakeMagnitude);
         }
     }
 }

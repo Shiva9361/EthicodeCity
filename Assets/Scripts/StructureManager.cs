@@ -2,8 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
@@ -15,11 +13,14 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
+    public EarthquakeMovement earthquakeMovement;
+
     public SlidePanelController slidePanelController;
 
     private readonly float[] specialWeights;
 
     private float earthQuaketimer = 0;
+    private float bankRobbingTimer = 0;
 
     private Queue<GameObject> ObjectsInMap = new();
 
@@ -28,18 +29,34 @@ public class StructureManager : MonoBehaviour
     private void Update()
     {
         earthQuaketimer += Time.deltaTime;
-        if (earthQuaketimer > 60)
+        bankRobbingTimer += Time.deltaTime;
+        if (earthQuaketimer > 1)
         {
             earthQuaketimer = 0;
 
-            if (UnityEngine.Random.value < 0.5f)
+            if (UnityEngine.Random.value < 0.5f && AIObjectsInMap.Count != 0)
             {
-                EarthQuake();
+                StartCoroutine(EarthQuake());
                 Debug.Log("Earthquake event triggered.");
             }
             else
             {
                 Debug.Log("Earthquake event skipped.");
+            }
+        }
+
+        if (bankRobbingTimer > 2)
+        {
+            bankRobbingTimer = 0;
+
+            if (UnityEngine.Random.value < 0.5f)
+            {
+                BankRobbery();
+                Debug.Log("Bank robbery event triggered.");
+            }
+            else
+            {
+                Debug.Log("Bank robbery event skipped.");
             }
         }
 
@@ -65,18 +82,36 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    private void EarthQuake()
+    private void BankRobbery()
     {
-        if (AIObjectsInMap.Count == 0)
-        {
-            return;
-        }
+
         foreach (var obj in AIObjectsInMap)
         {
             if (obj != null)
             {
-                obj.GetComponent<StructureClickController>().Clear();
+                if (obj.GetComponent<StructureClickController>().isAi && obj.GetComponent<StructureClickController>().isBank)
+                {
+                    inventoryManager.ClearMoney();
+                    slidePanelController.EnableAchievement("CB");
+                    break;
+                }
+            }
+        }
+    }
 
+    private IEnumerator EarthQuake()
+    {
+        earthquakeMovement.TriggerEarthquake(5, 0.1f);
+        yield return new WaitForSeconds(5);
+
+        float chance = 1;
+        foreach (var obj in AIObjectsInMap)
+        {
+            if (obj != null && UnityEngine.Random.value < chance)
+            {
+                obj.GetComponent<StructureClickController>().Clear();
+                chance -= .05f;
+                chance = Mathf.Max(0, chance);
                 Destroy(obj);
             }
         }
@@ -164,6 +199,7 @@ public class StructureManager : MonoBehaviour
         Destroy(gameObject);
 
         GameObject obj = placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi);
+        obj.GetComponent<StructureClickController>().isBank = bigStructuresPrefabs[houseNum].isBank;
         ObjectsInMap.Enqueue(obj);
         if (!isAi)
         {
@@ -354,7 +390,9 @@ public struct StructurePrefabWH
     [Range(0, 1)]
     public float aiPercentage;
 
-    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime)
+    public bool isBank;
+
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime, bool isBank)
     {
         this.prefab = prefab;
         this.weight = weight;
@@ -364,6 +402,7 @@ public struct StructurePrefabWH
         this.aiCost = aiCost;
         this.aiTime = aiTime;
         this.aiPercentage = aiPercentage;
+        this.isBank = isBank;
         scale = new Vector3(1, 1, 1);
 
     }

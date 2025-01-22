@@ -67,6 +67,7 @@ public struct StructureInfoMulti
     public RenderTexture image;
     public StructurePrefabWH weightedPrefab;
 
+
     public StructureInfoMulti(RenderTexture image, int id, StructurePrefabWH prefabWeighted)
     {
         this.image = image;

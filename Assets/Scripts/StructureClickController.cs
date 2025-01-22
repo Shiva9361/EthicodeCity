@@ -12,6 +12,8 @@ public class StructureClickController : MonoBehaviour
 
     public bool isAi = false;
 
+    public bool isBank = false;
+
     public float time;
     public StructureInfoManager structureInfoManager;
     public InventoryManager inventoryManager;
