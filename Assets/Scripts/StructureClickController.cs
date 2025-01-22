@@ -14,6 +14,8 @@ public class StructureClickController : MonoBehaviour
 
     public bool isBank = false;
 
+    public bool isAiFactory = false;
+
     public float time;
     public StructureInfoManager structureInfoManager;
     public InventoryManager inventoryManager;
@@ -27,6 +29,14 @@ public class StructureClickController : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
+        if (time % 10 == 0 && isBank)
+        {
+            inventoryManager.AddMoney(100);
+        }
+        if (time % 10 == 0 && isAiFactory)
+        {
+            inventoryManager.AddAiCredits(10);
+        }
     }
 
     void OnMouseDown()

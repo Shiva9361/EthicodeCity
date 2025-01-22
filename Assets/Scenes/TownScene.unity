@@ -1285,6 +1285,8 @@ MonoBehaviour:
       aiCost: 1
       aiTime: 1
       aiPercentage: 0.582
+      isBank: 0
+      isAiFactory: 0
   - id: 101
     image: {fileID: 8400000, guid: b825b565bcb76fbad9991b3d12c63f83, type: 2}
     weightedPrefab:
@@ -1297,6 +1299,8 @@ MonoBehaviour:
       aiCost: 1
       aiTime: 1
       aiPercentage: 0.582
+      isBank: 0
+      isAiFactory: 0
   - id: 102
     image: {fileID: 8400000, guid: 717b491537eb0818891334ab9b68d726, type: 2}
     weightedPrefab:
@@ -1309,6 +1313,8 @@ MonoBehaviour:
       aiCost: 100
       aiTime: 1
       aiPercentage: 0.582
+      isBank: 1
+      isAiFactory: 0
   structureManager: {fileID: 319897188}
   structurePrefabWeighted: []
   bigStructuresPrefabs: []
@@ -2735,6 +2741,8 @@ MonoBehaviour:
     aiCost: 0
     aiTime: 0
     aiPercentage: 1
+    isBank: 0
+    isAiFactory: 0
   - prefab: {fileID: 1000012260637608, guid: 65feeeb562c61c744aa87b8eb394ffcf, type: 3}
     weight: 2942
     scale: {x: 0.25, y: 0.25, z: 0.25}
@@ -2744,6 +2752,8 @@ MonoBehaviour:
     aiCost: 0
     aiTime: 0
     aiPercentage: 0.856
+    isBank: 0
+    isAiFactory: 0
   - prefab: {fileID: 1000012260637608, guid: 65feeeb562c61c744aa87b8eb394ffcf, type: 3}
     weight: 4885
     scale: {x: 0.25, y: 0.25, z: 0.25}
@@ -2753,6 +2763,8 @@ MonoBehaviour:
     aiCost: 0
     aiTime: 0
     aiPercentage: 0.532
+    isBank: 0
+    isAiFactory: 0
   - prefab: {fileID: 1000012260637608, guid: 65feeeb562c61c744aa87b8eb394ffcf, type: 3}
     weight: 0
     scale: {x: 0.25, y: 0.25, z: 0.25}
@@ -2762,8 +2774,11 @@ MonoBehaviour:
     aiCost: 0
     aiTime: 0
     aiPercentage: 0
+    isBank: 0
+    isAiFactory: 0
   placementManager: {fileID: 540532163}
   inventoryManager: {fileID: 1064610194}
+  earthquakeMovement: {fileID: 520439587}
   slidePanelController: {fileID: 1123641881}
 --- !u!4 &319897189
 Transform:
@@ -4698,6 +4713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 520439586}
   - component: {fileID: 520439585}
+  - component: {fileID: 520439587}
   m_Layer: 0
   m_Name: CameraBase
   m_TagString: Untagged
@@ -4733,6 +4749,20 @@ Transform:
   - {fileID: 2044889012}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &520439587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520439584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658d5278a3f61d64b898cd27e7242b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 2
+  shakeMagnitude: 0.1
 --- !u!114 &522139538
 MonoBehaviour:
   m_ObjectHideFlags: 0

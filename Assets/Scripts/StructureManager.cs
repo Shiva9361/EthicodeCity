@@ -200,6 +200,7 @@ public class StructureManager : MonoBehaviour
 
         GameObject obj = placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi);
         obj.GetComponent<StructureClickController>().isBank = bigStructuresPrefabs[houseNum].isBank;
+        obj.GetComponent<StructureClickController>().isAiFactory = bigStructuresPrefabs[houseNum].isAiFactory;
         ObjectsInMap.Enqueue(obj);
         if (!isAi)
         {
@@ -231,20 +232,23 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    internal void PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex, bool isAI = false)
+    internal bool PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex, bool isAI = false)
     {
         if (CheckBigStructure(position, width, height) && inventoryManager.CanBuy(bigStructuresPrefabs[bigStructureIndex].weight) && !isAI)
         {
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
+            return true;
         }
         else if (CheckBigStructure(position, width, height) && inventoryManager.CanBuyAi(bigStructuresPrefabs[bigStructureIndex].aiCost) && isAI)
         {
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
+            return true;
         }
         else
         {
             Debug.Log("Not enough money");
         }
+        return false;
     }
 
     private bool CheckBigStructure(Vector3Int position, int width, int height)
@@ -391,8 +395,9 @@ public struct StructurePrefabWH
     public float aiPercentage;
 
     public bool isBank;
+    public bool isAiFactory;
 
-    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime, bool isBank)
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime, bool isBank, bool isAiFactory)
     {
         this.prefab = prefab;
         this.weight = weight;
@@ -403,6 +408,7 @@ public struct StructurePrefabWH
         this.aiTime = aiTime;
         this.aiPercentage = aiPercentage;
         this.isBank = isBank;
+        this.isAiFactory = isAiFactory;
         scale = new Vector3(1, 1, 1);
 
     }
