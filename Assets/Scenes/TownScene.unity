@@ -7322,8 +7322,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 844701683}
-  Question1: {fileID: 0}
-  Question2: {fileID: 0}
+  alexImage: {fileID: 0}
+  elenaImage: {fileID: 0}
+  samImage: {fileID: 0}
+  johnImage: {fileID: 0}
 --- !u!114 &811039003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7622,10 +7624,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffcd386bd281d94395b4387006bbefc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionImage: {fileID: 0}
-  inputField: {fileID: 0}
-  submitButton: {fileID: 0}
-  questionImages: []
+  nameText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  characterImage: {fileID: 0}
+  specialImage: {fileID: 0}
+  textSpeed: 0
+  characters: []
 --- !u!114 &844701684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11215,7 +11219,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.8396912, y: 10.501892}
+  m_AnchoredPosition: {x: -1.8397217, y: 10.501892}
   m_SizeDelta: {x: -398.7452, y: -291.0984}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325761270
