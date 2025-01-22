@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 13527383}
   - component: {fileID: 13527382}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: WC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1920,7 +1920,7 @@ GameObject:
   - component: {fileID: 249178480}
   - component: {fileID: 249178479}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: CTQ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2764,6 +2764,7 @@ MonoBehaviour:
     aiPercentage: 0
   placementManager: {fileID: 540532163}
   inventoryManager: {fileID: 1064610194}
+  slidePanelController: {fileID: 1123641881}
 --- !u!4 &319897189
 Transform:
   m_ObjectHideFlags: 0
@@ -2884,7 +2885,7 @@ GameObject:
   - component: {fileID: 342829486}
   - component: {fileID: 342829485}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: CB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3127,7 +3128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &382231054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4791,7 +4792,7 @@ GameObject:
   - component: {fileID: 532945785}
   - component: {fileID: 532945784}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4874,7 +4875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16282225, g: 0.92568684, b: 0.15022026, a: 1}
+  m_Color: {r: 0.6627451, g: 0.14117648, b: 0.14117648, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5932,7 +5933,7 @@ GameObject:
   - component: {fileID: 703124492}
   - component: {fileID: 703124491}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6015,7 +6016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16282225, g: 0.92568684, b: 0.15022026, a: 1}
+  m_Color: {r: 0.76470596, g: 0.14509805, b: 0.14509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7877,7 +7878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &872216997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9418,7 +9419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1074447196
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15239,7 +15240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1626495145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16667,7 +16668,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1837184831
 RectTransform:
   m_ObjectHideFlags: 0
