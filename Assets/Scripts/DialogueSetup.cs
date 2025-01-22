@@ -23,7 +23,7 @@ public class DialogueSetup : MonoBehaviour
                 "Welcome, Mayor! I am the Architect of this city.",
                 "You are the new Mayor of this city. and must rebuild it after unforeseen circumstances caused its collapse.",
                 "The previous mayor has been arrested, and it’s now up to you to restore the city and uncover the reasons for its downfall.",
-                "Here’s what you’ve got to work with: The government has allotted you ₹10,000, and you have 10 minutes to rebuild the city.",
+                "Here’s what you’ve got to work with: The government has allotted you Rs.10,000 and you have 10 minutes to rebuild the city.",
                 "Each building’s cost and construction time are displayed above. Plan your resources wisely, Mayor!",
                 "Factories are backbone of the city’s growth. They generate AI Tokens that can reduce building time, but be careful—AI can lead to unexpected consequences.",
                 "Mayor, as you build, you'll uncover ethics on the right top corner. Collect them to earn rewards and unlock more buildings!",

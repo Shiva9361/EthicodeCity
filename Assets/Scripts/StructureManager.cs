@@ -1,7 +1,10 @@
 ﻿using SVS;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class StructureManager : MonoBehaviour
 {
@@ -12,7 +15,133 @@ public class StructureManager : MonoBehaviour
 
     public InventoryManager inventoryManager;
 
-    private float[] specialWeights;
+    public EarthquakeMovement earthquakeMovement;
+
+    public SlidePanelController slidePanelController;
+
+    public GameObject panelPrefab;
+
+    private readonly float[] specialWeights;
+
+    private float earthQuaketimer = 0;
+    private float bankRobbingTimer = 0;
+
+    private bool earthQuakeOccured = false;
+    private bool bankRobberyOccured = false;
+
+    private Queue<GameObject> ObjectsInMap = new();
+
+    private Queue<GameObject> AIObjectsInMap = new();
+
+    private void Update()
+    {
+        earthQuaketimer += Time.deltaTime;
+        bankRobbingTimer += Time.deltaTime;
+        if (earthQuaketimer > 120)
+        {
+            earthQuaketimer = 0;
+
+            if (UnityEngine.Random.value < 0.5f && AIObjectsInMap.Count != 0)
+            {
+                StartCoroutine(EarthQuake());
+                Debug.Log("Earthquake event triggered.");
+            }
+            else
+            {
+                Debug.Log("Earthquake event skipped.");
+            }
+        }
+
+        if (bankRobbingTimer > 3600)
+        {
+            bankRobbingTimer = 0;
+
+            if (UnityEngine.Random.value < 0.5f && AIObjectsInMap.Count != 0)
+            {
+                BankRobbery();
+                Debug.Log("Bank robbery event triggered.");
+            }
+            else
+            {
+                Debug.Log("Bank robbery event skipped.");
+            }
+        }
+
+        int k = ObjectsInMap.Count;
+
+        for (int i = 0; i < k; i++)
+        {
+            GameObject obj = ObjectsInMap.Dequeue();
+            if (obj != null)
+            {
+                ObjectsInMap.Enqueue(obj);
+            }
+        }
+
+        k = AIObjectsInMap.Count;
+        for (int i = 0; i < k; i++)
+        {
+            GameObject obj = AIObjectsInMap.Dequeue();
+            if (obj != null)
+            {
+                AIObjectsInMap.Enqueue(obj);
+            }
+        }
+    }
+
+    private void BankRobbery()
+    {
+
+        foreach (var obj in AIObjectsInMap)
+        {
+            if (obj != null)
+            {
+                if (obj.GetComponent<StructureClickController>().isAi && obj.GetComponent<StructureClickController>().isBank)
+                {
+                    inventoryManager.ClearMoney();
+                    slidePanelController.EnableAchievement("CB");
+                    break;
+                }
+            }
+        }
+        if (bankRobberyOccured)
+        {
+            return;
+        }
+        GameObject panel = Instantiate(panelPrefab, GameObject.Find("Canvas").transform);
+        panel.transform.Find("Text (TMP)").GetComponent<TMP_Text>().text = "AI code lead to vulnerability in bank security. All your money was stolen.";
+        panel.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() => Destroy(panel));
+        panel.SetActive(true);
+        bankRobberyOccured = true;
+    }
+
+    private IEnumerator EarthQuake()
+    {
+        earthquakeMovement.TriggerEarthquake(5, 0.1f);
+        yield return new WaitForSeconds(5);
+
+        float chance = 1;
+        foreach (var obj in AIObjectsInMap)
+        {
+            if (obj != null && UnityEngine.Random.value < chance && !obj.GetComponent<StructureClickController>().isBank) // lets's not collapse banks
+            {
+                obj.GetComponent<StructureClickController>().Clear();
+                chance -= .05f;
+                chance = Mathf.Max(0, chance);
+                Destroy(obj);
+            }
+        }
+        slidePanelController.EnableAchievement("AI");
+        if (earthQuakeOccured)
+        {
+            yield break;
+        }
+        GameObject panel = Instantiate(panelPrefab, GameObject.Find("Canvas").transform);
+        panel.transform.Find("Text (TMP)").GetComponent<TMP_Text>().text = "AI Code is not perfect. So buildings collapsed.";
+        panel.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() => Destroy(panel));
+        panel.SetActive(true);
+        earthQuakeOccured = true;
+    }
 
     internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)
     {
@@ -53,28 +182,32 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-        placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum);
+        GameObject obj = placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, 1, 1, houseNum, isAI: isAi);
+        ObjectsInMap.Enqueue(obj);
+
         if (!isAi)
         {
             inventoryManager.Buy(housesPrefabe[houseNum].weight);
         }
         else
         {
+            AIObjectsInMap.Enqueue(obj);
             inventoryManager.SpendAiCredits(housesPrefabe[houseNum].aiCost);
         }
+
         AudioPlayer.instance.PlayPlacementSound();
         Debug.Log("Placement completed.");
     }
 
     private IEnumerator DelayedPlacementMulti(Vector3Int position, int houseNum, bool isAi, int width, int height)
     {
-        Debug.Log("Placement started.");
+        Debug.Log("Placement started Multi.");
         float placementTime = isAi ? bigStructuresPrefabs[houseNum].aiTime : bigStructuresPrefabs[houseNum].time;
-        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, houseNum);
+        GameObject gameObject = placementManager.CreateANewStructureModelGameObject(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, houseNum, true);
         Renderer renderer = gameObject.GetComponentsInChildren<Renderer>()[0];
+
         Material oldMaterial = renderer.material;
-        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        material.color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage); ;
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.Lerp(Color.green, Color.red, housesPrefabe[houseNum].aiPercentage) };
 
         for (int i = 0; i < 2 * placementTime; i++)
         {
@@ -89,14 +222,18 @@ public class StructureManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         Destroy(gameObject);
-        placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum);
+
+        GameObject obj = placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi);
+        obj.GetComponent<StructureClickController>().isBank = bigStructuresPrefabs[houseNum].isBank;
+        obj.GetComponent<StructureClickController>().isAiFactory = bigStructuresPrefabs[houseNum].isAiFactory;
+        ObjectsInMap.Enqueue(obj);
         if (!isAi)
         {
-            Debug.Log(bigStructuresPrefabs[houseNum].weight);
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
         }
         else
         {
+            AIObjectsInMap.Enqueue(obj);
             inventoryManager.SpendAiCredits(bigStructuresPrefabs[houseNum].aiCost);
         }
         AudioPlayer.instance.PlayPlacementSound();
@@ -120,20 +257,23 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    internal void PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex, bool isAI = false)
+    internal bool PlaceBigStructure(Vector3Int position, int width, int height, int bigStructureIndex, bool isAI = false)
     {
         if (CheckBigStructure(position, width, height) && inventoryManager.CanBuy(bigStructuresPrefabs[bigStructureIndex].weight) && !isAI)
         {
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
+            return true;
         }
         else if (CheckBigStructure(position, width, height) && inventoryManager.CanBuyAi(bigStructuresPrefabs[bigStructureIndex].aiCost) && isAI)
         {
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
+            return true;
         }
         else
         {
             Debug.Log("Not enough money");
         }
+        return false;
     }
 
     private bool CheckBigStructure(Vector3Int position, int width, int height)
@@ -279,7 +419,10 @@ public struct StructurePrefabWH
     [Range(0, 1)]
     public float aiPercentage;
 
-    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime)
+    public bool isBank;
+    public bool isAiFactory;
+
+    public StructurePrefabWH(GameObject prefab, float weight, int width, int height, int time, float aiPercentage, int aiCost, int aiTime, bool isBank, bool isAiFactory)
     {
         this.prefab = prefab;
         this.weight = weight;
@@ -289,6 +432,8 @@ public struct StructurePrefabWH
         this.aiCost = aiCost;
         this.aiTime = aiTime;
         this.aiPercentage = aiPercentage;
+        this.isBank = isBank;
+        this.isAiFactory = isAiFactory;
         scale = new Vector3(1, 1, 1);
 
     }

@@ -36,6 +36,12 @@ public class InventoryManager : MonoBehaviour
         UpdateMoneyDisplay();
     }
 
+    public void ClearMoney()
+    {
+        Money = 0;
+        UpdateMoneyDisplay();
+    }
+
     // Method to add money to the player's balance
     public void AddMoney(float money)
     {

@@ -35,10 +35,12 @@ public class PlacementManager : MonoBehaviour
         return false;
     }
 
-    internal void PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1, int id = -1)
+    internal GameObject PlaceObjectOnTheMap(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int width = 1, int height = 1, int id = -1, bool isBigStructure = false, bool isAI = false)
     {
-        StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type, id);
 
+        StructureModel structure = CreateANewStructureModel(position, scale, structurePrefab, type, id, isBigStructure);
+
+        structure.GameObject().GetComponent<StructureClickController>().isAi = isAI;
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
@@ -50,6 +52,7 @@ public class PlacementManager : MonoBehaviour
                 DestroyNatureAt(newPosition);
             }
         }
+        return structure.GameObject();
 
     }
 
@@ -112,7 +115,7 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
-    private StructureModel CreateANewStructureModel(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int id = -1)
+    private StructureModel CreateANewStructureModel(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int id = -1, bool isBigStructure = false)
     {
         GameObject structure = new GameObject(type.ToString());
         structure.transform.SetParent(transform);
@@ -132,7 +135,8 @@ public class PlacementManager : MonoBehaviour
 
         structure.AddComponent<StructureClickController>();
         structure.GetComponent<StructureClickController>().structureInfoManager = structureInfoManager;
-        structure.GetComponent<StructureClickController>().id = id + structureInfoManager.bigStructureOffset;
+        structure.GetComponent<StructureClickController>().id = id;
+        structure.GetComponent<StructureClickController>().isBigStructure = isBigStructure;
         structure.GetComponent<StructureClickController>().detailsPanel = detailsPanel;
         structure.GetComponent<StructureClickController>().inventoryManager = inventoryManager;
         structure.GetComponent<StructureClickController>().placementManager = this;
@@ -142,7 +146,7 @@ public class PlacementManager : MonoBehaviour
         return structureModel;
     }
 
-    internal GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int id = -1)
+    internal GameObject CreateANewStructureModelGameObject(Vector3Int position, Vector3 scale, GameObject structurePrefab, CellType type, int id = -1, bool isBigStructure = false)
     {
         GameObject structure = new GameObject(type.ToString());
         structure.transform.SetParent(transform);
@@ -159,6 +163,7 @@ public class PlacementManager : MonoBehaviour
         structure.AddComponent<StructureClickController>();
         structure.GetComponent<StructureClickController>().structureInfoManager = structureInfoManager;
         structure.GetComponent<StructureClickController>().id = id;
+        structure.GetComponent<StructureClickController>().isBigStructure = isBigStructure;
         structure.GetComponent<StructureClickController>().detailsPanel = detailsPanel;
         structure.GetComponent<StructureClickController>().inventoryManager = inventoryManager;
         structure.GetComponent<StructureClickController>().placementManager = this;

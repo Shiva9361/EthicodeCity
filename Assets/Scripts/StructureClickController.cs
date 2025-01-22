@@ -7,6 +7,18 @@ public class StructureClickController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public int id;
+
+    public bool isBigStructure = false;
+
+    public bool isAi = false;
+
+    public bool isBank = false;
+
+    public bool isAiFactory = false;
+
+    public float time;
+
+    public float updateTime;
     public StructureInfoManager structureInfoManager;
     public InventoryManager inventoryManager;
 
@@ -15,12 +27,39 @@ public class StructureClickController : MonoBehaviour
     public GameObject detailsPanel;
 
     public HashSet<Vector3Int> positions;
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+        updateTime += Time.deltaTime;
+        if (updateTime > 10 && isBank)
+        {
+            inventoryManager.AddMoney(100);
+            updateTime = 0;
+        }
+        if (updateTime > 10 && isAiFactory)
+        {
+            inventoryManager.AddAiCredits(10);
+            updateTime = 0;
+        }
+
+    }
+
     void OnMouseDown()
     {
-        StructureInfo info;
-        structureInfoManager.structureInfoDictionary.TryGetValue(id, out info);
-        Debug.Log("Cost: " + info.weightedPrefab.weight + " Time: " + info.weightedPrefab.time);
-        UpdateDetailsPanel(info.weightedPrefab.weight, info.weightedPrefab.time, info.image);
+        if (!isBigStructure)
+        {
+            Debug.Log("placed " + structureInfoManager.structureInfoDictionary.TryGetValue(id, out StructureInfo info));
+            Debug.Log("ID " + id);
+            UpdateDetailsPanel(info.weightedPrefab.weight, info.weightedPrefab.time, info.image);
+        }
+        else
+        {
+            Debug.Log("placed multi " + structureInfoManager.multiStructureInfoDictionary.TryGetValue(id, out StructureInfoMulti info));
+            Debug.Log("ID " + id);
+            UpdateDetailsPanel(info.weightedPrefab.weight, info.weightedPrefab.time, info.image);
+        }
+
         detailsPanel.SetActive(true);
     }
 
@@ -30,6 +69,7 @@ public class StructureClickController : MonoBehaviour
         detailsPanel.transform.Find("Cost").GetComponent<TMP_Text>().text = "$" + cost;
         detailsPanel.transform.Find("Time").GetComponent<TMP_Text>().text = time + "s";
         detailsPanel.transform.Find("Image").GetComponent<RawImage>().texture = image;
+        detailsPanel.transform.Find("RemoveButton").GetComponent<Button>().onClick.RemoveAllListeners();
         detailsPanel.transform.Find("RemoveButton").GetComponent<Button>().onClick.AddListener(() =>
         {
             Destroy(gameObject);
@@ -41,7 +81,13 @@ public class StructureClickController : MonoBehaviour
             }
             detailsPanel.SetActive(false);
         });
+    }
 
-
+    internal void Clear()
+    {
+        foreach (Vector3Int position in positions)
+        {
+            placementManager.ClearLocation(position);
+        }
     }
 }

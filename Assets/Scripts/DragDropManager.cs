@@ -20,6 +20,8 @@ public class DragDropManager : MonoBehaviour
 
     bool isBigStructure = false;
 
+    bool initial = true;
+
     int currentPrefabIndex = 0;
 
     public InputManager inputManager;
@@ -50,6 +52,10 @@ public class DragDropManager : MonoBehaviour
         entry.eventID = EventTriggerType.PointerDown;
         entry.callback.AddListener((data) =>
         {
+            if (initial)
+            {
+                return;
+            }
             isDragging = true;
             Vector3Int? pos = inputManager.RaycastGround();
             isAI = isAi;
@@ -70,6 +76,10 @@ public class DragDropManager : MonoBehaviour
         entry.eventID = EventTriggerType.PointerDown;
         entry.callback.AddListener((data) =>
         {
+            if (initial && !(bigStructuresPrefabs[index].isBank || bigStructuresPrefabs[index].isAiFactory))
+            {
+                return;
+            }
             isDragging = true;
             Vector3Int? pos = inputManager.RaycastGround();
             this.isAI = isAI;
@@ -95,9 +105,11 @@ public class DragDropManager : MonoBehaviour
 
             if (pos != null && isBigStructure)
             {
-                structureManager.PlaceBigStructure(pos.Value, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height, currentPrefabIndex, isAI);
+                if (structureManager.PlaceBigStructure(pos.Value, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height, currentPrefabIndex, isAI))
+                {
+                    initial = false;
+                }
                 isBigStructure = false;
-                Debug.Log("Placing big structure");
             }
             else if (pos != null)
             {

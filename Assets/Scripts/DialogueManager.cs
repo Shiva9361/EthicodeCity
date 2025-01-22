@@ -19,7 +19,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         StartDialogue();
-        // specialImage.gameObject.SetActive(false);
+        specialImage.gameObject.SetActive(false);
     }
 
     void Update()

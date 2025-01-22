@@ -30,7 +30,7 @@ public class StructureInfoManager : MonoBehaviour
         }
         foreach (StructureInfoMulti structureInfo in multiBuildingStructureInfos)
         {
-            multiStructureInfoDictionary.Add(structureInfo.id, new StructureInfoMulti(structureInfo.image, structureInfo.id, structureInfo.weightedPrefab));
+            multiStructureInfoDictionary.Add(structureInfo.id - bigStructureOffset, new StructureInfoMulti(structureInfo.image, structureInfo.id, structureInfo.weightedPrefab));
             bigStructuresPrefabs[structureInfo.id - bigStructureOffset] = structureInfo.weightedPrefab;
         }
         structureManager.bigStructuresPrefabs = bigStructuresPrefabs;
@@ -66,6 +66,7 @@ public struct StructureInfoMulti
 
     public RenderTexture image;
     public StructurePrefabWH weightedPrefab;
+
 
     public StructureInfoMulti(RenderTexture image, int id, StructurePrefabWH prefabWeighted)
     {
