@@ -19,12 +19,56 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-    
+        for (int i = 0; i < disableButtons.Length; i++)
+        {
+            disableButtons[i].onClick.AddListener(() => cameraDragEnabled = false);
+        }
+        for (int i = 0; i < enableButtons.Length; i++)
+        {
+            enableButtons[i].onClick.AddListener(() => cameraDragEnabled = true);
+        }
     }
     void Update()
     {
-        
+        HandleCameraDrag();
+        HandleZoom();
     }
 
+    void HandleZoom()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0 && cameraDragEnabled)
+        {
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - scroll * 2, 2, 7);
+            dragSpeed = Camera.main.orthographicSize / dragRatio;
+        }
+    }
+    void HandleCameraDrag()
+    {
+        if (Input.GetMouseButtonDown(0) && cameraDragEnabled) // Left mouse button pressed
+        {
+            dragOrigin = Input.mousePosition;
+            isDragging = true;
+        }
 
+        if (Input.GetMouseButtonUp(0)) // Left mouse button released
+        {
+            isDragging = false;
+        }
+
+        if (isDragging && cameraDragEnabled)
+        {
+            Vector3 currentMousePosition = Input.mousePosition;
+            Vector3 difference = dragOrigin - currentMousePosition;
+
+            // Convert the difference to world space considering the camera's orientation
+            Vector3 move = new Vector3(difference.x, 0, difference.y) * dragSpeed * Time.deltaTime;
+            move = parent.transform.TransformDirection(move);
+
+            parent.transform.Translate(move, Space.World);
+
+            // Update drag origin
+            dragOrigin = currentMousePosition;
+        }
+    }
 }
