@@ -8,6 +8,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
     public Image characterImage;
+    public Image specialImage; // Image to display for specific dialogue
+
     public float textSpeed;
     public Character[] characters;  // Array of 4 characters (Alex, Elena, Sam, John)
 
@@ -17,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         StartDialogue();
+        // specialImage.gameObject.SetActive(false);
     }
 
     void Update()
@@ -48,6 +51,7 @@ public class DialogueManager : MonoBehaviour
         characterImage.sprite = characters[currentCharacterIndex].image;
         dialogueText.text = string.Empty;
 
+        CheckSpecialDialogue();
         StartCoroutine(TypeLine());
     }
 
@@ -80,6 +84,21 @@ public class DialogueManager : MonoBehaviour
             {
                 gameObject.SetActive(false);  // End the dialogue
             }
+        }
+    }
+    void CheckSpecialDialogue()
+    {
+        // Check if the current line is the special dialogue
+        string currentDialogue = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+        if (currentDialogue == "You are the new Mayor of this city. and must rebuild it after unforeseen circumstances caused its collapse.")
+        {
+            Debug.Log("Special image activated!");
+            specialImage.gameObject.SetActive(true); // Show the special image
+        }
+        else
+        {
+            Debug.Log("Special image deactivated!");
+            specialImage.gameObject.SetActive(false); // Hide the special image if it's not the special line
         }
     }
 }
