@@ -234,7 +234,7 @@ public class StructureManager : MonoBehaviour
         {
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
             // houseCount++;
-            inventoryManager.UpdateHappiness();
+            // inventoryManager.UpdateHappiness();
         }
         else
         {

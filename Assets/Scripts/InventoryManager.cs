@@ -21,19 +21,22 @@ public class InventoryManager : MonoBehaviour
         // Initialize the UI display
         UpdateMoneyDisplay();
         UpdateAiCreditsDisplay();
+        UpdateHappinessDisplay();
     }
 
     public void UpdateHappiness()
     {
         houseCount++;
-        HappinessMeter = (houseCount / 20) * 100;
+        HappinessMeter = houseCount / 20 * 100;
         UpdateHappinessDisplay();
-        if(HappinessMeter >= 50 && !isHappy) {
+        if (HappinessMeter >= 50 && !isHappy)
+        {
             AddAiCredits(100);
             AddMoney(1000);
             isHappy = true;
         }
-        else if(HappinessMeter < 50) {
+        else if (HappinessMeter < 50)
+        {
             isHappy = false;
         }
     }
