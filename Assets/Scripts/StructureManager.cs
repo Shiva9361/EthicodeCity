@@ -52,7 +52,7 @@ public class StructureManager : MonoBehaviour
             }
         }
 
-        if (bankRobbingTimer > 2)
+        if (bankRobbingTimer > 3600)
         {
             bankRobbingTimer = 0;
 
