@@ -16,9 +16,10 @@ public class DialogueManager : MonoBehaviour
     private int currentLineIndex = 0;
     private int currentCharacterIndex = 0;
 
+    private bool isRunning = false;
+
     void Start()
     {
-        StartDialogue();
         specialImage.gameObject.SetActive(false);
     }
 
@@ -26,33 +27,65 @@ public class DialogueManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (dialogueText.text == characters[currentCharacterIndex].dialogueLines[currentLineIndex])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
-            }
+            // dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+            if (!isRunning) { gameObject.SetActive(false); }
         }
     }
 
-    void StartDialogue()
+    private void Init()
     {
-        currentLineIndex = 0;
         currentCharacterIndex = 0;
-        DisplayCharacterDialogue();
-    }
-
-    void DisplayCharacterDialogue()
-    {
+        isRunning = true;
         nameText.text = characters[currentCharacterIndex].name;
         characterImage.sprite = characters[currentCharacterIndex].image;
         dialogueText.text = string.Empty;
+    }
 
-        CheckSpecialDialogue();
-        StartCoroutine(TypeLine());
+    public void StartDialogue()
+    {
+        Init();
+        StartCoroutine(TypeLine(0, 7));
+    }
+
+    public void BankBuildDialogue()
+    {
+        Init();
+        StartCoroutine(TypeLine(7, 10));
+    }
+
+    public void BankDestroyDialogue()
+    {
+        Init();
+        StartCoroutine(TypeLine(10, 11));
+    }
+
+    public void EarthQuakeDialogue()
+    {
+        Init();
+        StartCoroutine(TypeLine(11, 15));
+    }
+
+    public void HappinessDialogue()
+    {
+        Init();
+        StartCoroutine(TypeLine(15, 16));
+    }
+
+    public void DocumentationDialogue()
+    {
+        Init();
+        StartCoroutine(TypeLine(16, 19));
+    }
+
+    private IEnumerator TypeLine(int i, int j)
+    {
+        for (currentLineIndex = i; currentLineIndex < j; currentLineIndex++)
+        {
+            dialogueText.text = string.Empty;
+            yield return StartCoroutine(TypeLine());
+            yield return new WaitForSeconds(2f);
+        }
+        isRunning = false;
     }
 
     IEnumerator TypeLine()
@@ -62,30 +95,10 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+
     }
 
-    void NextLine()
-    {
-        if (currentLineIndex < characters[currentCharacterIndex].dialogueLines.Length - 1)
-        {
-            currentLineIndex++;
-            dialogueText.text = string.Empty;
-            StartCoroutine(TypeLine());
-        }
-        else
-        {
-            currentCharacterIndex++;
-            if (currentCharacterIndex < characters.Length)
-            {
-                currentLineIndex = 0;
-                DisplayCharacterDialogue();
-            }
-            else
-            {
-                gameObject.SetActive(false);  // End the dialogue
-            }
-        }
-    }
+
     void CheckSpecialDialogue()
     {
         // Check if the current line is the special dialogue
