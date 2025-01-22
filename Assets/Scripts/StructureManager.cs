@@ -26,6 +26,7 @@ public class StructureManager : MonoBehaviour
     private float earthQuaketimer = 0;
     private float bankRobbingTimer = 0;
 
+
     private bool earthQuakeOccured = false;
     private bool bankRobberyOccured = false;
 
@@ -188,6 +189,8 @@ public class StructureManager : MonoBehaviour
         if (!isAi)
         {
             inventoryManager.Buy(housesPrefabe[houseNum].weight);
+            // houseCount++;
+            inventoryManager.UpdateHappiness();
         }
         else
         {
@@ -230,6 +233,8 @@ public class StructureManager : MonoBehaviour
         if (!isAi)
         {
             inventoryManager.Buy(bigStructuresPrefabs[houseNum].weight);
+            // houseCount++;
+            inventoryManager.UpdateHappiness();
         }
         else
         {
@@ -249,6 +254,7 @@ public class StructureManager : MonoBehaviour
 
             placementManager.PlaceObjectOnTheMap(position, housesPrefabe[houseNum].scale, housesPrefabe[houseNum].prefab, CellType.Structure, houseNum);
             inventoryManager.Buy(housesPrefabe[houseNum].weight);
+            inventoryManager.UpdateHappiness();
             AudioPlayer.instance.PlayPlacementSound();
         }
         else if (inventoryManager.CanBuy(housesPrefabe[houseNum].weight) == false)
@@ -367,6 +373,11 @@ public class StructureManager : MonoBehaviour
         }
         return true;
     }
+
+    // public float GetHouseCount()
+    // {
+    //     return houseCount;
+    // }
 }
 
 [Serializable]

@@ -6,16 +6,36 @@ public class InventoryManager : MonoBehaviour
     // Public fields for Money and AI Credits
     public int AiCredits;
     public float Money;
+    public float HappinessMeter = 0;
+
+    public float houseCount = 0;
+    public bool isHappy = false;
 
     // UI Text elements for displaying money and AI credits
     public Text moneyText;
     public Text aiCreditsText;
+    public Text happinessMeterText;
 
     private void Start()
     {
         // Initialize the UI display
         UpdateMoneyDisplay();
         UpdateAiCreditsDisplay();
+    }
+
+    public void UpdateHappiness()
+    {
+        houseCount++;
+        HappinessMeter = (houseCount / 20) * 100;
+        UpdateHappinessDisplay();
+        if(HappinessMeter >= 50 && !isHappy) {
+            AddAiCredits(100);
+            AddMoney(1000);
+            isHappy = true;
+        }
+        else if(HappinessMeter < 50) {
+            isHappy = false;
+        }
     }
 
     // Method to check if the player can afford an item based on money
@@ -86,6 +106,14 @@ public class InventoryManager : MonoBehaviour
         if (aiCreditsText != null)
         {
             aiCreditsText.text = AiCredits.ToString(); // Display AI credits
+        }
+    }
+
+    private void UpdateHappinessDisplay()
+    {
+        if (happinessMeterText != null)
+        {
+            happinessMeterText.text = HappinessMeter.ToString() + "%";
         }
     }
 }
