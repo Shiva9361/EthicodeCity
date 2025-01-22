@@ -1,5 +1,7 @@
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
 public class SlidePanelController : MonoBehaviour
 {
     public GameObject panel;  // Reference to the panel to slide in/out
@@ -24,7 +26,7 @@ public class SlidePanelController : MonoBehaviour
     public void TogglePanel()
     {
         isPanelVisible = !isPanelVisible;  // Toggle panel visibility
-        
+
         // Start the sliding animation
         StopAllCoroutines();
         StartCoroutine(SlidePanel(isPanelVisible ? visiblePosition : hiddenPosition));
@@ -44,5 +46,10 @@ public class SlidePanelController : MonoBehaviour
 
         // Ensure panel is exactly at the target position
         panel.GetComponent<RectTransform>().anchoredPosition = targetPosition;
+    }
+    public void EnableAchievement(string Name)
+    {
+        panel.transform.Find(Name).gameObject.GetComponent<Image>().color = new Color(0, 255, 0, 1);
+        panel.transform.Find(Name).gameObject.transform.Find("Text (TMP)").GameObject().SetActive(true);
     }
 }

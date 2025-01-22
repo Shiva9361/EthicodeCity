@@ -51,6 +51,7 @@ public class StructureClickController : MonoBehaviour
         detailsPanel.transform.Find("Cost").GetComponent<TMP_Text>().text = "$" + cost;
         detailsPanel.transform.Find("Time").GetComponent<TMP_Text>().text = time + "s";
         detailsPanel.transform.Find("Image").GetComponent<RawImage>().texture = image;
+        detailsPanel.transform.Find("RemoveButton").GetComponent<Button>().onClick.RemoveAllListeners();
         detailsPanel.transform.Find("RemoveButton").GetComponent<Button>().onClick.AddListener(() =>
         {
             Destroy(gameObject);
@@ -62,7 +63,13 @@ public class StructureClickController : MonoBehaviour
             }
             detailsPanel.SetActive(false);
         });
+    }
 
-
+    internal void Clear()
+    {
+        foreach (Vector3Int position in positions)
+        {
+            placementManager.ClearLocation(position);
+        }
     }
 }
