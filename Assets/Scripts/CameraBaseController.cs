@@ -7,13 +7,16 @@ public class CameraBaseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (transform.GetComponentInChildren<CameraManager>().isDragging)
         {
-            transform.localRotation *= Quaternion.Euler(0, 1, 0);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.localRotation *= Quaternion.Euler(0, -1, 0);
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.localRotation *= Quaternion.Euler(0, 1, 0);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                transform.localRotation *= Quaternion.Euler(0, -1, 0);
+            }
         }
     }
 }

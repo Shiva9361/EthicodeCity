@@ -52,7 +52,7 @@ public class DialogueManager : MonoBehaviour
     public IEnumerator FactoryDialogue()
     {
         Init();
-        yield return StartCoroutine(TypeLine(5, 7));
+        yield return StartCoroutine(TypeLine(17, 18));
     }
 
     public IEnumerator BankBuildDialogue()

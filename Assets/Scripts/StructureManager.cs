@@ -17,6 +17,10 @@ public class StructureManager : MonoBehaviour
 
     public SlidePanelController slidePanelController;
 
+    public questionManager questionManager;
+
+    public CameraManager cameraManager;
+
     public GameObject panelPrefab;
 
     public DialogueManager dialogueManager;
@@ -252,6 +256,7 @@ public class StructureManager : MonoBehaviour
         {
             eventInProgress = true;
             yield return dialogueManager.FactoryDialogue();
+            yield return WaitforQuestion();
             eventInProgress = false;
         }
         if (!bigStructuresPrefabs[houseNum].isBank && !bigStructuresPrefabs[houseNum].isAiFactory)
@@ -287,7 +292,12 @@ public class StructureManager : MonoBehaviour
         Debug.Log("Placement completed.");
     }
 
-
+    private IEnumerator WaitforQuestion()
+    {
+        cameraManager.cameraDragEnabled = false;
+        yield return StartCoroutine(questionManager.StartQuestion());
+        cameraManager.cameraDragEnabled = true;
+    }
 
     internal void PlaceHouseBuffered(Vector3Int position, int houseNum)
     {
