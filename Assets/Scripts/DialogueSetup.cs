@@ -31,6 +31,7 @@ public class DialogueSetup : MonoBehaviour
                 "Building a bank? ",
                 " Here’s a choice: Using AI, you can complete it in just 1 second instead of the usual 100 seconds.",
                 "Tempting, isn’t it? But be cautious—AI can lead to issues like security breaches.",
+                // bank scene 10
                 "Warning! The bank you built using AI has been robbed due to a code breach. Always remember: Faster isn’t always better.",
 
                 //earthquake scene 11

@@ -3021,6 +3021,7 @@ MonoBehaviour:
   earthquakeMovement: {fileID: 520439587}
   slidePanelController: {fileID: 1123641881}
   panelPrefab: {fileID: 1325761268}
+  dialogueManager: {fileID: 92433837}
 --- !u!4 &319897189
 Transform:
   m_ObjectHideFlags: 0

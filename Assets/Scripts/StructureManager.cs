@@ -3,8 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class StructureManager : MonoBehaviour
 {
@@ -21,14 +20,19 @@ public class StructureManager : MonoBehaviour
 
     public GameObject panelPrefab;
 
+    public DialogueManager dialogueManager;
+
     private readonly float[] specialWeights;
 
     private float earthQuaketimer = 0;
     private float bankRobbingTimer = 0;
 
 
-    private bool earthQuakeOccured = false;
-    private bool bankRobberyOccured = false;
+    private bool eventInProgress = false;
+    private float earthquakeProbability = 0.5f;
+
+    private float bankRobberyProbability = 0.5f;
+    // private bool bankRobberyOccured = false;
 
     private Queue<GameObject> ObjectsInMap = new();
 
@@ -38,12 +42,14 @@ public class StructureManager : MonoBehaviour
     {
         earthQuaketimer += Time.deltaTime;
         bankRobbingTimer += Time.deltaTime;
-        if (earthQuaketimer > 120)
+        if (earthQuaketimer > 100)
         {
             earthQuaketimer = 0;
 
-            if (UnityEngine.Random.value < 0.5f && AIObjectsInMap.Count != 0)
+            if (UnityEngine.Random.value < earthquakeProbability && AIObjectsInMap.Count != 0 && !eventInProgress)
             {
+                eventInProgress = true;
+                earthquakeProbability = Mathf.Max(0.1f, earthquakeProbability - 0.1f);
                 StartCoroutine(EarthQuake());
                 Debug.Log("Earthquake event triggered.");
             }
@@ -53,12 +59,14 @@ public class StructureManager : MonoBehaviour
             }
         }
 
-        if (bankRobbingTimer > 3600)
+        if (bankRobbingTimer > 120)
         {
             bankRobbingTimer = 0;
 
-            if (UnityEngine.Random.value < 0.5f && AIObjectsInMap.Count != 0)
+            if (UnityEngine.Random.value < bankRobberyProbability && AIObjectsInMap.Count != 0 && !eventInProgress)
             {
+                eventInProgress = true;
+                bankRobberyProbability = Mathf.Max(0.1f, bankRobberyProbability - 0.1f);
                 BankRobbery();
                 Debug.Log("Bank robbery event triggered.");
             }
@@ -90,7 +98,7 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    private void BankRobbery()
+    private IEnumerator BankRobbery()
     {
 
         foreach (var obj in AIObjectsInMap)
@@ -105,19 +113,15 @@ public class StructureManager : MonoBehaviour
                 }
             }
         }
-        if (bankRobberyOccured)
-        {
-            return;
-        }
-        GameObject panel = Instantiate(panelPrefab, GameObject.Find("Canvas").transform);
-        panel.transform.Find("Text (TMP)").GetComponent<TMP_Text>().text = "AI code lead to vulnerability in bank security. All your money was stolen.";
-        panel.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() => Destroy(panel));
-        panel.SetActive(true);
-        bankRobberyOccured = true;
+        yield return StartCoroutine(dialogueManager.BankDestroyDialogue());
+        eventInProgress = false;
+        // bankRobberyOccured = true;
     }
 
     private IEnumerator EarthQuake()
     {
+        yield return dialogueManager.EarthQuakeDialogue(0);
+        yield return new WaitForSeconds(2);
         earthquakeMovement.TriggerEarthquake(5, 0.1f);
         yield return new WaitForSeconds(5);
 
@@ -132,16 +136,18 @@ public class StructureManager : MonoBehaviour
                 Destroy(obj);
             }
         }
+        yield return dialogueManager.EarthQuakeDialogue(1);
         slidePanelController.EnableAchievement("AI");
-        if (earthQuakeOccured)
-        {
-            yield break;
-        }
-        GameObject panel = Instantiate(panelPrefab, GameObject.Find("Canvas").transform);
-        panel.transform.Find("Text (TMP)").GetComponent<TMP_Text>().text = "AI Code is not perfect. So buildings collapsed.";
-        panel.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() => Destroy(panel));
-        panel.SetActive(true);
-        earthQuakeOccured = true;
+        eventInProgress = false;
+        // if (earthQuakeOccured)
+        // {
+        //     yield break;
+        // }
+        // GameObject panel = Instantiate(panelPrefab, GameObject.Find("Canvas").transform);
+        // panel.transform.Find("Text (TMP)").GetComponent<TMP_Text>().text = "AI Code is not perfect. So buildings collapsed.";
+        // panel.transform.Find("Button").GetComponent<Button>().onClick.AddListener(() => Destroy(panel));
+        // panel.SetActive(true);
+        // earthQuakeOccured = true;
     }
 
     internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)

@@ -28,12 +28,14 @@ public class DialogueManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             // dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
-            if (!isRunning) { gameObject.SetActive(false); }
+            if (!isRunning) { transform.parent.gameObject.SetActive(false); }
         }
     }
 
     private void Init()
     {
+        if (isRunning) return;
+        transform.parent.gameObject.SetActive(true);
         currentCharacterIndex = 0;
         isRunning = true;
         nameText.text = characters[currentCharacterIndex].name;
@@ -53,16 +55,17 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeLine(7, 10));
     }
 
-    public void BankDestroyDialogue()
+    public IEnumerator BankDestroyDialogue()
     {
         Init();
-        StartCoroutine(TypeLine(10, 11));
+        yield return StartCoroutine(TypeLine(10, 11));
     }
 
-    public void EarthQuakeDialogue()
+    public IEnumerator EarthQuakeDialogue(int i = 0)
     {
         Init();
-        StartCoroutine(TypeLine(11, 15));
+        if (i == 0) yield return StartCoroutine(TypeLine(11, 13));
+        if (i == 1) yield return StartCoroutine(TypeLine(13, 15));
     }
 
     public void HappinessDialogue()
@@ -83,7 +86,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = string.Empty;
             yield return StartCoroutine(TypeLine());
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.2f);
         }
         isRunning = false;
     }
