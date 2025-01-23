@@ -98,6 +98,12 @@ public class DialogueManager : MonoBehaviour
         yield return StartCoroutine(TypeLine(19, 20));
     }
 
+    public IEnumerator BuildingPlacementDialogue()
+    {
+        Init();
+        yield return StartCoroutine(TypeLine(20, 21));
+    }
+
     private IEnumerator TypeLine(int i, int j)
     {
         for (currentLineIndex = i; currentLineIndex < j; currentLineIndex++)

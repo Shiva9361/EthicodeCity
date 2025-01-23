@@ -49,7 +49,9 @@ public class DialogueSetup : MonoBehaviour
                 "Factories are running at 50% efficiency due to lack of proper code comments. Play the Debugging Challenge mini-game to improve efficiency.",
                 // happiness meter 18
                 "Well done, Mayor! A city built with strong values and responsibility will stand the test of time. Let’s make this city the best it can be!",
-                "AI building had vulnerabilities and ended up collapsing on it's own."
+                "AI building had vulnerabilities and ended up collapsing on it's own.",
+
+                "Buildings need to be placed only along roads, Mayor. Also make sure you have enough money or AI credits to build them.",
             }
         };
         dialogueManager.StartDialogue();

@@ -171,7 +171,7 @@ public class StructureManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough money");
+            StartCoroutine(dialogueManager.BuildingPlacementDialogue());
         }
     }
 
@@ -327,10 +327,12 @@ public class StructureManager : MonoBehaviour
             StartCoroutine(DelayedPlacementMulti(position, bigStructureIndex, isAI, width, height));
             return true;
         }
+
         else
         {
-            Debug.Log("Not enough money");
+            StartCoroutine(dialogueManager.BuildingPlacementDialogue());
         }
+
         return false;
     }
 
