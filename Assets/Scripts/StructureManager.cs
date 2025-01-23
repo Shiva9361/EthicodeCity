@@ -236,6 +236,22 @@ public class StructureManager : MonoBehaviour
         GameObject obj = placementManager.PlaceObjectOnTheMap(position, bigStructuresPrefabs[houseNum].scale, bigStructuresPrefabs[houseNum].prefab, CellType.Structure, width, height, houseNum, true, isAi);
         obj.GetComponent<StructureClickController>().isBank = bigStructuresPrefabs[houseNum].isBank;
         obj.GetComponent<StructureClickController>().isAiFactory = bigStructuresPrefabs[houseNum].isAiFactory;
+
+        if (isAi && bigStructuresPrefabs[houseNum].isBank && !eventInProgress)
+        {
+            eventInProgress = true;
+            yield return dialogueManager.BankBuildDialogue();
+            eventInProgress = false;
+        }
+
+        if (isAi && bigStructuresPrefabs[houseNum].isAiFactory && !eventInProgress)
+        {
+            eventInProgress = true;
+            yield return dialogueManager.FactoryDialogue();
+            eventInProgress = false;
+        }
+
+
         ObjectsInMap.Enqueue(obj);
         if (!isAi)
         {

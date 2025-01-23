@@ -46,13 +46,19 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue()
     {
         Init();
-        StartCoroutine(TypeLine(0, 7));
+        StartCoroutine(TypeLine(0, 5));
     }
 
-    public void BankBuildDialogue()
+    public IEnumerator FactoryDialogue()
     {
         Init();
-        StartCoroutine(TypeLine(7, 10));
+        yield return StartCoroutine(TypeLine(5, 7));
+    }
+
+    public IEnumerator BankBuildDialogue()
+    {
+        Init();
+        yield return StartCoroutine(TypeLine(7, 10));
     }
 
     public IEnumerator BankDestroyDialogue()
