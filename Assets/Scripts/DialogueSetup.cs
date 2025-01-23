@@ -31,7 +31,7 @@ public class DialogueSetup : MonoBehaviour
                 "Mayor, as you build, you'll uncover ethics on the right top corner. Collect them to earn rewards and unlock more buildings!",
                 // bank scene 7
                 "Building a bank? ",
-                " Here’s a choice: Using AI, you can complete it in just 1 second instead of the usual 100 seconds.",
+                " Here’s a choice: Using AI, you can complete it in just 1 second instead of the usual 200 seconds.",
                 "Tempting, isn’t it? But be cautious—AI can lead to issues like security breaches.",
                 // bank scene 10
                 "Warning! The bank you built using AI has been robbed due to a code breach. Always remember: Faster isn’t always better.",
@@ -44,8 +44,10 @@ public class DialogueSetup : MonoBehaviour
                 //happiness meter 15
                 "Great progress, Mayor! Keep an eye on the Citizen Happiness Meter. The more buildings you construct, the happier they’ll be.",
                 //documentation index 16
-                "Don’t forget the Documentation Index. Building at least 5 offices ensures the city’s systems are well-documented and future-proof.",
+                "Don’t forget the Documentation Index. Building at least 5 Hospitals ensures the city’s systems are well-documented and future-proof.",
+                // documentation index 17
                 "Factories are running at 50% efficiency due to lack of proper code comments. Play the Debugging Challenge mini-game to improve efficiency.",
+                // happiness meter 18
                 "Well done, Mayor! A city built with strong values and responsibility will stand the test of time. Let’s make this city the best it can be!",
             }
         };

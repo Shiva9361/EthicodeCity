@@ -26,6 +26,8 @@ public class StructureManager : MonoBehaviour
     private float earthQuaketimer = 0;
     private float bankRobbingTimer = 0;
 
+    private int hospitalCount = 0;
+
 
     private bool eventInProgress = false;
     private float earthquakeProbability = 0.5f;
@@ -249,6 +251,21 @@ public class StructureManager : MonoBehaviour
             eventInProgress = true;
             yield return dialogueManager.FactoryDialogue();
             eventInProgress = false;
+        }
+        if (!bigStructuresPrefabs[houseNum].isBank && !bigStructuresPrefabs[houseNum].isAiFactory)
+        {
+            if (hospitalCount == 0)
+            {
+                eventInProgress = true;
+                yield return dialogueManager.DocumentationDialogue();
+                eventInProgress = false;
+            }
+            else if (hospitalCount == 4)
+            {
+                slidePanelController.EnableAchievement("CD");
+                yield return dialogueManager.CongratulationsDialogue();
+            }
+            hospitalCount++;
         }
 
 

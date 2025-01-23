@@ -80,10 +80,16 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeLine(15, 16));
     }
 
-    public void DocumentationDialogue()
+    public IEnumerator DocumentationDialogue()
     {
         Init();
-        StartCoroutine(TypeLine(16, 19));
+        yield return StartCoroutine(TypeLine(16, 17));
+    }
+
+    public IEnumerator CongratulationsDialogue()
+    {
+        Init();
+        yield return StartCoroutine(TypeLine(18, 19));
     }
 
     private IEnumerator TypeLine(int i, int j)
