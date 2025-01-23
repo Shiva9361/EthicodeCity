@@ -140,7 +140,7 @@ public class StructureManager : MonoBehaviour
             }
         }
         yield return dialogueManager.EarthQuakeDialogue(1);
-        slidePanelController.EnableAchievement("AI");
+        slidePanelController.EnableAchievement("CTQ");
         eventInProgress = false;
         // if (earthQuakeOccured)
         // {
