@@ -59,9 +59,9 @@ public class InventoryManager : MonoBehaviour
         UpdateMoneyDisplay();
     }
 
-    public void ClearMoney()
+    public void ClearMoney(int percent = 100)
     {
-        Money = 0;
+        Money *= 1 - percent / 100;
         UpdateMoneyDisplay();
     }
 

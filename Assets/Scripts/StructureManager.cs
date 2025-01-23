@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class StructureManager : MonoBehaviour
 {
@@ -32,6 +31,7 @@ public class StructureManager : MonoBehaviour
     private float earthquakeProbability = 0.5f;
 
     private float bankRobberyProbability = 0.5f;
+    private int moneyClearPercentage = 100;
     // private bool bankRobberyOccured = false;
 
     private Queue<GameObject> ObjectsInMap = new();
@@ -67,7 +67,7 @@ public class StructureManager : MonoBehaviour
             {
                 eventInProgress = true;
                 bankRobberyProbability = Mathf.Max(0.1f, bankRobberyProbability - 0.1f);
-                BankRobbery();
+                StartCoroutine(BankRobbery());
                 Debug.Log("Bank robbery event triggered.");
             }
             else
@@ -107,7 +107,8 @@ public class StructureManager : MonoBehaviour
             {
                 if (obj.GetComponent<StructureClickController>().isAi && obj.GetComponent<StructureClickController>().isBank)
                 {
-                    inventoryManager.ClearMoney();
+                    inventoryManager.ClearMoney(moneyClearPercentage);
+                    moneyClearPercentage = Mathf.Max(20, moneyClearPercentage - 10);
                     slidePanelController.EnableAchievement("CB");
                     break;
                 }
