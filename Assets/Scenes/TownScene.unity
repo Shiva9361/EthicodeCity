@@ -1374,7 +1374,7 @@ MonoBehaviour:
       weight: 2556
       scale: {x: 0.01, y: 0.01, z: 0.01}
       time: 0
-      aiCost: 16
+      aiCost: 14
       aiTime: 1
       aiPercentage: 0
   - id: 1
@@ -1383,9 +1383,9 @@ MonoBehaviour:
       prefab: {fileID: 919132149155446097, guid: 070da169a9d4e0f4a9adb179ed137cc1, type: 3}
       weight: 1000
       scale: {x: 0.01, y: 0.01, z: 0.01}
-      time: 0
+      time: 10
       aiCost: 13
-      aiTime: 0
+      aiTime: 2
       aiPercentage: 0.246
   - id: 2
     image: {fileID: 8400000, guid: ecc5c8add2622431a97e96e16cb79994, type: 2}
@@ -1393,9 +1393,9 @@ MonoBehaviour:
       prefab: {fileID: 919132149155446097, guid: 937264fee3f822a4c9ab3b7616c695ae, type: 3}
       weight: 1000
       scale: {x: 0.01, y: 0.01, z: 0.01}
-      time: 0
+      time: 10
       aiCost: 0
-      aiTime: 0
+      aiTime: 2
       aiPercentage: 0.232
   - id: 3
     image: {fileID: 8400000, guid: b856c09fe7b9335c782578e548f0a6d9, type: 2}
@@ -1403,9 +1403,9 @@ MonoBehaviour:
       prefab: {fileID: 919132149155446097, guid: 56b70a5b976f18043abdd429b490177b, type: 3}
       weight: 1000
       scale: {x: 0.01, y: 0.01, z: 0.01}
-      time: 0
-      aiCost: 0
-      aiTime: 0
+      time: 10
+      aiCost: 13
+      aiTime: 1
       aiPercentage: 0
   - id: 4
     image: {fileID: 8400000, guid: bc7a041c20fb1a642b9a3b7ced92d173, type: 2}
@@ -1413,9 +1413,9 @@ MonoBehaviour:
       prefab: {fileID: 100000, guid: 6a690a756dbd65141a09a3ad7fafacc4, type: 3}
       weight: 1717
       scale: {x: 0.05, y: 0.05, z: 0.05}
-      time: 0
-      aiCost: 0
-      aiTime: 0
+      time: 10
+      aiCost: 12
+      aiTime: 2
       aiPercentage: 1
   - id: 5
     image: {fileID: 8400000, guid: ab60aea7497cb744ab0fca6c56ff2397, type: 2}
@@ -1423,9 +1423,9 @@ MonoBehaviour:
       prefab: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
       weight: 2761
       scale: {x: 0.05, y: 0.05, z: 0.05}
-      time: 0
-      aiCost: 0
-      aiTime: 0
+      time: 10
+      aiCost: 12
+      aiTime: 2
       aiPercentage: 0.536
   - id: 6
     image: {fileID: 8400000, guid: 687060aa0d63a434c8f50f1153eb3029, type: 2}
@@ -1434,7 +1434,7 @@ MonoBehaviour:
       weight: 0
       scale: {x: 0.05, y: 0.05, z: 0.05}
       time: 0
-      aiCost: 0
+      aiCost: 11
       aiTime: 0
       aiPercentage: 0
   multiBuildingStructureInfos:
@@ -1461,7 +1461,7 @@ MonoBehaviour:
       width: 4
       height: 6
       time: 2
-      aiCost: 1
+      aiCost: 10
       aiTime: 1
       aiPercentage: 0.582
       isBank: 0
@@ -3022,6 +3022,8 @@ MonoBehaviour:
   slidePanelController: {fileID: 1123641881}
   panelPrefab: {fileID: 1325761268}
   dialogueManager: {fileID: 92433837}
+  eventInProgress: 0
+  AIDestroyed: 0
 --- !u!4 &319897189
 Transform:
   m_ObjectHideFlags: 0
@@ -9930,7 +9932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ec2d123a1ec6a4b9c3c01e419086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AiCredits: 100
+  AiCredits: 110
   Money: 1000
   HappinessMeter: 0
   houseCount: 0
@@ -15037,7 +15039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1475595961
 RectTransform:
   m_ObjectHideFlags: 0
