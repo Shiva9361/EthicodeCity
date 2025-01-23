@@ -59,6 +59,7 @@ public class questionManager : MonoBehaviour
         questionImage.gameObject.SetActive(false);
         inputField.gameObject.SetActive(false);
         submitButton.gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
 }
