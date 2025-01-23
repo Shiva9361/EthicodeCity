@@ -52,7 +52,7 @@ public class DialogueSetup : MonoBehaviour
                 "AI building had vulnerabilities and ended up collapsing on it's own."
             }
         };
-        // dialogueManager.StartDialogue();
+        dialogueManager.StartDialogue();
 
 
     }
