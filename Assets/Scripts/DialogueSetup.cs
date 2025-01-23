@@ -23,7 +23,7 @@ public class DialogueSetup : MonoBehaviour
                 "Welcome, Mayor! I am the Architect of this city.",
                 "You are the new Mayor of this city. and must rebuild it after unforeseen circumstances caused its collapse.",
                 "The previous mayor has been arrested, and it’s now up to you to restore the city and uncover the reasons for its downfall.",
-                "Here’s what you’ve got to work with: The government has allotted you $1000 and 100 AI credits to rebuild the city.",
+                "Here’s what you’ve got to work with: The government has allotted you $1000 and 110 AI credits to rebuild the city.",
                 "You can drag and drop buildings from the menu on the left. Let’s get started!",
                 
                 // Factory scene 5
@@ -49,9 +49,10 @@ public class DialogueSetup : MonoBehaviour
                 "Factories are running at 50% efficiency due to lack of proper code comments. Play the Debugging Challenge mini-game to improve efficiency.",
                 // happiness meter 18
                 "Well done, Mayor! A city built with strong values and responsibility will stand the test of time. Let’s make this city the best it can be!",
+                "AI building had vulnerabilities and ended up collapsing on it's own."
             }
         };
-        dialogueManager.StartDialogue();
+        // dialogueManager.StartDialogue();
 
 
     }

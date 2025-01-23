@@ -29,7 +29,9 @@ public class StructureManager : MonoBehaviour
     private int hospitalCount = 0;
 
 
-    private bool eventInProgress = false;
+    public bool eventInProgress = false;
+
+    public bool AIDestroyed = false;
     private float earthquakeProbability = 0.5f;
 
     private float bankRobberyProbability = 0.5f;

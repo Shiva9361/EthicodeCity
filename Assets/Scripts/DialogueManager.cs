@@ -92,6 +92,12 @@ public class DialogueManager : MonoBehaviour
         yield return StartCoroutine(TypeLine(18, 19));
     }
 
+    public IEnumerator AIBuildingDialogue()
+    {
+        Init();
+        yield return StartCoroutine(TypeLine(19, 20));
+    }
+
     private IEnumerator TypeLine(int i, int j)
     {
         for (currentLineIndex = i; currentLineIndex < j; currentLineIndex++)

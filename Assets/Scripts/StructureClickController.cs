@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class StructureClickController : MonoBehaviour
 {
@@ -43,6 +44,27 @@ public class StructureClickController : MonoBehaviour
             updateTime = 0;
         }
 
+        if (time > 10 && time < 12)
+        {
+            if (isAi && Random.value > 0.2 && !isBank)
+            {
+                Clear();
+                if (!structureInfoManager.structureManager.eventInProgress && !structureInfoManager.structureManager.AIDestroyed)
+                {
+                    structureInfoManager.structureManager.eventInProgress = true;
+                    StartCoroutine(DestroyAI());
+                    structureInfoManager.structureManager.eventInProgress = false;
+                }
+                Destroy(gameObject);
+            }
+        }
+
+    }
+
+    private IEnumerator DestroyAI()
+    {
+        yield return structureInfoManager.structureManager.dialogueManager.AIBuildingDialogue();
+        structureInfoManager.structureManager.slidePanelController.EnableAchievement("AI");
     }
 
     void OnMouseDown()
