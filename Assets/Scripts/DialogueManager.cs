@@ -25,14 +25,49 @@ public class DialogueManager : MonoBehaviour
         specialImage.gameObject.SetActive(false);
     }
 
+    // void Update()
+    // {
+    //     if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
+    //     {
+    //         // dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+    //         if (!isRunning) { transform.parent.gameObject.SetActive(false); }
+    //     }
+    // }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            // dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
-            if (!isRunning) { transform.parent.gameObject.SetActive(false); }
+            if (!isRunning) 
+            { 
+                transform.parent.gameObject.SetActive(false); 
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (isRunning)
+            {
+                SkipDialogue();
+            }
         }
     }
+
+    void SkipDialogue()
+    {
+        StopAllCoroutines();
+        dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+
+        currentLineIndex++;
+
+        if (currentLineIndex < characters[currentCharacterIndex].dialogueLines.Length)
+        {
+            StartCoroutine(TypeLine(currentLineIndex, currentLineIndex + 1));
+        }
+        isRunning = false;
+        transform.parent.gameObject.SetActive(false);
+    }
+
 
     private void Init()
     {
