@@ -9,6 +9,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Image characterImage;
     public Image specialImage; // Image to display for specific dialogue
+    public string dialogueSpeech;
+    public SpeechManager speechmanager;
 
     public float textSpeed;
     public Character[] characters;  // Array of 4 characters (Alex, Elena, Sam, John)
@@ -46,7 +48,9 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue()
     {
         Init();
+        // SpeakLine(0, 5);
         StartCoroutine(TypeLine(0, 5));
+        // StartCoroutine(GetLine(0, 5));
     }
 
     public IEnumerator FactoryDialogue()
@@ -108,8 +112,11 @@ public class DialogueManager : MonoBehaviour
     {
         for (currentLineIndex = i; currentLineIndex < j; currentLineIndex++)
         {
+            dialogueSpeech = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+            Debug.Log(dialogueSpeech);
             dialogueText.text = string.Empty;
             yield return StartCoroutine(TypeLine());
+            speechmanager.SpeakLine(dialogueSpeech);
             yield return new WaitForSeconds(1.2f);
         }
         isRunning = false;
@@ -124,6 +131,26 @@ public class DialogueManager : MonoBehaviour
         }
 
     }
+
+    // void SpeakLine(int i, int j)
+    // {
+    //     for (currentLineIndex = i; currentLineIndex < j; currentLineIndex++)
+    //     {
+    //         dialogueSpeech = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+    //         Debug.Log(dialogueSpeech);
+    //         speechmanager.Speak(dialogueSpeech);
+    //     }
+    // }
+
+    // IEnumerator GetLine()
+    // {
+    //     foreach (char c in characters[currentCharacterIndex].dialogueLines[currentLineIndex].ToCharArray())
+    //     {
+    //         dialogueSpeech += c;
+    //         Debug.Log(dialogueSpeech);
+    //         yield return new WaitForSeconds(textSpeed);
+    //     }
+    // }
 
 
     void CheckSpecialDialogue()
