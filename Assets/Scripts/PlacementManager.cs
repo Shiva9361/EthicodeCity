@@ -99,9 +99,28 @@ public class PlacementManager : MonoBehaviour
         selectedPrefab = CreateANewStructureModelGameObject(position, scale, structurePrefab, type);
     }
 
-    internal void ReplaceCurrentSelection(Vector3Int position)
+    internal void ReplaceCurrentSelection(Vector3Int position, Color color, int width = 1, int height = 1)
     {
         selectedPrefab.transform.localPosition = position;
+        Renderer[] renderers = selectedPrefab.GetComponentsInChildren<Renderer>();
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        material.color = color;
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material = material;
+        }
+        // if (renderers.Length == 0)
+        // {
+        //     if (selectedPrefab.GetComponent<Renderer>() != null)
+        //     {
+        //         selectedPrefab.GetComponent<Renderer>().material.color = color;
+        //     }
+        //     else
+        //     {
+        //         selectedPrefab.AddComponent<Renderer>().material.color = color;
+        //     }
+        // }
+
     }
 
     internal List<Vector3Int> GetNeighboursOfTypeFor(Vector3Int position, CellType type)

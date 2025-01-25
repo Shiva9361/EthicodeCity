@@ -137,10 +137,11 @@ public class DialogueManager : MonoBehaviour
         yield return StartCoroutine(TypeLine(19, 20));
     }
 
-    public IEnumerator BuildingPlacementDialogue()
+    public IEnumerator BuildingPlacementDialogue(int i)
     {
         Init();
-        yield return StartCoroutine(TypeLine(20, 21));
+        if (i == 0) { yield return StartCoroutine(TypeLine(20, 21)); }
+        else { yield return StartCoroutine(TypeLine(21, 22)); }
     }
 
     private IEnumerator TypeLine(int i, int j)

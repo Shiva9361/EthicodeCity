@@ -51,10 +51,11 @@ public class DialogueSetup : MonoBehaviour
                 "Well done, Mayor! A city built with strong values and responsibility will stand the test of time. Let’s make this city the best it can be!",
                 "AI building had vulnerabilities and ended up collapsing on it's own.",
 
-                "Buildings need to be placed only along roads, Mayor. Also make sure you have enough money or AI credits to build them.",
+                "Buildings need to be placed only along roads, Mayor.",
+                "Make sure you have enough money or AI credits to build buildings, Mayor.",
             }
         };
-        dialogueManager.StartDialogue();
+        // dialogueManager.StartDialogue();
 
 
     }

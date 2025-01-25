@@ -49,7 +49,7 @@ public class SlidePanelController : MonoBehaviour
     }
     public void EnableAchievement(string Name)
     {
-        panel.transform.Find(Name).gameObject.GetComponent<Image>().color = new Color(0, 255, 0, 1);
+        // panel.transform.Find(Name).gameObject.GetComponent<Image>().color = new Color(0, 255, 0, 1);
         panel.transform.Find(Name).gameObject.transform.Find("Text (TMP)").GameObject().SetActive(true);
     }
 }

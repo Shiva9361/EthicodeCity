@@ -46,42 +46,39 @@ public class StructureClickController : MonoBehaviour
             updateTime = 0;
         }
 
-        if (time > 10 && notTriedToDestroy)
+        if (time > 5 && notTriedToDestroy)
         {
             notTriedToDestroy = false;
-            if (isAi && Random.value > 0.8 && !isBank && !isAiFactory)
+            if (isAi && Random.value >= 0 && !isBank && !isAiFactory)
             {
-                Clear();
                 if (!structureInfoManager.structureManager.AIDestroyed)
                 {
                     StartCoroutine(DestroyAI());
                 }
-                DestroyObject();
+                StartCoroutine(DestroyModel());
             }
         }
 
     }
 
-    private IEnumerator DestroyObject()
+    private IEnumerator DestroyModel()
     {
-        if (transform.GetComponent<Renderer>() != null)
+        Renderer renderer = transform.GetComponentsInChildren<Renderer>()[0];
+        Material oldMaterial = renderer.material;
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.red };
+        for (int i = 0; i < 2 * 3; i++)
         {
-            Renderer renderer = transform.GetComponent<Renderer>();
-            Material oldMaterial = transform.GetComponent<Renderer>().material;
-            Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.red };
-            for (int i = 0; i < 2 * 3; i++)
+            if (i % 2 == 1)
             {
-                if (i % 2 == 1)
-                {
-                    renderer.material = oldMaterial;
-                }
-                else
-                {
-                    renderer.material = material;
-                }
-                yield return new WaitForSeconds(0.5f);
+                renderer.material = oldMaterial;
             }
+            else
+            {
+                renderer.material = material;
+            }
+            yield return new WaitForSeconds(0.5f);
         }
+        Clear();
         Destroy(gameObject);
     }
 

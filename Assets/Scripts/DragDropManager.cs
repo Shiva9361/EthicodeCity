@@ -120,9 +120,27 @@ public class DragDropManager : MonoBehaviour
         if (isDragging)
         {
             Vector3Int? pos = inputManager.RaycastGround();
-            if (pos != null)
+            if (pos != null && isBigStructure)
             {
-                placementManager.ReplaceCurrentSelection(pos.Value);
+                if (structureManager.CheckBigStructure(pos.Value, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height))
+                {
+                    placementManager.ReplaceCurrentSelection(pos.Value, Color.green, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height);
+                }
+                else
+                {
+                    placementManager.ReplaceCurrentSelection(pos.Value, Color.red, bigStructuresPrefabs[currentPrefabIndex].width, bigStructuresPrefabs[currentPrefabIndex].height);
+                }
+            }
+            else if (pos != null)
+            {
+                if (structureManager.CheckBigStructure(pos.Value, 1, 1))
+                {
+                    placementManager.ReplaceCurrentSelection(pos.Value, Color.green);
+                }
+                else
+                {
+                    placementManager.ReplaceCurrentSelection(pos.Value, Color.red);
+                }
             }
         }
     }

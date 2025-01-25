@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StructureManager : MonoBehaviour
@@ -140,19 +141,20 @@ public class StructureManager : MonoBehaviour
         yield return dialogueManager.EarthQuakeDialogue(0);
         yield return new WaitForSeconds(2);
         earthquakeMovement.TriggerEarthquake(5, 0.1f);
-        yield return new WaitForSeconds(5);
+
 
         float chance = 1;
         foreach (var obj in AIObjectsInMap)
         {
-            if (obj != null && UnityEngine.Random.value < chance && !obj.GetComponent<StructureClickController>().isBank) // lets's not collapse banks
+            if (obj != null && UnityEngine.Random.value <= chance && !obj.GetComponent<StructureClickController>().isBank) // lets's not collapse banks
             {
                 obj.GetComponent<StructureClickController>().Clear();
                 chance -= .05f;
                 chance = Mathf.Max(0, chance);
-                Destroy(obj);
+                StartCoroutine(DestroyBuilding(obj));
             }
         }
+        yield return new WaitForSeconds(5);
         yield return dialogueManager.EarthQuakeDialogue(1);
         slidePanelController.EnableAchievement("CTQ");
         eventInProgress = false;
@@ -167,6 +169,32 @@ public class StructureManager : MonoBehaviour
         // earthQuakeOccured = true;
     }
 
+    private IEnumerator DestroyBuilding(GameObject obj)
+    {
+        // if (obj.transform.GetComponent<Renderer>() == null)
+        // {
+        //     obj.transform.AddComponent<Renderer>();
+        // }
+
+        Renderer renderer = obj.transform.GetComponentsInChildren<Renderer>()[0];
+        Material oldMaterial = renderer.material;
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.red };
+        for (int i = 0; i < 2 * 5; i++)
+        {
+            if (i % 2 == 1)
+            {
+                renderer.material = oldMaterial;
+            }
+            else
+            {
+                renderer.material = material;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        Destroy(obj);
+    }
+
     internal void PlaceHouseBufferedDelayed(Vector3Int position, int houseNum, bool isAi = false)
     {
         if (CheckPositionBeforePlacement(position) && inventoryManager.CanBuy(housesPrefabe[houseNum].weight) && !isAi)
@@ -177,12 +205,13 @@ public class StructureManager : MonoBehaviour
         {
             StartCoroutine(DelayedPlacement(position, houseNum, isAi));
         }
-        else
+        else if (CheckPositionBeforePlacement(position) == false && !eventInProgress)
         {
-            if (!eventInProgress)
-            {
-                StartCoroutine(dialogueManager.BuildingPlacementDialogue());
-            }
+            StartCoroutine(dialogueManager.BuildingPlacementDialogue(0));
+        }
+        else if (!eventInProgress)
+        {
+            StartCoroutine(dialogueManager.BuildingPlacementDialogue(1));
         }
     }
 
@@ -359,15 +388,19 @@ public class StructureManager : MonoBehaviour
             return true;
         }
 
-        else
+        else if (!CheckBigStructure(position, width, height) && !eventInProgress)
         {
-            StartCoroutine(dialogueManager.BuildingPlacementDialogue());
+            StartCoroutine(dialogueManager.BuildingPlacementDialogue(0));
+        }
+        else if (!eventInProgress)
+        {
+            StartCoroutine(dialogueManager.BuildingPlacementDialogue(1));
         }
 
         return false;
     }
 
-    private bool CheckBigStructure(Vector3Int position, int width, int height)
+    internal bool CheckBigStructure(Vector3Int position, int width, int height)
     {
         bool nearRoad = false;
         for (int x = 0; x < width; x++)
