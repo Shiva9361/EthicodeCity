@@ -29,6 +29,8 @@ public class StructureClickController : MonoBehaviour
 
     public HashSet<Vector3Int> positions;
 
+    private bool notTriedToDestroy = true;
+
     private void Update()
     {
         time += Time.deltaTime;
@@ -44,8 +46,9 @@ public class StructureClickController : MonoBehaviour
             updateTime = 0;
         }
 
-        if (time > 10 && time < 12)
+        if (time > 10 && notTriedToDestroy)
         {
+            notTriedToDestroy = false;
             if (isAi && Random.value > 0.8 && !isBank && !isAiFactory)
             {
                 Clear();
