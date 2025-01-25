@@ -49,11 +49,9 @@ public class StructureClickController : MonoBehaviour
             if (isAi && Random.value > 0.8 && !isBank && !isAiFactory)
             {
                 Clear();
-                if (!structureInfoManager.structureManager.eventInProgress && !structureInfoManager.structureManager.AIDestroyed)
+                if (!structureInfoManager.structureManager.AIDestroyed)
                 {
-                    structureInfoManager.structureManager.eventInProgress = true;
                     StartCoroutine(DestroyAI());
-                    structureInfoManager.structureManager.eventInProgress = false;
                 }
                 Destroy(gameObject);
             }
@@ -63,10 +61,15 @@ public class StructureClickController : MonoBehaviour
 
     private IEnumerator DestroyAI()
     {
-
+        while (structureInfoManager.structureManager.eventInProgress)
+        {
+            yield return null;
+        }
+        structureInfoManager.structureManager.eventInProgress = true;
         structureInfoManager.structureManager.slidePanelController.EnableAchievement("AI");
         structureInfoManager.structureManager.AIDestroyed = true;
         yield return structureInfoManager.structureManager.dialogueManager.AIBuildingDialogue();
+        structureInfoManager.structureManager.eventInProgress = false;
 
     }
 
