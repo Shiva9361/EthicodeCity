@@ -25,33 +25,33 @@ public class DialogueManager : MonoBehaviour
         specialImage.gameObject.SetActive(false);
     }
 
-    // void Update()
-    // {
-    //     if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
-    //     {
-    //         // dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
-    //         if (!isRunning) { transform.parent.gameObject.SetActive(false); }
-    //     }
-    // }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (!isRunning) 
-            { 
-                transform.parent.gameObject.SetActive(false); 
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (isRunning)
-            {
-                SkipDialogue();
-            }
+            // dialogueText.text = characters[currentCharacterIndex].dialogueLines[currentLineIndex];
+            if (!isRunning) { transform.parent.gameObject.SetActive(false); }
         }
     }
+
+    // void Update()
+    // {
+    //     if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
+    //     {
+    //         if (!isRunning) 
+    //         { 
+    //             transform.parent.gameObject.SetActive(false); 
+    //         }
+    //     }
+
+    //     if (Input.GetKeyDown(KeyCode.B))
+    //     {
+    //         if (isRunning)
+    //         {
+    //             SkipDialogue();
+    //         }
+    //     }
+    // }
 
     void SkipDialogue()
     {
