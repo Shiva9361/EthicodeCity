@@ -55,7 +55,7 @@ public class DialogueSetup : MonoBehaviour
                 "Make sure you have enough money or AI credits to build buildings, Mayor.",
             }
         };
-        // dialogueManager.StartDialogue();
+        dialogueManager.StartDialogue();
 
 
     }

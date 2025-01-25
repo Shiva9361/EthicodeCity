@@ -46,7 +46,7 @@ public class StructureClickController : MonoBehaviour
             updateTime = 0;
         }
 
-        if (time > 5 && notTriedToDestroy)
+        if (time > 10 && notTriedToDestroy)
         {
             notTriedToDestroy = false;
             if (isAi && Random.value >= 0 && !isBank && !isAiFactory)
@@ -66,7 +66,7 @@ public class StructureClickController : MonoBehaviour
         Renderer renderer = transform.GetComponentsInChildren<Renderer>()[0];
         Material oldMaterial = renderer.material;
         Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.red };
-        for (int i = 0; i < 2 * 3; i++)
+        for (int i = 0; i < 2 * 2; i++)
         {
             if (i % 2 == 1)
             {
