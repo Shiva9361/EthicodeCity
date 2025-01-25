@@ -152,7 +152,7 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text = string.Empty;
             yield return StartCoroutine(TypeLine());
             speechmanager.SpeakLine(dialogueSpeech);
-            yield return new WaitForSeconds(1.2f);
+            // yield return new WaitForSeconds(1.2f);
         }
         isRunning = false;
     }
