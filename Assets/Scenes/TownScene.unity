@@ -873,7 +873,7 @@ MonoBehaviour:
   specialImage: {fileID: 196961472}
   dialogueSpeech: 
   speechmanager: {fileID: 106800420}
-  textSpeed: 0.03
+  textSpeed: 0.001
   characters: []
 --- !u!114 &92433838
 MonoBehaviour:

@@ -29,6 +29,8 @@ public class StructureClickController : MonoBehaviour
 
     public HashSet<Vector3Int> positions;
 
+    private bool notTriedToDestroy = true;
+
     private void Update()
     {
         time += Time.deltaTime;
@@ -44,27 +46,57 @@ public class StructureClickController : MonoBehaviour
             updateTime = 0;
         }
 
-        if (time > 10 && time < 12)
+        if (time > 10 && notTriedToDestroy)
         {
-            if (isAi && Random.value > 0.2 && !isBank && !isAiFactory)
+            notTriedToDestroy = false;
+            if (isAi && Random.value > 0.8 && !isBank && !isAiFactory)
             {
                 Clear();
-                if (!structureInfoManager.structureManager.eventInProgress && !structureInfoManager.structureManager.AIDestroyed)
+                if (!structureInfoManager.structureManager.AIDestroyed)
                 {
-                    structureInfoManager.structureManager.eventInProgress = true;
                     StartCoroutine(DestroyAI());
-                    structureInfoManager.structureManager.eventInProgress = false;
                 }
-                Destroy(gameObject);
+                DestroyObject();
             }
         }
 
     }
 
+    private IEnumerator DestroyObject()
+    {
+        if (transform.GetComponent<Renderer>() != null)
+        {
+            Renderer renderer = transform.GetComponent<Renderer>();
+            Material oldMaterial = transform.GetComponent<Renderer>().material;
+            Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.red };
+            for (int i = 0; i < 2 * 3; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    renderer.material = oldMaterial;
+                }
+                else
+                {
+                    renderer.material = material;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+        Destroy(gameObject);
+    }
+
     private IEnumerator DestroyAI()
     {
-        yield return structureInfoManager.structureManager.dialogueManager.AIBuildingDialogue();
+        while (structureInfoManager.structureManager.eventInProgress)
+        {
+            yield return null;
+        }
+        structureInfoManager.structureManager.eventInProgress = true;
         structureInfoManager.structureManager.slidePanelController.EnableAchievement("AI");
+        structureInfoManager.structureManager.AIDestroyed = true;
+        yield return structureInfoManager.structureManager.dialogueManager.AIBuildingDialogue();
+        structureInfoManager.structureManager.eventInProgress = false;
+
     }
 
     void OnMouseDown()
