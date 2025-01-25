@@ -54,9 +54,8 @@ public class StructureManager : MonoBehaviour
         {
             earthQuaketimer = 0;
 
-            if (UnityEngine.Random.value < earthquakeProbability && AIObjectsInMap.Count != 0 && !eventInProgress)
+            if (UnityEngine.Random.value < earthquakeProbability && AIObjectsInMap.Count != 0)
             {
-                eventInProgress = true;
                 earthquakeProbability = Mathf.Max(0.1f, earthquakeProbability - 0.1f);
                 StartCoroutine(EarthQuake());
                 Debug.Log("Earthquake event triggered.");
@@ -71,9 +70,8 @@ public class StructureManager : MonoBehaviour
         {
             bankRobbingTimer = 0;
 
-            if (UnityEngine.Random.value < bankRobberyProbability && AIObjectsInMap.Count != 0 && !eventInProgress)
+            if (UnityEngine.Random.value < bankRobberyProbability && AIObjectsInMap.Count != 0)
             {
-                eventInProgress = true;
                 bankRobberyProbability = Mathf.Max(0.1f, bankRobberyProbability - 0.1f);
                 StartCoroutine(BankRobbery());
                 Debug.Log("Bank robbery event triggered.");
@@ -108,7 +106,12 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator BankRobbery()
     {
+        while (eventInProgress)
+        {
+            yield return null;
+        }
 
+        eventInProgress = true;
         foreach (var obj in AIObjectsInMap)
         {
             if (obj != null)
@@ -129,6 +132,11 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator EarthQuake()
     {
+        while (eventInProgress)
+        {
+            yield return null;
+        }
+        eventInProgress = true;
         yield return dialogueManager.EarthQuakeDialogue(0);
         yield return new WaitForSeconds(2);
         earthquakeMovement.TriggerEarthquake(5, 0.1f);
@@ -171,7 +179,10 @@ public class StructureManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(dialogueManager.BuildingPlacementDialogue());
+            if (!eventInProgress)
+            {
+                StartCoroutine(dialogueManager.BuildingPlacementDialogue());
+            }
         }
     }
 
@@ -245,32 +256,51 @@ public class StructureManager : MonoBehaviour
         obj.GetComponent<StructureClickController>().isBank = bigStructuresPrefabs[houseNum].isBank;
         obj.GetComponent<StructureClickController>().isAiFactory = bigStructuresPrefabs[houseNum].isAiFactory;
 
-        if (isAi && bigStructuresPrefabs[houseNum].isBank && !eventInProgress)
+        if (isAi && bigStructuresPrefabs[houseNum].isBank)
         {
+            while (eventInProgress)
+            {
+                yield return null;
+            }
             eventInProgress = true;
             yield return dialogueManager.BankBuildDialogue();
             eventInProgress = false;
         }
 
-        if (isAi && bigStructuresPrefabs[houseNum].isAiFactory && !eventInProgress)
+        if (isAi && bigStructuresPrefabs[houseNum].isAiFactory)
         {
+            while (eventInProgress)
+            {
+                yield return null;
+            }
             eventInProgress = true;
             yield return dialogueManager.FactoryDialogue();
             yield return WaitforQuestion();
+            slidePanelController.EnableAchievement("WC");
             eventInProgress = false;
         }
         if (!bigStructuresPrefabs[houseNum].isBank && !bigStructuresPrefabs[houseNum].isAiFactory)
         {
             if (hospitalCount == 0)
             {
+                while (eventInProgress)
+                {
+                    yield return null;
+                }
                 eventInProgress = true;
                 yield return dialogueManager.DocumentationDialogue();
                 eventInProgress = false;
             }
             else if (hospitalCount == 4)
             {
+                while (eventInProgress)
+                {
+                    yield return null;
+                }
+                eventInProgress = true;
                 slidePanelController.EnableAchievement("CD");
                 yield return dialogueManager.CongratulationsDialogue();
+                eventInProgress = false;
             }
             hospitalCount++;
         }
@@ -294,9 +324,10 @@ public class StructureManager : MonoBehaviour
 
     private IEnumerator WaitforQuestion()
     {
+        bool old = cameraManager.cameraDragEnabled;
         cameraManager.cameraDragEnabled = false;
         yield return StartCoroutine(questionManager.StartQuestion());
-        cameraManager.cameraDragEnabled = true;
+        cameraManager.cameraDragEnabled = old;
     }
 
     internal void PlaceHouseBuffered(Vector3Int position, int houseNum)

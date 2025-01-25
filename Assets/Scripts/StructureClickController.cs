@@ -46,7 +46,7 @@ public class StructureClickController : MonoBehaviour
 
         if (time > 10 && time < 12)
         {
-            if (isAi && Random.value > 0.2 && !isBank && !isAiFactory)
+            if (isAi && Random.value > 0.8 && !isBank && !isAiFactory)
             {
                 Clear();
                 if (!structureInfoManager.structureManager.eventInProgress && !structureInfoManager.structureManager.AIDestroyed)
@@ -63,8 +63,11 @@ public class StructureClickController : MonoBehaviour
 
     private IEnumerator DestroyAI()
     {
-        yield return structureInfoManager.structureManager.dialogueManager.AIBuildingDialogue();
+
         structureInfoManager.structureManager.slidePanelController.EnableAchievement("AI");
+        structureInfoManager.structureManager.AIDestroyed = true;
+        yield return structureInfoManager.structureManager.dialogueManager.AIBuildingDialogue();
+
     }
 
     void OnMouseDown()
