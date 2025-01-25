@@ -56,10 +56,33 @@ public class StructureClickController : MonoBehaviour
                 {
                     StartCoroutine(DestroyAI());
                 }
-                Destroy(gameObject);
+                DestroyObject();
             }
         }
 
+    }
+
+    private IEnumerator DestroyObject()
+    {
+        if (transform.GetComponent<Renderer>() != null)
+        {
+            Renderer renderer = transform.GetComponent<Renderer>();
+            Material oldMaterial = transform.GetComponent<Renderer>().material;
+            Material material = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = Color.red };
+            for (int i = 0; i < 2 * 3; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    renderer.material = oldMaterial;
+                }
+                else
+                {
+                    renderer.material = material;
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+        Destroy(gameObject);
     }
 
     private IEnumerator DestroyAI()

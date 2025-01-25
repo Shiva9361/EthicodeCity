@@ -86,7 +86,7 @@ public class StructureManager : MonoBehaviour
 
         for (int i = 0; i < k; i++)
         {
-            GameObject obj = ObjectsInMap.Dequeue();
+            ObjectsInMap.TryDequeue(out GameObject obj);
             if (obj != null)
             {
                 ObjectsInMap.Enqueue(obj);
@@ -96,7 +96,7 @@ public class StructureManager : MonoBehaviour
         k = AIObjectsInMap.Count;
         for (int i = 0; i < k; i++)
         {
-            GameObject obj = AIObjectsInMap.Dequeue();
+            AIObjectsInMap.TryDequeue(out GameObject obj);
             if (obj != null)
             {
                 AIObjectsInMap.Enqueue(obj);
