@@ -502,7 +502,7 @@ public class StructureManager : MonoBehaviour
 public struct StructurePrefabWeighted
 {
     public GameObject prefab;
-    [Range(1000, 10_000)]
+    [Range(100, 10_000)]
     public float weight;
     public Vector3 scale;
 
@@ -532,7 +532,7 @@ public struct StructurePrefabWeighted
 public struct StructurePrefabWH
 {
     public GameObject prefab;
-    [Range(1000, 10_000)]
+    [Range(100, 10_000)]
     public float weight;
     public Vector3 scale;
 

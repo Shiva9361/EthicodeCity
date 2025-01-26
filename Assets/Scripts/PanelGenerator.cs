@@ -30,7 +30,7 @@ public class PanelGenerator : MonoBehaviour
         panel.transform.Find("Image").GetComponent<RawImage>().texture = structureInfo.image;
         panel.transform.Find("MoneyButton").GetComponent<Transform>().Find("Cost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.weight;
         panel.transform.Find("MoneyButton").GetComponent<Transform>().Find("Time").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.time + "s";
-        panel.transform.Find("AIButton").GetComponent<Transform>().Find("AICost").GetComponent<TMP_Text>().text = "$" + structureInfo.weightedPrefab.aiCost;
+        panel.transform.Find("AIButton").GetComponent<Transform>().Find("AICost").GetComponent<TMP_Text>().text = ""+structureInfo.weightedPrefab.aiCost;
         panel.transform.Find("AIButton").GetComponent<Transform>().Find("AITime").GetComponent<TMP_Text>().text = structureInfo.weightedPrefab.aiTime + "s";
         panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(offset, 0);
         panel.SetActive(true);
