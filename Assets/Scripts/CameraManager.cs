@@ -65,7 +65,15 @@ public class CameraManager : MonoBehaviour
             Vector3 move = new Vector3(difference.x, 0, difference.y) * dragSpeed * Time.deltaTime;
             move = parent.transform.TransformDirection(move);
 
-            parent.transform.Translate(move, Space.World);
+            // Calculate the new position
+            Vector3 newPosition = parent.transform.position + move;
+
+            // Clamp the new position within the desired range
+            newPosition.x = Mathf.Clamp(newPosition.x, 7f, 24f); // Adjust the range as needed
+            newPosition.z = Mathf.Clamp(newPosition.z, 7f, 24f); // Adjust the range as needed
+
+            // Apply the clamped position
+            parent.transform.position = newPosition;
 
             // Update drag origin
             dragOrigin = currentMousePosition;
