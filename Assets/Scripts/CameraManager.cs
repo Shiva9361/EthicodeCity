@@ -69,8 +69,8 @@ public class CameraManager : MonoBehaviour
             Vector3 newPosition = parent.transform.position + move;
 
             // Clamp the new position within the desired range
-            newPosition.x = Mathf.Clamp(newPosition.x, 7f, 24f); // Adjust the range as needed
-            newPosition.z = Mathf.Clamp(newPosition.z, 7f, 24f); // Adjust the range as needed
+            newPosition.x = Mathf.Clamp(newPosition.x, 7f, 24f);
+            newPosition.z = Mathf.Clamp(newPosition.z, 7f, 24f);
 
             // Apply the clamped position
             parent.transform.position = newPosition;
