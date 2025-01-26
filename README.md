@@ -1,5 +1,8 @@
 # Ethicode City
 
+### Game Demonstration : https://drive.google.com/file/d/14WhW1tQJW6qdpKHMqL0YRO96nRkbu1-E/view?usp=sharing
+### Report Doc : https://docs.google.com/document/d/1lObG9-U8z2NsmxOKRndBi2Su-x3C8WG70PSy8ljQbFY/edit?usp=sharing
+
 ## Game Features
 The game begins in a city devastated by unforeseen circumstances. The previous mayor has been arrested, leaving the new mayor (the player) responsible for rebuilding the city from scratch. With the help of the city’s architect, the player must not only rebuild but also uncover the reasons behind the city’s collapse.
 
